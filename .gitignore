@@ -25,7 +25,18 @@ token.json
 *.crt
 *.pfx
 *.p12
+*.keystore
+*.jks
 id_rsa*
+*.id_rsa
+known_hosts
+
+# Cloud & deployment local credentials
+.aws/
+.gcp/
+.azure/
+.vercel/
+.netlify/
 
 # Database & local data dumps
 *.sql
@@ -34,7 +45,19 @@ id_rsa*
 *.db
 *.dump
 
-# Personal / private files and backups
+# ===================================================================
+# PERSONAL DOCUMENTS, CVS, IDENTIFIERS & PRIVATE MEDIA
+# ===================================================================
+*.pdf
+*CV*
+*cv*
+*Curriculum*
+*curriculum*
+*Resume*
+*resume*
+*.doc
+*.docx
+*.rtf
 *.bak
 *.backup
 *.old
@@ -49,10 +72,17 @@ personal-photos/
 *dni*
 *id-card*
 *passport*
-*.pdf
+*identidad*
+
+# Allow only specific public web images and assets
 *.png
-!assets/*.pdf
+*.jpg
+*.jpeg
 !assets/*.png
+!assets/*.jpg
+!assets/*.jpeg
+!assets/*.svg
+!assets/*.ico
 
 # ===================================================================
 # DEPENDENCIES & PACKAGES
@@ -85,6 +115,10 @@ temp/
 pid
 *.pid
 *.seed
+dist/
+build/
+out/
+coverage/
 
 # ===================================================================
 # OPERATING SYSTEM & EDITOR METADATA
@@ -109,3 +143,8 @@ $RECYCLE.BIN/
 *.sln
 *.swp
 *~
+
+# Agent & AI toolchains local caches
+.agents/
+.gemini/
+.system_generated/
