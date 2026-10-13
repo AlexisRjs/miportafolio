@@ -17,8 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // 2.2 Initialize Physical Draggable Lanyard Badge (ReactBits)
   if (window.LanyardBadge && document.getElementById('lanyard-container')) {
     window.lanyardInstance = new LanyardBadge('lanyard-container', {
-      githubUrl: 'https://github.com/alesi01',
-      githubUsername: 'alesi01',
+      githubUrl: 'https://github.com/AlexisRjs',
+      githubUsername: 'AlexisRjs',
       linkedinUrl: 'https://www.linkedin.com/in/alexis-fernando-rojas-94922b250',
       avatarUrl: 'assets/alexis-profile.png',
       badgeTitle: 'Alexis',
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupMetricCounters();
 
   // 11. Confetti & Contact Form
-  setupContactAndCV();
+  setupContactForm();
 
   // 12. Infinite Marquee Auto-Duplicate
   setupInfiniteMarquee();
@@ -291,6 +291,83 @@ function setupBioTabs() {
  */
 const projectsData = [
   {
+    id: 'libremath',
+    category: 'mern',
+    categoryLabel: '⭐ Proyecto Principal • Rust / Tauri',
+    title: 'LibreMath — Suite del Estudiante de Ingeniería',
+    shortDesc: 'La navaja suiza del estudiante de ingeniería (UTN FRRO): software ultra veloz y liviano con backend nativo en Rust (Tauri 2), KaTeX, D3.js, notas Markdown y grafos de conocimiento.',
+    tags: ['Rust', 'Tauri 2', 'TypeScript', 'KaTeX', 'D3.js', 'Tailwind CSS'],
+    visualGrad: 'linear-gradient(180deg, #182234 0%, #0c111c 100%)',
+    iconSvg: `<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="8" y1="6" x2="16" y2="14"/><line x1="16" y1="6" x2="8" y2="14"/>`,
+    fullDesc: 'Proyecto personal insignia desarrollado por Alexis Fernando Rojas para estudiantes de Ingeniería (UTN Rosario). Concebido tras una exhaustiva comparativa arquitectónica frente a Electron, Flet y Rust puro, implementando Tauri 2 (Rust + WebView2) para lograr un consumo mínimo de RAM (~35-70 MB), arranque en <1s, diagramación matemática KaTeX de alta fidelidad y grafos interactivos de conocimiento con D3.js.',
+    architecture: [
+      'Núcleo de alto rendimiento en Rust (Tauri 2) con acceso nativo al sistema de archivos para latencias sub-milisegundo',
+      'Consumo ultra bajo de memoria (35-70 MB RAM) y empaquetado ligero (~5-10 MB) sin sobrecarga de Chromium ni Node empaquetado',
+      'Motor de renderizado tipográfico KaTeX para fórmulas matemáticas complejas (cálculo multivariable, tensores, integrales)',
+      'Visualizador interactivo de grafos de conocimiento a 60fps con D3.js y física de fuerzas para conectar temas del cursado',
+      'Módulos específicos para asignaturas de UTN FRRO: Análisis Matemático I/II, Álgebra, Física I/II, Lógica y más'
+    ],
+    liveUrl: '#',
+    githubUrl: 'https://github.com/AlexisRjs/LibreMath'
+  },
+  {
+    id: 'generador-posts-upl',
+    category: 'data',
+    categoryLabel: 'Full Stack & OCR',
+    title: 'Generador de Posts UPL (Flyers & OCR)',
+    shortDesc: 'Suite web y motor OCR en Python para automatizar el diseño y exportación de historias para redes (1080×1920 px) en UTN FRRO.',
+    tags: ['Python', 'FastAPI', 'OpenCV', 'RapidOCR', 'JavaScript', 'HTML5 Canvas'],
+    visualGrad: 'linear-gradient(180deg, #1f142b 0%, #0c0814 100%)',
+    iconSvg: `<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>`,
+    fullDesc: 'Herramienta integral de automatización y diseño oficial para Universitarios por la Libertad (UTN Facultad Regional Rosario). Procesa capturas de planillas de horarios y mesas de examen extrayendo datos con visión artificial y OCR en ~0.2s, delimitando aulas, especialidades y horarios con normalización difusa contra el catálogo oficial, renderizando piezas a 60fps con HTML5 Canvas.',
+    architecture: [
+      'Backend de alta velocidad en Python con FastAPI, RapidOCR (modelos ONNX PaddleOCR v4) y OpenCV para análisis matricial de celdas',
+      'Motor de renderizado nativo sobre HTML5 Canvas a 1080×1920 px para exportación en calidad HD sin artefactos',
+      'Algoritmo de desambiguación y normalización difusa de asignaturas frente al catálogo oficial de la facultad',
+      'Soporte multi-historia automático para planillas extensas y selector interactivo por especialidad (ISI, IQ, IC, etc.)'
+    ],
+    liveUrl: 'https://generador-de-posts-upl.vercel.app',
+    githubUrl: 'https://github.com/AlexisRjs/Generador-de-posts-UPL'
+  },
+  {
+    id: 'upl-regional-rosario',
+    category: 'data',
+    categoryLabel: 'Datos & Visualización',
+    title: 'Auditorías Universitarias — Regional Rosario',
+    shortDesc: 'Plataforma analítica con mapa vectorial interactivo de Rosario, rankings oficiales de auditoría y métricas de retención para la UNR.',
+    tags: ['JavaScript', 'SVG Interactivo', 'Data Visualization', 'CSS Glassmorphism'],
+    visualGrad: 'linear-gradient(180deg, #141b2b 0%, #070913 100%)',
+    iconSvg: `<path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/>`,
+    fullDesc: 'Plataforma interactiva de auditoría académica desarrollada para Universitarios por la Libertad Regional Rosario. Visualiza datos críticos de la Universidad Nacional de Rosario (UNR): tasa de graduación por cohorte, padrones de alumnos activos, costo por graduado efectivo y geolocalización de facultades e institutos mediante cartografía vectorial SVG personalizada.',
+    architecture: [
+      'Cartografía interactiva en SVG con delimitación de la costa del Río Paraná, cuadrícula de Rosario y nodos académicos',
+      'Visualización y ranking de métricas oficiales de auditoría con comparativas regionales y nacionales',
+      'Interfaz glassmorphism de alto contraste y animaciones sutiles para maximizar la legibilidad de datos',
+      'Desarrollo modular en JavaScript nativo optimizado para fluidez total a 60fps'
+    ],
+    liveUrl: 'https://alexisrjs.github.io/UPLregionalRosario/',
+    githubUrl: 'https://github.com/AlexisRjs/UPLregionalRosario'
+  },
+  {
+    id: 'mapa-upl-utnfrro',
+    category: 'mern',
+    categoryLabel: 'Campus Web App',
+    title: 'Mapa Interactivo UTN FRRO',
+    shortDesc: 'Aplicación web interactiva que geolocaliza secretarías, dependencias, pisos, aulas y trámites clave para la comunidad de la UTN Rosario.',
+    tags: ['JavaScript', 'HTML5', 'CSS3 Moderno', 'Campus UX'],
+    visualGrad: 'linear-gradient(180deg, #181922 0%, #0b0c12 100%)',
+    iconSvg: `<polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/>`,
+    fullDesc: 'Herramienta digital de orientación institucional para estudiantes y docentes de la UTN FRRO (Zeballos 1341). Ofrece ubicación directa de aulas de examen, secretarías (SAU, SeCyT, Académica, Administrativa), horarios de conmutador y trámites universitarios, eliminando la desorientación en los pasillos de la facultad.',
+    architecture: [
+      'Organización jerárquica de sedes, pisos y secretarías con datos actualizados de contacto y horarios',
+      'Filtros instantáneos por área de gestión y trámites estudiantiles',
+      'Diseño responsivo optimizado para navegación veloz en teléfonos inteligentes',
+      'Carga ultrarrápida sin librerías pesadas externas'
+    ],
+    liveUrl: 'https://alexisrjs.github.io/MapaUPL-UTNFRRO/',
+    githubUrl: 'https://github.com/AlexisRjs/MapaUPL-UTNFRRO'
+  },
+  {
     id: 'ecommerce-mern',
     category: 'mern',
     categoryLabel: 'Stack MERN',
@@ -308,83 +385,7 @@ const projectsData = [
       'Autenticación robusta basada en JWT (JSON Web Tokens) y contraseñas hasheadas con bcryptjs'
     ],
     liveUrl: '#',
-    githubUrl: 'https://github.com/alesi01'
-  },
-  {
-    id: 'gestion-turnos',
-    category: 'mern',
-    categoryLabel: 'Stack MERN',
-    title: 'Sistema de Gestión de Turnos',
-    shortDesc: 'Plataforma web para asignación, control y reserva de turnos en tiempo real con calendario interactivo y prevención de solapamientos.',
-    tags: ['JavaScript', 'React', 'Node.js', 'Express.js', 'MongoDB'],
-    visualGrad: 'linear-gradient(180deg, #141b24 0%, #0b0e14 100%)',
-    iconSvg: `<rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="12" cy="15" r="2"/>`,
-    fullDesc: 'Sistema diseñado para centros de atención, consultorios y prestadores de servicios. Permite a los usuarios consultar franjas horarias libres y programar turnos de manera autónoma, mientras que el personal administrativo gestiona cancelaciones y confirmaciones instantáneas.',
-    architecture: [
-      'Calendario y selector horario dinámico en React con validación visual instantánea',
-      'Manejo de reservas atómicas en MongoDB para impedir solapamiento de horarios simultáneos',
-      'Control de roles diferenciados (Administrador, Profesional y Paciente/Cliente)',
-      'Notificaciones y estados de turno automatizados (Pendiente, Confirmado, Atendido, Cancelado)'
-    ],
-    liveUrl: '#',
-    githubUrl: 'https://github.com/alesi01'
-  },
-  {
-    id: 'pos-stock',
-    category: 'mern',
-    categoryLabel: 'Stack MERN',
-    title: 'Punto de Venta (POS) & Control de Stock',
-    shortDesc: 'Software de mostrador de alta velocidad para cobro ágil, lectura de código de barras, control de inventario y arqueo de caja.',
-    tags: ['JavaScript', 'React', 'Node.js', 'Express.js', 'MongoDB'],
-    visualGrad: 'linear-gradient(180deg, #1b1926 0%, #0d0c14 100%)',
-    iconSvg: `<rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/><path d="M7 8h10M7 12h6"/>`,
-    fullDesc: 'Punto de venta comercial concebido para maximizar la velocidad transaccional en mostrador. Brinda búsqueda ultrarrápida por código de barras o SKU, cálculo automático de impuestos y descuentos, y rebaja inmediata de mercancía en inventario.',
-    architecture: [
-      'Interfaz de facturación en React optimizada para uso con atajos de teclado y pistolas de códigos',
-      'Actualización atómica de stock mediante operadores nativos de MongoDB ($inc) sin condiciones de carrera',
-      'Módulo de apertura y cierre de caja con conciliación por métodos de pago (Efectivo / Tarjeta)',
-      'Histórico de movimientos de kardex y generación de recibos'
-    ],
-    liveUrl: '#',
-    githubUrl: 'https://github.com/alesi01'
-  },
-  {
-    id: 'viabilidad-negocio',
-    category: 'data',
-    categoryLabel: 'Análisis de Datos',
-    title: 'Análisis de Viabilidad de Negocio',
-    shortDesc: 'Modelo financiero y cuantitativo en Python y Power BI para evaluar rentabilidad, TIR, VAN y punto de equilibrio operativo.',
-    tags: ['Python', 'Pandas', 'Power BI', 'Data Analytics', 'Modelado Financiero'],
-    visualGrad: 'linear-gradient(180deg, #1f1a14 0%, #0f0c08 100%)',
-    iconSvg: `<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>`,
-    fullDesc: 'Proyecto de análisis de datos financieros enfocado en evaluar la factibilidad técnica y económica de iniciativas comerciales. Permite cuantificar inversiones iniciales, calcular costos marginales y proyectar la recuperación de capital bajo distintos horizontes de tiempo.',
-    architecture: [
-      'Scripts en Python con Pandas y NumPy para el procesamiento de flujos de fondos proyectados',
-      'Cálculo algorítmico de indicadores financieros fundamentales: VAN, TIR, Payback y Punto de Equilibrio',
-      'Modelado interactivo en Power BI con parámetros de hipótesis (What-if) para análisis de sensibilidad',
-      'Visualizaciones ejecutivas para directores y toma de decisiones fundamentadas en datos'
-    ],
-    liveUrl: '#',
-    githubUrl: 'https://github.com/alesi01'
-  },
-  {
-    id: 'analisis-ventas',
-    category: 'data',
-    categoryLabel: 'Análisis de Datos',
-    title: 'Dashboard de Análisis de Ventas & Clientes',
-    shortDesc: 'Solución integral de Business Intelligence en Power BI y Python para detectar estacionalidad, ticket promedio y segmentación de clientes.',
-    tags: ['Power BI', 'Python', 'Pandas', 'SQL', 'Visualización de Datos'],
-    visualGrad: 'linear-gradient(180deg, #181922 0%, #0b0c12 100%)',
-    iconSvg: `<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>`,
-    fullDesc: 'Ecosistema analítico para la exploración profunda de patrones comerciales y comportamiento del consumidor. Integra procesos de limpieza ETL en Python con modelado relacional en estrella en Power BI para brindar una visión de 360 grados del rendimiento de ventas.',
-    architecture: [
-      'Proceso ETL con Python y consultas SQL para depuración, desduplicación y normalización de transacciones',
-      'Esquema dimensional en estrella (Star Schema) optimizado para alto rendimiento de consultas en Power BI',
-      'Métricas complejas en DAX (Time Intelligence, variación interanual YoY, margen neto y ticket promedio)',
-      'Segmentación de clientes RFM (Recencia, Frecuencia y Monto) para fidelización y retención'
-    ],
-    liveUrl: '#',
-    githubUrl: 'https://github.com/alesi01'
+    githubUrl: 'https://github.com/julianmuinos/Grupo_F_Comision_2_TT_Sprint_3-4_Muebleria_hnos_J'
   }
 ];
 
@@ -468,9 +469,16 @@ function renderProjects(filterCategory) {
             Ver Arquitectura
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </button>
-          <a href="${p.githubUrl}" target="_blank" rel="noopener" class="btn-icon" style="width:34px; height:34px;" title="Ver Repositorio en GitHub">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
-          </a>
+          <div style="display:flex; align-items:center; gap:8px;">
+            ${p.liveUrl && p.liveUrl !== '#' ? `
+              <a href="${p.liveUrl}" target="_blank" rel="noopener" class="btn-icon" style="width:34px; height:34px;" title="Ver Demo en Vivo">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+              </a>
+            ` : ''}
+            <a href="${p.githubUrl}" target="_blank" rel="noopener" class="btn-icon" style="width:34px; height:34px;" title="Ver Repositorio en GitHub">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
+            </a>
+          </div>
         </div>
       </div>
     `;
@@ -549,10 +557,12 @@ function openProjectModal(p) {
     </div>
 
     <div style="display:flex; gap:16px; margin-top:16px; padding-top:16px; border-top:1px solid var(--border-subtle);">
-      <a href="${p.liveUrl}" class="btn btn-primary" style="flex:1;">
-        Demo en Vivo
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
-      </a>
+      ${p.liveUrl && p.liveUrl !== '#' ? `
+        <a href="${p.liveUrl}" target="_blank" rel="noopener" class="btn btn-primary" style="flex:1;">
+          Demo en Vivo
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+        </a>
+      ` : ''}
       <a href="${p.githubUrl}" target="_blank" rel="noopener" class="btn btn-secondary" style="flex:1;">
         Código GitHub
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
@@ -622,84 +632,62 @@ function animateCounter(el, target, prefix, suffix, decimals, duration) {
 /**
  * CONFETTI & CONTACT FORM SUBMIT
  */
-function setupContactAndCV() {
+function setupContactForm() {
   const form = document.getElementById('contact-form');
-  const cvBtn = document.getElementById('download-cv-btn');
-
-  if (cvBtn) {
-    cvBtn.addEventListener('click', () => {
-      if (cvBtn.classList.contains('downloading')) return;
-
-      const iconWrap = document.getElementById('cv-icon-wrap');
-      const textEl = document.getElementById('cv-text');
-
-      if (window.soundEngine) window.soundEngine.playClick();
-
-      cvBtn.classList.add('downloading');
-      if (iconWrap) {
-        iconWrap.innerHTML = `<span class="btn-cv-spinner"></span>`;
-      }
-      if (textEl) textEl.textContent = 'Descargando...';
-
-      setTimeout(() => {
-        cvBtn.classList.remove('downloading');
-        cvBtn.classList.add('success');
-        if (iconWrap) {
-          iconWrap.innerHTML = `
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#30d158" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="20 6 9 17 4 12" />
-            </svg>
-          `;
-        }
-        if (textEl) textEl.textContent = 'CV Descargado';
-        if (window.soundEngine) window.soundEngine.playSuccess();
-        showToast('✓ Curriculum Vitae de Alexis descargado con éxito.');
-
-        setTimeout(() => {
-          cvBtn.classList.remove('success');
-          if (iconWrap) {
-            iconWrap.innerHTML = `
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
-              </svg>
-            `;
-          }
-          if (textEl) textEl.textContent = 'Descargar CV';
-        }, 2800);
-      }, 500);
-    });
-  }
 
   if (form) {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-      const submitBtn = form.querySelector('button[type="submit"]');
-      const origText = submitBtn.innerHTML;
 
-      submitBtn.innerHTML = `
-        <svg style="animation:spin 1s linear infinite;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10" stroke-opacity="0.3"></circle>
-          <path d="M12 2a10 10 0 0 1 10 10"></path>
-        </svg>
-        Enviando paquete cifrado...
-      `;
-      submitBtn.disabled = true;
+      const name = document.getElementById('contact-name')?.value?.trim() || '';
+      const email = document.getElementById('contact-email')?.value?.trim() || '';
+      const message = document.getElementById('contact-message')?.value?.trim() || '';
+
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const origText = submitBtn ? submitBtn.innerHTML : 'Enviar Mensaje';
+
+      if (submitBtn) {
+        submitBtn.innerHTML = `
+          <svg style="animation:spin 1s linear infinite;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10" stroke-opacity="0.3"></circle>
+            <path d="M12 2a10 10 0 0 1 10 10"></path>
+          </svg>
+          Preparando Gmail...
+        `;
+        submitBtn.disabled = true;
+      }
+
+      // Configuración de correo a Gmail
+      const recipient = 'alexisrojas2073@gmail.com';
+      const subject = `Propuesta de proyecto, ${name}`;
+      const body = message;
+
+      const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(recipient)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+      // Abrir Gmail en una nueva pestaña
+      const win = window.open(gmailUrl, '_blank');
+      if (!win || win.closed || typeof win.closed === 'undefined') {
+        window.location.href = gmailUrl;
+      }
+
+      triggerConfetti();
+      if (window.soundEngine) window.soundEngine.playSuccess();
+      showToast('📬 Abriendo Gmail para enviar tu propuesta a alexisrojas2073@gmail.com');
+
+      if (submitBtn) {
+        submitBtn.innerHTML = `✓ Redirigido a Gmail`;
+        submitBtn.style.background = 'var(--accent-emerald)';
+      }
+
+      form.reset();
 
       setTimeout(() => {
-        triggerConfetti();
-        if (window.soundEngine) window.soundEngine.playSuccess();
-        submitBtn.innerHTML = `✓ Mensaje Transmitido con Éxito`;
-        submitBtn.style.background = 'var(--accent-emerald)';
-        form.reset();
-
-        showToast('🚀 Mensaje recibido. Te responderé en menos de 24 horas.');
-
-        setTimeout(() => {
+        if (submitBtn) {
           submitBtn.innerHTML = origText;
           submitBtn.style.background = '';
           submitBtn.disabled = false;
-        }, 3500);
-      }, 1200);
+        }
+      }, 3000);
     });
   }
 }

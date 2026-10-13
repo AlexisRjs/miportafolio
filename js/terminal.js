@@ -30,6 +30,11 @@ class InteractiveTerminal {
       bio: () => this.cmdBio(),
       about: () => this.cmdBio(),
       sobremi: () => this.cmdBio(),
+      formacion: () => this.cmdBio(),
+      educacion: () => this.cmdBio(),
+
+      certs: () => this.cmdCerts(),
+      certificaciones: () => this.cmdCerts(),
 
       contact: () => this.cmdContact(),
       contacto: () => this.cmdContact(),
@@ -195,9 +200,9 @@ class InteractiveTerminal {
         <span class="yellow" style="text-decoration:underline;">🛠️ INFORMACIÓN & PERFIL:</span><br>
         &nbsp;&nbsp;<span class="emerald">skills</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Stack tecnológico (MERN + Análisis con Python & Power BI).<br>
         &nbsp;&nbsp;<span class="emerald">projects</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Catálogo de proyectos y soluciones escalables.<br>
-        &nbsp;&nbsp;<span class="emerald">bio</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Formación académica en Sistemas y enfoque profesional.<br>
+        &nbsp;&nbsp;<span class="emerald">bio</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Formación académica en Sistemas (UTN FRRO, ITBA).<br>
+        &nbsp;&nbsp;<span class="emerald">certs</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Certificaciones (Google Data Analytics, ITBA).<br>
         &nbsp;&nbsp;<span class="emerald">contact</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Enlaces profesionales (LinkedIn, GitHub, Formulario).<br>
-        &nbsp;&nbsp;<span class="emerald">cv</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Descarga directa del Curriculum Vitae real oficial.<br>
         &nbsp;&nbsp;<span class="emerald">mern</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Diagrama ASCII de la arquitectura full stack.<br><br>
         <span class="yellow" style="text-decoration:underline;">💥 EFECTO ESPECIAL DESTACADO:</span><br>
         &nbsp;&nbsp;<span class="red" style="font-weight:800;">sabotear</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 💥 Derrumbe visual completo de la página hacia abajo (3s auto-repair).<br>
@@ -313,12 +318,13 @@ class InteractiveTerminal {
   cmdProjects() {
     this.printLine(`
       <div style="margin: 4px 0;">
-        <span class="cyan">💼 Proyectos Destacados:</span><br>
-        1. <span class="emerald">Plataforma E-Commerce MERN</span> — Catálogo reactivo, carrito dinámico, JWT y panel admin.<br>
-        2. <span class="emerald">Sistema de Gestión de Turnos</span> — Reserva en tiempo real, 0 solapamiento y roles diferenciados.<br>
-        3. <span class="emerald">Punto de Venta (POS) & Control de Stock</span> — Facturación ultra-rápida y control atómico de inventario.<br>
-        4. <span class="emerald">Análisis de Viabilidad de Negocio</span> — Modelado financiero en Python y Power BI (TIR, VAN, Break-even).<br>
-        5. <span class="emerald">Dashboard de Análisis de Ventas & Clientes</span> — BI con Power BI, Python y SQL (Segmentación RFM y tendencias).
+        <span class="cyan">💼 Proyectos Reales Destacados (github.com/AlexisRjs):</span><br>
+        1. <span class="emerald">LibreMath — Suite de Ingeniería</span> (⭐ <em>Proyecto Principal</em>) — Rust, Tauri 2, KaTeX, D3.js y notas Markdown.<br>
+        2. <span class="emerald">Generador de Posts UPL (Flyers & OCR)</span> — Reconocimiento OCR con Python/OpenCV/FastAPI + Canvas 60fps.<br>
+        3. <span class="emerald">Auditorías Universitarias — Regional Rosario</span> — Cartografía SVG interactiva y métricas de auditoría académica.<br>
+        4. <span class="emerald">Mapa Interactivo UTN FRRO</span> — Orientación institucional de aulas, secretarías y trámites.<br>
+        5. <span class="emerald">Plataforma E-Commerce MERN (Mueblería Hnos J)</span> — Catálogo reactivo, carrito dinámico, JWT y panel admin.<br>
+        <span class="yellow">🔗 Repositorios completos:</span> <a href="https://github.com/AlexisRjs" target="_blank" style="color:#2997ff;">github.com/AlexisRjs</a>
       </div>
     `);
   }
@@ -327,7 +333,24 @@ class InteractiveTerminal {
     this.printLine(`
       <div style="margin: 4px 0;">
         <span class="cyan">👨‍💻 Alexis Fernando Rojas — Full Stack Developer & Analista de Datos</span><br>
-        Estudiante de Ingeniería en Sistemas apasionado por el desarrollo de aplicaciones web de extremo a extremo con el <strong>Stack MERN</strong> (MongoDB, Express, React, Node.js) y la ciencia de datos aplicada a la toma de decisiones empresariales con <strong>Python</strong> y <strong>Power BI</strong>.
+        Estudiante de Ingeniería en Sistemas enfocado en soluciones de alto rendimiento con el <strong>Stack MERN</strong> (MongoDB, Express, React, Node.js), Tauri/Rust y analítica con <strong>Python</strong> & <strong>Power BI</strong>.<br><br>
+        <span class="yellow">🎓 Formación:</span><br>
+        • <a href="https://www.frro.utn.edu.ar/" target="_blank" style="color:#2997ff;">UTN FRRO</a> — Estudiante de Ingeniería en Sistemas de Información<br>
+        • <a href="https://www.itba.edu.ar/" target="_blank" style="color:#2997ff;">ITBA</a> — Instituto Tecnológico de Buenos Aires<br><br>
+        <span class="yellow">📜 Certificaciones:</span><br>
+        • <a href="https://www.coursera.org/account/accomplishments/professional-cert/certificate/UOZETYMOBH9C" target="_blank" style="color:#2997ff;">Google Data Analytics (Coursera) ↗</a><br>
+        • FULL STACK ITBA <span style="color:#eab308;">(en curso)</span>
+      </div>
+    `);
+  }
+
+  cmdCerts() {
+    this.printLine(`
+      <div style="margin: 4px 0;">
+        <span class="cyan">📜 Certificaciones Oficiales:</span><br>
+        • <span class="emerald">Google Data Analytics</span> — Certificación Profesional emitida por Google en Coursera.<br>
+        &nbsp;&nbsp;<span class="yellow">Credencial verificada:</span> <a href="https://www.coursera.org/account/accomplishments/professional-cert/certificate/UOZETYMOBH9C" target="_blank" style="color:#2997ff;">Ver Certificado Coursera ↗</a><br><br>
+        • <span class="emerald">FULL STACK ITBA</span> — Instituto Tecnológico de Buenos Aires <span style="color:#eab308;">(en curso)</span>
       </div>
     `);
   }
@@ -336,22 +359,21 @@ class InteractiveTerminal {
     this.printLine(`
       <div style="margin: 4px 0;">
         <span class="cyan">📬 Canales de Conexión Profesional:</span><br>
+        • <span class="yellow">Email:</span> <a href="mailto:alexisrojas2073@gmail.com" style="color:#2997ff;">alexisrojas2073@gmail.com</a><br>
         • <span class="yellow">LinkedIn:</span> <a href="https://www.linkedin.com/in/alexis-fernando-rojas-94922b250" target="_blank" style="color:#2997ff;">linkedin.com/in/alexis-fernando-rojas-94922b250</a><br>
-        • <span class="yellow">GitHub:</span> <a href="https://github.com/alesi01" target="_blank" style="color:#2997ff;">github.com/alesi01</a><br>
-        • <span class="yellow">Formulario:</span> Puedes dejarme un mensaje directo en la sección de contacto al final de la página.<br>
+        • <span class="yellow">GitHub:</span> <a href="https://github.com/AlexisRjs" target="_blank" style="color:#2997ff;">github.com/AlexisRjs</a><br>
+        • <span class="yellow">Formulario:</span> Puedes dejarme un mensaje directo en la sección de contacto al final de la página (se abrirá en Gmail listo para enviar).<br>
       </div>
     `);
   }
 
   cmdCV() {
-    const cvBtn = document.getElementById('download-cv-btn');
-    if (cvBtn) {
-      cvBtn.click();
-      this.printLine(`<span class="emerald">📄 Descargando Curriculum Vitae oficial de Alexis...</span>`);
-    } else {
-      window.open('assets/Alexis_Fernando_Rojas_CV.pdf', '_blank');
-      this.printLine(`<span class="emerald">📄 Abriendo Curriculum Vitae oficial de Alexis...</span>`);
-    }
+    this.printLine(`
+      <div style="margin: 4px 0;">
+        <span class="yellow">ℹ️ Información:</span> La descarga directa del CV está deshabilitada.<br>
+        Puedes consultar mis proyectos reales y código fuente en <a href="https://github.com/AlexisRjs" target="_blank" style="color:#2997ff;">github.com/AlexisRjs</a> o escribirme a través del formulario de contacto.
+      </div>
+    `);
   }
 
   cmdMern() {
