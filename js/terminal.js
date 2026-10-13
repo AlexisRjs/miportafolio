@@ -320,10 +320,10 @@ class InteractiveTerminal {
       <div style="margin: 4px 0;">
         <span class="cyan">💼 Proyectos Reales Destacados (github.com/AlexisRjs):</span><br>
         1. <span class="emerald">LibreMath — Suite de Ingeniería</span> (⭐ <em>Proyecto Principal</em>) — Rust, Tauri 2, KaTeX, D3.js y notas Markdown.<br>
-        2. <span class="emerald">Generador de Posts UPL (Flyers & OCR)</span> — Reconocimiento OCR con Python/OpenCV/FastAPI + Canvas 60fps.<br>
+        2. <span class="emerald">Plataforma E-Commerce MERN (Mueblería Hnos J)</span> — Catálogo reactivo, carrito dinámico, JWT y panel admin.<br>
         3. <span class="emerald">Auditorías Universitarias — Regional Rosario</span> — Cartografía SVG interactiva y métricas de auditoría académica.<br>
         4. <span class="emerald">Mapa Interactivo UTN FRRO</span> — Orientación institucional de aulas, secretarías y trámites.<br>
-        5. <span class="emerald">Plataforma E-Commerce MERN (Mueblería Hnos J)</span> — Catálogo reactivo, carrito dinámico, JWT y panel admin.<br>
+        5. <span class="emerald">Generador de Posts UPL (Flyers & OCR)</span> — Reconocimiento OCR con Python/OpenCV/FastAPI + Canvas 60fps.<br>
         <span class="yellow">🔗 Repositorios completos:</span> <a href="https://github.com/AlexisRjs" target="_blank" style="color:#2997ff;">github.com/AlexisRjs</a>
       </div>
     `);

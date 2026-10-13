@@ -80,10 +80,10 @@ Emulador de terminal con historial mediante flechas de navegación ($\uparrow$ /
 ## Proyectos Destacados
 
 1. **[LibreMath — Suite del Estudiante de Ingeniería](https://github.com/AlexisRjs) (*Proyecto Principal*):** Software de escritorio ultra ligero con backend nativo en Rust (Tauri 2), KaTeX para fórmulas matemáticas complejas, D3.js para grafos interactivos y notas Markdown, concebido para estudiantes de ingeniería de UTN FRRO.
-2. **[Generador de Posts UPL (Flyers y OCR)](https://github.com/AlexisRjs):** Herramienta web y backend OCR en Python (FastAPI + OpenCV + RapidOCR) con renderizado HTML5 Canvas a 60fps (1080×1920) para automatizar placas y horarios oficiales.
+2. **[Plataforma E-Commerce MERN (Mueblería Hnos J)](https://github.com/julianmuinos/Grupo_F_Comision_2_TT_Sprint_3-4_Muebleria_hnos_J):** Comercio electrónico full stack desacoplado (React, Node.js, Express, MongoDB) con catálogo interactivo, autenticación JWT y panel administrativo.
 3. **[Auditorías Universitarias — Regional Rosario](https://github.com/AlexisRjs):** Plataforma analítica con mapa vectorial interactivo de Rosario, rankings oficiales de auditoría y métricas académicas.
 4. **[Mapa Interactivo UTN FRRO](https://alexisrjs.github.io/MapaUPL-UTNFRRO/):** Aplicación web de orientación para el campus universitario (Zeballos 1341) que geolocaliza aulas, secretarías, pisos y trámites estudiantiles.
-5. **[Plataforma E-Commerce MERN (Mueblería Hnos J)](https://github.com/julianmuinos/Grupo_F_Comision_2_TT_Sprint_3-4_Muebleria_hnos_J):** Comercio electrónico full stack desacoplado (React, Node.js, Express, MongoDB) con catálogo interactivo, autenticación JWT y panel administrativo.
+5. **[Generador de Posts UPL (Flyers y OCR)](https://github.com/AlexisRjs):** Herramienta web y backend OCR en Python (FastAPI + OpenCV + RapidOCR) con renderizado HTML5 Canvas a 60fps (1080×1920) para automatizar placas y horarios oficiales.
 
 ---
 

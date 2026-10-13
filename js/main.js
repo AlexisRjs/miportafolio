@@ -297,6 +297,7 @@ const projectsData = [
     title: 'LibreMath — Suite del Estudiante de Ingeniería',
     shortDesc: 'La navaja suiza del estudiante de ingeniería (UTN FRRO): software ultra veloz y liviano con backend nativo en Rust (Tauri 2), KaTeX, D3.js, notas Markdown y grafos de conocimiento.',
     tags: ['Rust', 'Tauri 2', 'TypeScript', 'KaTeX', 'D3.js', 'Tailwind CSS'],
+    image: 'assets/libremath.png',
     visualGrad: 'linear-gradient(180deg, #182234 0%, #0c111c 100%)',
     iconSvg: `<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="8" y1="6" x2="16" y2="14"/><line x1="16" y1="6" x2="8" y2="14"/>`,
     fullDesc: 'Proyecto personal insignia desarrollado por Alexis Fernando Rojas para estudiantes de Ingeniería (UTN Rosario). Concebido tras una exhaustiva comparativa arquitectónica frente a Electron, Flet y Rust puro, implementando Tauri 2 (Rust + WebView2) para lograr un consumo mínimo de RAM (~35-70 MB), arranque en <1s, diagramación matemática KaTeX de alta fidelidad y grafos interactivos de conocimiento con D3.js.',
@@ -309,63 +310,6 @@ const projectsData = [
     ],
     liveUrl: '#',
     githubUrl: 'https://github.com/AlexisRjs/LibreMath'
-  },
-  {
-    id: 'generador-posts-upl',
-    category: 'data',
-    categoryLabel: 'Full Stack & OCR',
-    title: 'Generador de Posts UPL (Flyers & OCR)',
-    shortDesc: 'Suite web y motor OCR en Python para automatizar el diseño y exportación de historias para redes (1080×1920 px) en UTN FRRO.',
-    tags: ['Python', 'FastAPI', 'OpenCV', 'RapidOCR', 'JavaScript', 'HTML5 Canvas'],
-    visualGrad: 'linear-gradient(180deg, #1f142b 0%, #0c0814 100%)',
-    iconSvg: `<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>`,
-    fullDesc: 'Herramienta integral de automatización y diseño oficial para Universitarios por la Libertad (UTN Facultad Regional Rosario). Procesa capturas de planillas de horarios y mesas de examen extrayendo datos con visión artificial y OCR en ~0.2s, delimitando aulas, especialidades y horarios con normalización difusa contra el catálogo oficial, renderizando piezas a 60fps con HTML5 Canvas.',
-    architecture: [
-      'Backend de alta velocidad en Python con FastAPI, RapidOCR (modelos ONNX PaddleOCR v4) y OpenCV para análisis matricial de celdas',
-      'Motor de renderizado nativo sobre HTML5 Canvas a 1080×1920 px para exportación en calidad HD sin artefactos',
-      'Algoritmo de desambiguación y normalización difusa de asignaturas frente al catálogo oficial de la facultad',
-      'Soporte multi-historia automático para planillas extensas y selector interactivo por especialidad (ISI, IQ, IC, etc.)'
-    ],
-    liveUrl: 'https://generador-de-posts-upl.vercel.app',
-    githubUrl: 'https://github.com/AlexisRjs/Generador-de-posts-UPL'
-  },
-  {
-    id: 'upl-regional-rosario',
-    category: 'data',
-    categoryLabel: 'Datos & Visualización',
-    title: 'Auditorías Universitarias — Regional Rosario',
-    shortDesc: 'Plataforma analítica con mapa vectorial interactivo de Rosario, rankings oficiales de auditoría y métricas de retención para la UNR.',
-    tags: ['JavaScript', 'SVG Interactivo', 'Data Visualization', 'CSS Glassmorphism'],
-    visualGrad: 'linear-gradient(180deg, #141b2b 0%, #070913 100%)',
-    iconSvg: `<path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/>`,
-    fullDesc: 'Plataforma interactiva de auditoría académica desarrollada para Universitarios por la Libertad Regional Rosario. Visualiza datos críticos de la Universidad Nacional de Rosario (UNR): tasa de graduación por cohorte, padrones de alumnos activos, costo por graduado efectivo y geolocalización de facultades e institutos mediante cartografía vectorial SVG personalizada.',
-    architecture: [
-      'Cartografía interactiva en SVG con delimitación de la costa del Río Paraná, cuadrícula de Rosario y nodos académicos',
-      'Visualización y ranking de métricas oficiales de auditoría con comparativas regionales y nacionales',
-      'Interfaz glassmorphism de alto contraste y animaciones sutiles para maximizar la legibilidad de datos',
-      'Desarrollo modular en JavaScript nativo optimizado para fluidez total a 60fps'
-    ],
-    liveUrl: 'https://alexisrjs.github.io/UPLregionalRosario/',
-    githubUrl: 'https://github.com/AlexisRjs/UPLregionalRosario'
-  },
-  {
-    id: 'mapa-upl-utnfrro',
-    category: 'mern',
-    categoryLabel: 'Campus Web App',
-    title: 'Mapa Interactivo UTN FRRO',
-    shortDesc: 'Aplicación web interactiva que geolocaliza secretarías, dependencias, pisos, aulas y trámites clave para la comunidad de la UTN Rosario.',
-    tags: ['JavaScript', 'HTML5', 'CSS3 Moderno', 'Campus UX'],
-    visualGrad: 'linear-gradient(180deg, #181922 0%, #0b0c12 100%)',
-    iconSvg: `<polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/>`,
-    fullDesc: 'Herramienta digital de orientación institucional para estudiantes y docentes de la UTN FRRO (Zeballos 1341). Ofrece ubicación directa de aulas de examen, secretarías (SAU, SeCyT, Académica, Administrativa), horarios de conmutador y trámites universitarios, eliminando la desorientación en los pasillos de la facultad.',
-    architecture: [
-      'Organización jerárquica de sedes, pisos y secretarías con datos actualizados de contacto y horarios',
-      'Filtros instantáneos por área de gestión y trámites estudiantiles',
-      'Diseño responsivo optimizado para navegación veloz en teléfonos inteligentes',
-      'Carga ultrarrápida sin librerías pesadas externas'
-    ],
-    liveUrl: 'https://alexisrjs.github.io/MapaUPL-UTNFRRO/',
-    githubUrl: 'https://github.com/AlexisRjs/MapaUPL-UTNFRRO'
   },
   {
     id: 'ecommerce-mern',
@@ -386,6 +330,66 @@ const projectsData = [
     ],
     liveUrl: '#',
     githubUrl: 'https://github.com/julianmuinos/Grupo_F_Comision_2_TT_Sprint_3-4_Muebleria_hnos_J'
+  },
+  {
+    id: 'upl-regional-rosario',
+    category: 'data',
+    categoryLabel: 'Datos & Visualización',
+    title: 'Auditorías Universitarias — Regional Rosario',
+    shortDesc: 'Plataforma analítica con mapa vectorial interactivo de Rosario, rankings oficiales de auditoría y métricas de retención para la UNR.',
+    tags: ['JavaScript', 'SVG Interactivo', 'Data Visualization', 'CSS Glassmorphism'],
+    image: 'assets/auditorias%20universitarias.png',
+    visualGrad: 'linear-gradient(180deg, #141b2b 0%, #070913 100%)',
+    iconSvg: `<path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/>`,
+    fullDesc: 'Plataforma interactiva de auditoría académica desarrollada para Universitarios por la Libertad Regional Rosario. Visualiza datos críticos de la Universidad Nacional de Rosario (UNR): tasa de graduación por cohorte, padrones de alumnos activos, costo por graduado efectivo y geolocalización de facultades e institutos mediante cartografía vectorial SVG personalizada.',
+    architecture: [
+      'Cartografía interactiva en SVG con delimitación de la costa del Río Paraná, cuadrícula de Rosario y nodos académicos',
+      'Visualización y ranking de métricas oficiales de auditoría con comparativas regionales y nacionales',
+      'Interfaz glassmorphism de alto contraste y animaciones sutiles para maximizar la legibilidad de datos',
+      'Desarrollo modular en JavaScript nativo optimizado para fluidez total a 60fps'
+    ],
+    liveUrl: 'https://alexisrjs.github.io/UPLregionalRosario/',
+    githubUrl: 'https://github.com/AlexisRjs/UPLregionalRosario'
+  },
+  {
+    id: 'mapa-upl-utnfrro',
+    category: 'mern',
+    categoryLabel: 'Campus Web App',
+    title: 'Mapa Interactivo UTN FRRO',
+    shortDesc: 'Aplicación web interactiva que geolocaliza secretarías, dependencias, pisos, aulas y trámites clave para la comunidad de la UTN Rosario.',
+    tags: ['JavaScript', 'HTML5', 'CSS3 Moderno', 'Campus UX'],
+    image: 'assets/mata%20utnfrro.png',
+    visualGrad: 'linear-gradient(180deg, #181922 0%, #0b0c12 100%)',
+    iconSvg: `<polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/>`,
+    fullDesc: 'Herramienta digital de orientación institucional para estudiantes y docentes de la UTN FRRO (Zeballos 1341). Ofrece ubicación directa de aulas de examen, secretarías (SAU, SeCyT, Académica, Administrativa), horarios de conmutador y trámites universitarios, eliminando la desorientación en los pasillos de la facultad.',
+    architecture: [
+      'Organización jerárquica de sedes, pisos y secretarías con datos actualizados de contacto y horarios',
+      'Filtros instantáneos por área de gestión y trámites estudiantiles',
+      'Diseño responsivo optimizado para navegación veloz en teléfonos inteligentes',
+      'Carga ultrarrápida sin librerías pesadas externas'
+    ],
+    liveUrl: 'https://alexisrjs.github.io/MapaUPL-UTNFRRO/',
+    githubUrl: 'https://github.com/AlexisRjs/MapaUPL-UTNFRRO'
+  },
+  {
+    id: 'generador-posts-upl',
+    category: 'data',
+    categoryLabel: 'Full Stack & OCR',
+    title: 'Generador de Posts UPL (Flyers & OCR)',
+    shortDesc: 'Suite web y motor OCR en Python para automatizar el diseño y exportación de historias para redes (1080×1920 px) en UTN FRRO.',
+    tags: ['Python', 'FastAPI', 'OpenCV', 'RapidOCR', 'JavaScript', 'HTML5 Canvas'],
+    image: 'assets/generador%20de%20posts%20instagram.png',
+    visualGrad: 'linear-gradient(180deg, #1f142b 0%, #0c0814 100%)',
+    iconSvg: `<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>`,
+    fullDesc: 'Herramienta integral de automatización y diseño oficial para Universitarios por la Libertad (UTN Facultad Regional Rosario). Procesa capturas de planillas de horarios y mesas de examen extrayendo datos con visión artificial y OCR en ~0.2s, delimitando aulas, especialidades y horarios con normalización difusa contra el catálogo oficial, renderizando piezas a 60fps con HTML5 Canvas.',
+    architecture: [
+      'Backend de alta velocidad en Python con FastAPI, RapidOCR (modelos ONNX PaddleOCR v4) y OpenCV para análisis matricial de celdas',
+      'Motor de renderizado nativo sobre HTML5 Canvas a 1080×1920 px para exportación en calidad HD sin artefactos',
+      'Algoritmo de desambiguación y normalización difusa de asignaturas frente al catálogo oficial de la facultad',
+      'Soporte multi-historia automático para planillas extensas y selector interactivo por especialidad (ISI, IQ, IC, etc.)'
+    ],
+    liveUrl: 'https://generador-de-posts-upl.vercel.app',
+    githubUrl: 'https://github.com/AlexisRjs/Generador-de-posts-UPL'
   }
 ];
 
