@@ -10,8 +10,8 @@ class LanyardBadge {
     if (!this.container) return;
 
     this.options = {
-      githubUrl: options.githubUrl || 'https://github.com/alesi01',
-      githubUsername: options.githubUsername || 'alesi01',
+      githubUrl: options.githubUrl || 'https://github.com/AlexisRjs',
+      githubUsername: options.githubUsername || 'AlexisRjs',
       linkedinUrl: options.linkedinUrl || 'https://www.linkedin.com/in/alexis-fernando-rojas-94922b250',
       avatarUrl: options.avatarUrl || 'assets/alexis-profile.png',
       badgeTitle: options.badgeTitle || 'Alexis',

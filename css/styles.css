@@ -1503,19 +1503,29 @@ section {
 
 .contact-item {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 14px;
 }
 
 .contact-item-icon {
   width: 44px;
   height: 44px;
+  flex-shrink: 0;
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--border-subtle);
   display: grid;
   place-items: center;
   color: var(--text-primary);
+  margin-top: 2px;
+}
+
+.contact-item a {
+  transition: color var(--transition-fast);
+}
+
+.contact-item a:hover {
+  color: var(--accent-primary) !important;
 }
 
 .contact-form-col {
