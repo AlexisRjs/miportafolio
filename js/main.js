@@ -676,7 +676,7 @@ function setupContactForm() {
 
       triggerConfetti();
       if (window.soundEngine) window.soundEngine.playSuccess();
-      showToast('📬 Abriendo Gmail para enviar tu propuesta a alexisrojas2073@gmail.com');
+      showToast('📬 Abriendo Gmail para redactar tu propuesta...');
 
       if (submitBtn) {
         submitBtn.innerHTML = `✓ Redirigido a Gmail`;
