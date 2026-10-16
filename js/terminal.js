@@ -208,7 +208,7 @@ class InteractiveTerminal {
         &nbsp;&nbsp;<span class="red" style="font-weight:800;">sabotear</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 💥 Derrumbe visual completo de la página hacia abajo (3s auto-repair).<br>
         &nbsp;&nbsp;<em>(Alias: "sabotear codigo", "sabotage", "destruir")</em><br><br>
         <span class="yellow" style="text-decoration:underline;">🎮 DIVERSIÓN & EASTER EGGS (15+ comandos):</span><br>
-        &nbsp;&nbsp;<span class="emerald">antigravity</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- ⚡ Pulso y ondas de choque cuánticas en el canvas.<br>
+        &nbsp;&nbsp;<span class="emerald">antigravity</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- ⚡ Pulso dinámico y ondas en el canvas de partículas.<br>
         &nbsp;&nbsp;<span class="emerald">matrix</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 💻 Lluvia digital de glifos estilo Matrix.<br>
         &nbsp;&nbsp;<span class="emerald">hack</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 🔓 Simulación de bypass de seguridad perimetral.<br>
         &nbsp;&nbsp;<span class="emerald">coffee</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- ☕ Prepara un espresso doble para compilar sin parar.<br>
@@ -220,7 +220,7 @@ class InteractiveTerminal {
         &nbsp;&nbsp;<span class="emerald">git</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 🌿 Estado actual del repositorio git mental.<br>
         &nbsp;&nbsp;<span class="emerald">dance</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 💃 Un robot danzante celebrando el deploy.<br>
         &nbsp;&nbsp;<span class="emerald">weather</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 🌤️ Pronóstico del tiempo en localhost:3000.<br>
-        &nbsp;&nbsp;<span class="emerald">calc [expr]</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 🧮 Calculadora cuántica (ej: calc 42 * 2).<br>
+        &nbsp;&nbsp;<span class="emerald">calc [expr]</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 🧮 Calculadora en terminal (ej: calc 42 * 2).<br>
         &nbsp;&nbsp;<span class="emerald">ping</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 🏓 Test de latencia y estado de servicios.<br>
         &nbsp;&nbsp;<span class="emerald">whoami</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 👤 Muestra tu rol e identidad de sesión.<br>
         &nbsp;&nbsp;<span class="emerald">sudo</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 🛡️ Intenta ejecutar como superusuario root.<br>
@@ -297,7 +297,7 @@ class InteractiveTerminal {
         this.isSabotaging = false;
       }, 950);
 
-      this.printLine(`<span class="emerald" style="font-weight:700;">✨ [AUTO-HEAL] Reconstrucción cuántica completada. El código está 100% a salvo y en perfecto estado.</span>`);
+      this.printLine(`<span class="emerald" style="font-weight:700;">✨ [RESTAURACIÓN] Interfaz reensamblada con éxito. Todos los elementos volvieron a su posición original.</span>`);
       if (window.soundEngine) window.soundEngine.playSuccess();
     }, 3000);
   }
@@ -412,12 +412,12 @@ class InteractiveTerminal {
   }
 
   cmdHack() {
-    this.printLine(`<span class="emerald">Iniciando protocolo de bypass en puertos cuánticos...</span>`);
+    this.printLine(`<span class="emerald">Iniciando protocolo de bypass en puertos del sistema...</span>`);
     const steps = [
       'Inyectando payloads en el servidor proxy...',
       'Bypasseando cortafuegos perimetral [AES-256 OK]...',
-      'Accediendo al mainframe de Alexis...',
-      '🔓 ACCESS GRANTED: Bienvenido al núcleo cuántico del portafolio.'
+      'Accediendo al panel de administración de Alexis...',
+      '🔓 ACCESS GRANTED: Bienvenido al entorno interactivo del portafolio.'
     ];
 
     steps.forEach((msg, idx) => {
@@ -579,7 +579,7 @@ class InteractiveTerminal {
   }
 
   cmdAntigravity() {
-    this.printLine(`<span class="violet">⚡ [QUANTUM_FLUX_ENABLED] Desencadenando pulso de antigravedad cuántico...</span>`);
+    this.printLine(`<span class="violet">⚡ [PARTICLE_PULSE] Desencadenando pulso reactivo en el canvas de partículas...</span>`);
     if (window.antigravityInstance) {
       for (let i = 0; i < 5; i++) {
         setTimeout(() => {
@@ -602,7 +602,7 @@ class InteractiveTerminal {
   }
 
   cmdMatrix() {
-    this.printLine(`<span class="emerald">Iniciando decodificación del buffer cuántico...</span>`);
+    this.printLine(`<span class="emerald">Iniciando decodificación de buffer en pantalla...</span>`);
     const glyphs = '01ABCDEFΩΨ∑∏∆∇≈≠≤≥λπ§±';
     for (let i = 0; i < 4; i++) {
       setTimeout(() => {
