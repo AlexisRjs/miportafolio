@@ -4,12 +4,7 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. Initialize Antigravity Canvas
-  if (document.getElementById('antigravity-canvas')) {
-    window.antigravityInstance = new AntigravityEngine('antigravity-canvas');
-  }
-
-  // 2. Initialize 3D Tilt Cards
+  // 1. Initialize 3D Tilt Cards
   if (window.TiltCardController) {
     new TiltCardController();
   }
@@ -20,6 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
       githubUrl: 'https://github.com/AlexisRjs',
       githubUsername: 'AlexisRjs',
       linkedinUrl: 'https://www.linkedin.com/in/alexis-fernando-rojas-94922b250',
+      instagramUrl: 'https://instagram.com/alexisrojas.1',
+      instagramUsername: 'alexisrojas.1',
       avatarUrl: 'assets/alexis-profile.png',
       badgeTitle: 'Alexis',
       badgeRole: 'Full Stack & Data Analyst'

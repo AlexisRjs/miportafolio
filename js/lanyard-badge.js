@@ -13,6 +13,8 @@ class LanyardBadge {
       githubUrl: options.githubUrl || 'https://github.com/AlexisRjs',
       githubUsername: options.githubUsername || 'AlexisRjs',
       linkedinUrl: options.linkedinUrl || 'https://www.linkedin.com/in/alexis-fernando-rojas-94922b250',
+      instagramUrl: options.instagramUrl || 'https://instagram.com/alexisrojas.1',
+      instagramUsername: options.instagramUsername || 'alexisrojas.1',
       avatarUrl: options.avatarUrl || 'assets/alexis-profile.png',
       badgeTitle: options.badgeTitle || 'Alexis',
       badgeRole: options.badgeRole || 'Full Stack & Data Analyst',
@@ -49,7 +51,7 @@ class LanyardBadge {
           <div class="lanyard-ring"></div>
           <div class="lanyard-hook"></div>
         </div>
-        <div class="lanyard-card" id="lanyard-card" title="Arrastra el badge o haz clic para interactuar">
+        <div class="lanyard-card" id="lanyard-card" title="Arrastra el badge o interactúa con los enlaces">
           <div class="card-sheen" id="lanyard-sheen"></div>
           <div class="badge-hole"></div>
           <div class="badge-inner">
@@ -86,17 +88,18 @@ class LanyardBadge {
                   </svg>
                   <span>linkedin.com/in/alexis-rojas</span>
                 </a>
-              </div>
-            </div>
 
-            <div class="badge-bottom-bar">
-              <div class="badge-barcode">
-                <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                <a href="${this.options.instagramUrl}" target="_blank" rel="noopener" class="badge-social-pill instagram" title="Abrir Instagram">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
+                  <span>@${this.options.instagramUsername}</span>
+                </a>
               </div>
-              <span class="badge-nfc-label">PASS_2026 // PRO</span>
             </div>
           </div>
-          <div class="lanyard-drag-hint">Drag me!</div>
         </div>
       </div>
     `;

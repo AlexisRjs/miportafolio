@@ -13,106 +13,65 @@ class InteractiveTerminal {
     this.historyIndex = -1;
     this.isSabotaging = false;
 
-    // Command registry with extensive aliases & Spanish support
+    // Command registry restricted strictly to the user's requested set
     this.commands = {
-      // Core Portfolio & Info
-      help: () => this.cmdHelp(),
-      ayuda: () => this.cmdHelp(),
-      comandos: () => this.cmdHelp(),
-
-      skills: () => this.cmdSkills(),
-      habilidades: () => this.cmdSkills(),
-      tecnologias: () => this.cmdSkills(),
-
-      projects: () => this.cmdProjects(),
-      proyectos: () => this.cmdProjects(),
-
-      bio: () => this.cmdBio(),
-      about: () => this.cmdBio(),
-      sobremi: () => this.cmdBio(),
-      formacion: () => this.cmdBio(),
-      educacion: () => this.cmdBio(),
-
-      certs: () => this.cmdCerts(),
-      certificaciones: () => this.cmdCerts(),
-
-      contact: () => this.cmdContact(),
-      contacto: () => this.cmdContact(),
-      email: () => this.cmdContact(),
-
-      cv: () => this.cmdCV(),
-      curriculum: () => this.cmdCV(),
-      descargar: () => this.cmdCV(),
-
-      mern: () => this.cmdMern(),
-      stack: () => this.cmdMern(),
-      arquitectura: () => this.cmdMern(),
-
-      // Sabotear Código (Visual Physics Collapse for 3 seconds)
+      // 1. Sabotear Código
       sabotear: () => this.cmdSabotage(),
       'sabotear codigo': () => this.cmdSabotage(),
       'sabotear-codigo': () => this.cmdSabotage(),
-      sabotage: () => this.cmdSabotage(),
-      destruir: () => this.cmdSabotage(),
-      colapsar: () => this.cmdSabotage(),
-      crash: () => this.cmdSabotage(),
 
-      // Fun & Easter Eggs
-      antigravity: () => this.cmdAntigravity(),
-      antigravedad: () => this.cmdAntigravity(),
+      // 2. Help
+      help: () => this.cmdHelp(),
+      ayuda: () => this.cmdHelp(),
 
-      matrix: () => this.cmdMatrix(),
+      // 3. Skills
+      skills: () => this.cmdSkills(),
+      habilidades: () => this.cmdSkills(),
 
+      // 4. Projects
+      projects: () => this.cmdProjects(),
+      proyectos: () => this.cmdProjects(),
+
+      // 5. Bio
+      bio: () => this.cmdBio(),
+      about: () => this.cmdBio(),
+      sobremi: () => this.cmdBio(),
+
+      // 6. Contact
+      contact: () => this.cmdContact(),
+      contacto: () => this.cmdContact(),
+
+      // 7. MERN
+      mern: () => this.cmdMern(),
+      stack: () => this.cmdMern(),
+
+      // 8. Hack Your Computer (Interactive 3-second full-screen Matrix scare prank)
+      'hack your computer': () => this.cmdHack(),
       hack: () => this.cmdHack(),
 
-      coffee: () => this.cmdCoffee(),
-      cafe: () => this.cmdCoffee(),
-
-      sudo: () => this.cmdSudo(),
-      'sudo rm -rf': () => this.cmdSudo(),
-
+      // 9. Joke
       joke: () => this.cmdJoke(),
       chiste: () => this.cmdJoke(),
 
+      // 10. Quote (en español)
       quote: () => this.cmdQuote(),
       frase: () => this.cmdQuote(),
 
-      cat: () => this.cmdCat(),
-      gato: () => this.cmdCat(),
-
-      roll: () => this.cmdRoll(),
-      dado: () => this.cmdRoll(),
-
+      // 11. Ping
       ping: () => this.cmdPing(),
-      status: () => this.cmdPing(),
 
-      whoami: () => this.cmdWhoami(),
-
-      rickroll: () => this.cmdRickroll(),
-      rick: () => this.cmdRickroll(),
-
-      git: () => this.cmdGit(),
-      commit: () => this.cmdGit(),
-
-      dance: () => this.cmdDance(),
-      bailar: () => this.cmdDance(),
-
-      weather: () => this.cmdWeather(),
-      clima: () => this.cmdWeather(),
-
-      calc: (raw) => this.cmdCalc(raw),
-      calculadora: (raw) => this.cmdCalc(raw),
-
+      // 12. Secret
       secret: () => this.cmdSecret(),
       secreto: () => this.cmdSecret(),
-      easteregg: () => this.cmdSecret(),
 
-      // System Controls
+      // 13. Theme
       theme: () => this.cmdTheme(),
       tema: () => this.cmdTheme(),
 
+      // 14. Clear
       clear: () => this.cmdClear(),
-      cls: () => this.cmdClear()
+      cls: () => this.cmdClear(),
+      limpiar: () => this.cmdClear()
     };
 
     this.init();
@@ -173,7 +132,6 @@ class InteractiveTerminal {
     const rawTrim = cmdText.trim();
     if (!rawTrim) return;
 
-    // Normalize accents and convert to lowercase
     const normalized = rawTrim
       .toLowerCase()
       .normalize("NFD")
@@ -189,45 +147,31 @@ class InteractiveTerminal {
     } else if (this.commands[mainCmd]) {
       this.commands[mainCmd](rawTrim);
     } else {
-      this.printLine(`<span style="color:#ef4444;">Comando no reconocido: "${this.escapeHTML(rawTrim)}". Escribe <span class="cyan">help</span> para ver los más de 25 comandos disponibles.</span>`);
+      this.printLine(`<span style="color:#ef4444;">Comando no reconocido: "${this.escapeHTML(rawTrim)}". Escribe <span class="cyan">help</span> para ver los comandos disponibles.</span>`);
     }
   }
 
   cmdHelp() {
     this.printLine(`
-      <div style="margin: 6px 0; line-height: 1.6;">
-        <span class="cyan" style="font-weight:700;">🖥️ COMANDOS DISPONIBLES EN ALEXIS-SH (25+):</span><br><br>
-        <span class="yellow" style="text-decoration:underline;">🛠️ INFORMACIÓN & PERFIL:</span><br>
-        &nbsp;&nbsp;<span class="emerald">skills</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Stack tecnológico (MERN + Análisis con Python & Power BI).<br>
-        &nbsp;&nbsp;<span class="emerald">projects</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Catálogo de proyectos y soluciones escalables.<br>
-        &nbsp;&nbsp;<span class="emerald">bio</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Formación académica en Sistemas (UTN FRRO, ITBA).<br>
-        &nbsp;&nbsp;<span class="emerald">certs</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Certificaciones (Google Data Analytics, ITBA).<br>
-        &nbsp;&nbsp;<span class="emerald">contact</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Enlaces profesionales (LinkedIn, GitHub, Formulario).<br>
-        &nbsp;&nbsp;<span class="emerald">mern</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Diagrama ASCII de la arquitectura full stack.<br><br>
-        <span class="yellow" style="text-decoration:underline;">💥 EFECTO ESPECIAL DESTACADO:</span><br>
-        &nbsp;&nbsp;<span class="red" style="font-weight:800;">sabotear</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 💥 Derrumbe visual completo de la página hacia abajo (3s auto-repair).<br>
-        &nbsp;&nbsp;<em>(Alias: "sabotear codigo", "sabotage", "destruir")</em><br><br>
-        <span class="yellow" style="text-decoration:underline;">🎮 DIVERSIÓN & EASTER EGGS (15+ comandos):</span><br>
-        &nbsp;&nbsp;<span class="emerald">antigravity</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- ⚡ Pulso dinámico y ondas en el canvas de partículas.<br>
-        &nbsp;&nbsp;<span class="emerald">matrix</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 💻 Lluvia digital de glifos estilo Matrix.<br>
-        &nbsp;&nbsp;<span class="emerald">hack</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 🔓 Simulación de bypass de seguridad perimetral.<br>
-        &nbsp;&nbsp;<span class="emerald">coffee</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- ☕ Prepara un espresso doble para compilar sin parar.<br>
-        &nbsp;&nbsp;<span class="emerald">joke</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 😄 Chistes clásicos de programadores y bugs.<br>
-        &nbsp;&nbsp;<span class="emerald">quote</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 💡 Citas inspiradoras de leyendas del software.<br>
-        &nbsp;&nbsp;<span class="emerald">cat</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 🐱 Un gato ASCII durmiendo sobre el teclado.<br>
-        &nbsp;&nbsp;<span class="emerald">roll</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 🎲 Lanza un dado d20 para probar tu suerte en prod.<br>
-        &nbsp;&nbsp;<span class="emerald">rickroll</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 🕺 Un homenaje legendario a Rick Astley.<br>
-        &nbsp;&nbsp;<span class="emerald">git</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 🌿 Estado actual del repositorio git mental.<br>
-        &nbsp;&nbsp;<span class="emerald">dance</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 💃 Un robot danzante celebrando el deploy.<br>
-        &nbsp;&nbsp;<span class="emerald">weather</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 🌤️ Pronóstico del tiempo en localhost:3000.<br>
-        &nbsp;&nbsp;<span class="emerald">calc [expr]</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 🧮 Calculadora en terminal (ej: calc 42 * 2).<br>
-        &nbsp;&nbsp;<span class="emerald">ping</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 🏓 Test de latencia y estado de servicios.<br>
-        &nbsp;&nbsp;<span class="emerald">whoami</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 👤 Muestra tu rol e identidad de sesión.<br>
-        &nbsp;&nbsp;<span class="emerald">sudo</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 🛡️ Intenta ejecutar como superusuario root.<br>
-        &nbsp;&nbsp;<span class="emerald">secret</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 🤫 Guía de secretos y trucos ocultos en la web.<br><br>
-        <span class="yellow" style="text-decoration:underline;">⚙️ SISTEMA:</span><br>
-        &nbsp;&nbsp;<span class="emerald">theme</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Alterna el tema Dark / Light.<br>
-        &nbsp;&nbsp;<span class="emerald">clear</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Limpia la pantalla de la terminal.
+      <div style="margin: 4px 0; line-height: 1.6; font-family: monospace;">
+        <span class="cyan" style="font-weight:700;">COMANDOS DISPONIBLES:</span><br><br>
+        <span class="yellow">[PERFIL & CODIGO]</span><br>
+        &nbsp;&nbsp;<span class="emerald">skills</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Stack tecnologico y herramientas de desarrollo.<br>
+        &nbsp;&nbsp;<span class="emerald">projects</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lista de proyectos y enlaces a repositorios.<br>
+        &nbsp;&nbsp;<span class="emerald">bio</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Educacion formal y certificaciones profesionales.<br>
+        &nbsp;&nbsp;<span class="emerald">contact</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Informacion de contacto y perfiles tecnicos.<br>
+        &nbsp;&nbsp;<span class="emerald">mern</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Diagrama de flujo del Stack MERN.<br><br>
+        <span class="yellow">[INTERACCION]</span><br>
+        &nbsp;&nbsp;<span class="red" style="font-weight:700;">sabotear codigo</span>&nbsp;&nbsp;&nbsp;Colapso de CSS y autoreconstruccion en 3s.<br>
+        &nbsp;&nbsp;<span class="emerald" style="font-weight:700;">hack your computer</span>&nbsp;Simulacion de pantalla azul (BSOD) en pantalla completa durante 3s.<br>
+        &nbsp;&nbsp;<span class="emerald">joke</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Chiste de programacion.<br>
+        &nbsp;&nbsp;<span class="emerald">quote</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cita tecnica en español.<br>
+        &nbsp;&nbsp;<span class="emerald">ping</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Latencia de red simulada hacia localhost.<br>
+        &nbsp;&nbsp;<span class="emerald">secret</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Detalles de implementacion interactiva.<br><br>
+        <span class="yellow">[SISTEMA]</span><br>
+        &nbsp;&nbsp;<span class="emerald">theme</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Alterna entre modo oscuro y claro.<br>
+        &nbsp;&nbsp;<span class="emerald">clear</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Limpia el buffer de la terminal.<br>
+        &nbsp;&nbsp;<span class="emerald">help</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Muestra este manual de ayuda.
       </div>
     `);
   }
@@ -236,15 +180,12 @@ class InteractiveTerminal {
     if (this.isSabotaging) return;
     this.isSabotaging = true;
 
-    this.printLine(`<span style="color:#ef4444; font-weight:800; font-size:1.05rem;">💥 [CRITICAL FAILURE] ¡SABOTAJE ACTIVADO!</span>`);
-    this.printLine(`<span style="color:#f87171;">Toda la página entera se derrumba hacia abajo... Redirigiendo al inicio para presenciar el colapso.</span>`);
+    this.printLine(`<span style="color:#ef4444; font-weight:700;">[SABOTAGE] Ejecutando colapso visual de nodos del DOM...</span>`);
 
     if (window.soundEngine) window.soundEngine.playClick();
 
-    // Automatically send the user to the beginning (hero) to watch the entire collapse
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    // Select all visual modules across the page (outside the terminal)
     const targetSelectors = [
       '#navbar',
       '#hero .hero-content',
@@ -263,7 +204,6 @@ class InteractiveTerminal {
     const elements = document.querySelectorAll(targetSelectors);
     document.body.classList.add('sabotage-mode');
 
-    // Assign randomized tumble directions via pure CSS classes
     const fallClasses = ['sabotage-fall-left', 'sabotage-fall-right', 'sabotage-fall-center'];
     elements.forEach((el, index) => {
       el.classList.remove('sabotage-fall-left', 'sabotage-fall-right', 'sabotage-fall-center', 'sabotage-rebuilding');
@@ -275,11 +215,10 @@ class InteractiveTerminal {
     const interval = setInterval(() => {
       count--;
       if (count > 0) {
-        this.printLine(`<span style="color:#f97316;">⏱️ Reensamblando módulos en ${count}s...</span>`);
+        this.printLine(`<span style="color:#f97316;">[RESTORE] Restaurando componentes en ${count}s...</span>`);
       }
     }, 900);
 
-    // Exactly at 3.0s: Trigger smooth spring rebuild animation
     setTimeout(() => {
       clearInterval(interval);
 
@@ -288,7 +227,6 @@ class InteractiveTerminal {
         el.classList.add('sabotage-rebuilding');
       });
 
-      // At 3.95s: Remove all animation classes so elements return 100% to natural DOM state
       setTimeout(() => {
         elements.forEach((el) => {
           el.classList.remove('sabotage-rebuilding');
@@ -297,84 +235,61 @@ class InteractiveTerminal {
         this.isSabotaging = false;
       }, 950);
 
-      this.printLine(`<span class="emerald" style="font-weight:700;">✨ [RESTAURACIÓN] Interfaz reensamblada con éxito. Todos los elementos volvieron a su posición original.</span>`);
+      this.printLine(`<span class="emerald" style="font-weight:700;">[RESTORE_OK] Interfaz restaurada. Estado del DOM restablecido.</span>`);
       if (window.soundEngine) window.soundEngine.playSuccess();
     }, 3000);
   }
 
   cmdSkills() {
     this.printLine(`
-      <div style="margin: 4px 0;">
-        <span class="cyan">🚀 Habilidades & Tecnologías Principales:</span><br>
-        • <span class="violet">Stack MERN:</span> JavaScript (ES6+), React, Node.js, Express.js, MongoDB (Mongoose).<br>
-        • <span class="violet">Análisis de Datos:</span> Python (Pandas, NumPy), Microsoft Power BI, SQL, DAX, Modelado de Negocios.<br>
-        • <span class="violet">Bases de Datos & APIs:</span> MongoDB (NoSQL), SQL (PostgreSQL/MySQL), RESTful APIs, Autenticación JWT.<br>
-        • <span class="violet">Herramientas & Entornos:</span> Git, GitHub, Visual Studio Code, Postman, Excel Avanzado.<br>
-        • <span class="violet">Ingeniería en Sistemas:</span> Patrones de diseño, SOLID, clean architecture y metodologías ágiles.
+      <div style="margin: 4px 0; font-family: monospace;">
+        <span class="cyan">[SKILLS] Tecnologias Principales:</span><br>
+        - <span class="violet">Stack MERN:</span> JavaScript (ES6+), React, Node.js, Express.js, MongoDB.<br>
+        - <span class="violet">Analitica:</span> Python (Pandas, NumPy), Power BI, SQL, DAX.<br>
+        - <span class="violet">Bases de datos & APIs:</span> MongoDB (NoSQL), PostgreSQL, MySQL, REST APIs, JWT.<br>
+        - <span class="violet">Herramientas:</span> Git, GitHub, VS Code, Postman, Linux.<br>
+        - <span class="violet">Ingenieria de Software:</span> Patrones de diseño, SOLID, clean code y Scrum.
       </div>
     `);
   }
 
   cmdProjects() {
     this.printLine(`
-      <div style="margin: 4px 0;">
-        <span class="cyan">💼 Proyectos Reales Destacados (github.com/AlexisRjs):</span><br>
-        1. <span class="emerald">LibreMath — Suite de Ingeniería</span> (⭐ <em>Proyecto Principal</em>) — Rust, Tauri 2, KaTeX, D3.js y notas Markdown.<br>
-        2. <span class="emerald">Plataforma E-Commerce MERN (Mueblería Hnos J)</span> — Catálogo reactivo, carrito dinámico, JWT y panel admin.<br>
-        3. <span class="emerald">Auditorías Universitarias — Regional Rosario</span> — Cartografía SVG interactiva y métricas de auditoría académica.<br>
-        4. <span class="emerald">Mapa Interactivo UTN FRRO</span> — Orientación institucional de aulas, secretarías y trámites.<br>
-        5. <span class="emerald">Generador de Posts UPL (Flyers & OCR)</span> — Reconocimiento OCR con Python/OpenCV/FastAPI + Canvas 60fps.<br>
-        <span class="yellow">🔗 Repositorios completos:</span> <a href="https://github.com/AlexisRjs" target="_blank" style="color:#2997ff;">github.com/AlexisRjs</a>
+      <div style="margin: 4px 0; font-family: monospace;">
+        <span class="cyan">[PROJECTS] Proyectos Reales:</span><br>
+        1. <span class="emerald">LibreMath:</span> Suite de ingenieria en Rust, Tauri 2, KaTeX y D3.js.<br>
+        2. <span class="emerald">E-Commerce MERN:</span> Plataforma comercial completa con catalogo, carrito y auth JWT.<br>
+        3. <span class="emerald">Auditorias Regional Rosario:</span> Cartografia SVG interactiva y dashboard analitico.<br>
+        4. <span class="emerald">Mapa Interactivo UTN FRRO:</span> Guia institucional y ubicacion de dependencias.<br>
+        5. <span class="emerald">Generador de Posts UPL:</span> Pipeline de OCR con Python/OpenCV/FastAPI + Canvas.<br>
+        <span class="yellow">Codigo fuente disponible en:</span> <a href="https://github.com/AlexisRjs" target="_blank" style="color:#2997ff;">github.com/AlexisRjs</a>
       </div>
     `);
   }
 
   cmdBio() {
     this.printLine(`
-      <div style="margin: 4px 0;">
-        <span class="cyan">👨‍💻 Alexis Fernando Rojas — Full Stack Developer & Analista de Datos</span><br>
-        Estudiante de Ingeniería en Sistemas enfocado en soluciones de alto rendimiento con el <strong>Stack MERN</strong> (MongoDB, Express, React, Node.js), Tauri/Rust y analítica con <strong>Python</strong> & <strong>Power BI</strong>.<br><br>
-        <span class="yellow">🎓 Formación:</span><br>
-        • <a href="https://www.frro.utn.edu.ar/" target="_blank" style="color:#2997ff;">UTN FRRO</a> — Estudiante de Ingeniería en Sistemas de Información<br>
-        • <a href="https://www.itba.edu.ar/" target="_blank" style="color:#2997ff;">ITBA</a> — Instituto Tecnológico de Buenos Aires<br><br>
-        <span class="yellow">📜 Certificaciones:</span><br>
-        • <a href="https://www.coursera.org/account/accomplishments/professional-cert/certificate/UOZETYMOBH9C" target="_blank" style="color:#2997ff;">Google Data Analytics (v2) (Coursera) ↗</a><br>
-        • <a href="https://www.credly.com/badges/7187c248-fe57-402d-a017-b72be71df51d/public_url" target="_blank" style="color:#2997ff;">Google Data Analytics (v.3) (Credly) ↗</a><br>
-        • FULL STACK ITBA <span style="color:#eab308;">(en curso)</span>
-      </div>
-    `);
-  }
-
-  cmdCerts() {
-    this.printLine(`
-      <div style="margin: 4px 0;">
-        <span class="cyan">📜 Certificaciones Profesionales Oficiales:</span><br>
-        • <span class="emerald">Google Data Analytics (v2)</span> — Emitido por Google / Coursera (10 Jul 2025).<br>
-        &nbsp;&nbsp;<span class="yellow">Credencial verificada:</span> <a href="https://www.coursera.org/account/accomplishments/professional-cert/certificate/UOZETYMOBH9C" target="_blank" style="color:#2997ff;">Ver Certificado Coursera ↗</a><br><br>
-        • <span class="emerald">Google Data Analytics (v.3)</span> — Emitido por Google / Coursera en Credly (8 Abr 2026).<br>
-        &nbsp;&nbsp;<span class="yellow">Insignia verificada:</span> <a href="https://www.credly.com/badges/7187c248-fe57-402d-a017-b72be71df51d/public_url" target="_blank" style="color:#2997ff;">Ver Credencial Oficial en Credly ↗</a><br><br>
-        • <span class="emerald">FULL STACK ITBA</span> — Instituto Tecnológico de Buenos Aires <span style="color:#eab308;">(en curso)</span>
+      <div style="margin: 4px 0; font-family: monospace;">
+        <span class="cyan">Alexis Fernando Rojas | Full Stack Developer & Data Analyst</span><br>
+        Estudiante de Ingenieria en Sistemas enfocado en arquitectura MERN, Tauri/Rust y analitica con Python y Power BI.<br><br>
+        <span class="yellow">Educacion:</span><br>
+        - UTN FRRO: Ingenieria en Sistemas de Informacion (en curso)<br>
+        - ITBA: Full Stack Development (en curso)<br><br>
+        <span class="yellow">Certificaciones:</span><br>
+        - Google Data Analytics (v2) - Coursera: <a href="https://www.coursera.org/account/accomplishments/professional-cert/certificate/UOZETYMOBH9C" target="_blank" style="color:#2997ff;">Verificar</a><br>
+        - Google Data Analytics (v.3) - Credly: <a href="https://www.credly.com/badges/7187c248-fe57-402d-a017-b72be71df51d/public_url" target="_blank" style="color:#2997ff;">Verificar</a>
       </div>
     `);
   }
 
   cmdContact() {
     this.printLine(`
-      <div style="margin: 4px 0;">
-        <span class="cyan">📬 Canales de Conexión Profesional:</span><br>
-        • <span class="yellow">Email:</span> <a href="mailto:alexisrojas2073@gmail.com" style="color:#2997ff;">alexisrojas2073@gmail.com</a><br>
-        • <span class="yellow">LinkedIn:</span> <a href="https://www.linkedin.com/in/alexis-fernando-rojas-94922b250" target="_blank" style="color:#2997ff;">linkedin.com/in/alexis-fernando-rojas-94922b250</a><br>
-        • <span class="yellow">GitHub:</span> <a href="https://github.com/AlexisRjs" target="_blank" style="color:#2997ff;">github.com/AlexisRjs</a><br>
-        • <span class="yellow">Formulario:</span> Puedes dejarme un mensaje directo en la sección de contacto al final de la página (se abrirá en Gmail listo para enviar).<br>
-      </div>
-    `);
-  }
-
-  cmdCV() {
-    this.printLine(`
-      <div style="margin: 4px 0;">
-        <span class="yellow">ℹ️ Información:</span> La descarga directa del CV está deshabilitada.<br>
-        Puedes consultar mis proyectos reales y código fuente en <a href="https://github.com/AlexisRjs" target="_blank" style="color:#2997ff;">github.com/AlexisRjs</a> o escribirme a través del formulario de contacto.
+      <div style="margin: 4px 0; font-family: monospace;">
+        <span class="cyan">[CONTACT] Canales de contacto:</span><br>
+        - LinkedIn: <a href="https://www.linkedin.com/in/alexis-fernando-rojas-94922b250" target="_blank" style="color:#2997ff;">linkedin.com/in/alexis-fernando-rojas</a><br>
+        - Instagram: <a href="https://instagram.com/alexisrojas.1" target="_blank" style="color:#2997ff;">@alexisrojas.1</a><br>
+        - GitHub: <a href="https://github.com/AlexisRjs" target="_blank" style="color:#2997ff;">github.com/AlexisRjs</a><br>
+        - Mensaje directo: Formulario disponible al pie de la pagina.
       </div>
     `);
   }
@@ -382,217 +297,189 @@ class InteractiveTerminal {
   cmdMern() {
     this.printLine(`
       <div style="margin: 4px 0; font-family: monospace; font-size: 0.8rem; line-height: 1.4;">
-        <span class="cyan">🌐 ARQUITECTURA STACK MERN DE ALEXIS:</span><br><br>
-        ┌─────────────────────────┐<br>
-        │   <span class="yellow">REACT (Frontend SPA)</span>  │ ◄── Componentes modulares, Hooks, State Management<br>
-        └────────────┬────────────┘<br>
-                     │  HTTP / REST API (JSON)<br>
-        ┌────────────▼────────────┐<br>
-        │ <span class="emerald">EXPRESS.JS + NODE.JS</span>    │ ◄── Middlewares, JWT Auth, Rutas asíncronas<br>
-        └────────────┬────────────┘<br>
-                     │  Mongoose ODM (Driver)<br>
-        ┌────────────▼────────────┐<br>
-        │  <span class="violet">MONGODB (Database)</span>     │ ◄── Colecciones NoSQL, Agregaciones optimizadas<br>
-        └─────────────────────────┘
+        <span class="cyan">[MERN_ARCHITECTURE]</span><br><br>
+        +-------------------------+<br>
+        |   REACT (Frontend SPA)  | &lt;-- UI declarativa, Hooks, Context<br>
+        +------------+------------+<br>
+                     | HTTP / REST (JSON)<br>
+        +------------v------------+<br>
+        |   EXPRESS + NODE.JS     | &lt;-- Middleware, Controladores, JWT Auth<br>
+        +------------+------------+<br>
+                     | Mongoose Driver<br>
+        +------------v------------+<br>
+        |   MONGODB (Database)    | &lt;-- Colecciones NoSQL, Indexacion, Agregaciones<br>
+        +-------------------------+
       </div>
     `);
   }
 
-  cmdCoffee() {
-    this.printLine(`<span class="yellow">☕ Preparando Espresso Doble...</span>`);
-    setTimeout(() => {
-      this.printLine(`<span class="yellow">⚙️ Moliendo granos de café... Inyectando cafeína a los hilos de Node.js...</span>`);
-    }, 350);
-    setTimeout(() => {
-      this.printLine(`<span class="emerald">✓ ¡Café servido! Energía al 100% para escribir código sin bugs durante 12 horas seguidas.</span>`);
-      if (window.soundEngine) window.soundEngine.playSuccess();
-    }, 850);
-  }
-
-  cmdSudo() {
-    this.printLine(`<span style="color:#ef4444;">🛡️ Permission denied: 'alexis' está en el archivo sudoers, pero tus intenciones son sospechosas. ¡Nice try! 😉</span>`);
-    if (window.soundEngine) window.soundEngine.playClick();
-  }
-
   cmdHack() {
-    this.printLine(`<span class="emerald">Iniciando protocolo de bypass en puertos del sistema...</span>`);
-    const steps = [
-      'Inyectando payloads en el servidor proxy...',
-      'Bypasseando cortafuegos perimetral [AES-256 OK]...',
-      'Accediendo al panel de administración de Alexis...',
-      '🔓 ACCESS GRANTED: Bienvenido al entorno interactivo del portafolio.'
-    ];
+    this.printLine(`<span style="color:#ef4444; font-weight:700;">[SYSTEM_CRASH] Ejecutando simulación de fallo del sistema...</span>`);
+    if (window.soundEngine) window.soundEngine.playClick();
 
-    steps.forEach((msg, idx) => {
+    try {
+      const docEl = document.documentElement;
+      if (docEl.requestFullscreen) {
+        docEl.requestFullscreen().catch(() => {});
+      } else if (docEl.webkitRequestFullscreen) {
+        docEl.webkitRequestFullscreen();
+      }
+    } catch (_) {}
+
+    let overlay = document.getElementById('windows-bsod-overlay');
+    if (!overlay) {
+      overlay = document.createElement('div');
+      overlay.id = 'windows-bsod-overlay';
+      document.body.appendChild(overlay);
+    }
+
+    overlay.style.cssText = `
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #0078d7;
+      color: #ffffff;
+      z-index: 999999999;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: clamp(24px, 8vw, 110px);
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+      user-select: none;
+      cursor: none;
+      box-sizing: border-box;
+      transition: opacity 0.3s ease;
+    `;
+
+    overlay.style.opacity = '1';
+    overlay.style.pointerEvents = 'all';
+
+    overlay.innerHTML = `
+      <div style="font-size: clamp(4.5rem, 9vw, 8rem); font-weight: 300; line-height: 1; margin-bottom: 24px;">:(</div>
+      <div style="font-size: clamp(1.2rem, 2.3vw, 2.1rem); font-weight: 300; line-height: 1.35; max-width: 900px; margin-bottom: 30px;">
+        Se ha producido un problema en su PC y necesita reiniciarse. Vamos a recopilar información sobre el error y después se reiniciará automáticamente.
+      </div>
+      <div style="font-size: clamp(1.1rem, 2vw, 1.6rem); font-weight: 300; margin-bottom: 45px;">
+        <span id="bsod-pct">0</span>% completado
+      </div>
+      <div style="display: flex; align-items: flex-start; gap: 24px; flex-wrap: wrap;">
+        <svg width="105" height="105" viewBox="0 0 100 100" style="background: #ffffff; padding: 6px; flex-shrink: 0; border-radius: 2px;">
+          <rect width="100" height="100" fill="#fff"/>
+          <rect x="10" y="10" width="24" height="24" fill="#0078d7"/>
+          <rect x="14" y="14" width="16" height="16" fill="#fff"/>
+          <rect x="18" y="18" width="8" height="8" fill="#0078d7"/>
+          <rect x="66" y="10" width="24" height="24" fill="#0078d7"/>
+          <rect x="70" y="14" width="16" height="16" fill="#fff"/>
+          <rect x="74" y="18" width="8" height="8" fill="#0078d7"/>
+          <rect x="10" y="66" width="24" height="24" fill="#0078d7"/>
+          <rect x="14" y="70" width="16" height="16" fill="#fff"/>
+          <rect x="18" y="74" width="8" height="8" fill="#0078d7"/>
+          <rect x="42" y="12" width="6" height="6" fill="#0078d7"/>
+          <rect x="52" y="12" width="6" height="6" fill="#0078d7"/>
+          <rect x="42" y="24" width="6" height="6" fill="#0078d7"/>
+          <rect x="52" y="24" width="6" height="6" fill="#0078d7"/>
+          <rect x="42" y="42" width="16" height="16" fill="#0078d7"/>
+          <rect x="12" y="46" width="6" height="6" fill="#0078d7"/>
+          <rect x="24" y="46" width="6" height="6" fill="#0078d7"/>
+          <rect x="68" y="46" width="6" height="6" fill="#0078d7"/>
+          <rect x="80" y="46" width="6" height="6" fill="#0078d7"/>
+          <rect x="42" y="68" width="8" height="8" fill="#0078d7"/>
+          <rect x="56" y="68" width="8" height="8" fill="#0078d7"/>
+          <rect x="72" y="68" width="16" height="8" fill="#0078d7"/>
+          <rect x="42" y="82" width="16" height="8" fill="#0078d7"/>
+          <rect x="68" y="82" width="20" height="8" fill="#0078d7"/>
+        </svg>
+        <div style="font-size: clamp(0.78rem, 1.4vw, 0.95rem); font-weight: 300; line-height: 1.5; opacity: 0.95;">
+          Para obtener más información sobre este problema y posibles soluciones, consulta:<br>
+          <span style="text-decoration: underline;">https://www.windows.com/stopcode</span><br><br>
+          Si llamas a una persona de soporte técnico, indícale este código:<br>
+          Código de detención: <strong>CRITICAL_PROCESS_DIED</strong><br>
+          Lo que falló: <strong>alexis_portfolio.sys</strong>
+        </div>
+      </div>
+    `;
+
+    // Fast BSOD progress percentage ticker
+    const pctEl = document.getElementById('bsod-pct');
+    const pcts = [15, 38, 64, 85, 100];
+    pcts.forEach((val, i) => {
       setTimeout(() => {
-        this.printLine(`<span style="color:${idx === 3 ? '#30d158' : '#38bdf8'}; font-family:monospace;">${msg}</span>`);
-        if (idx === 3 && window.soundEngine) window.soundEngine.playSuccess();
-      }, (idx + 1) * 350);
+        if (pctEl) pctEl.textContent = val;
+      }, (i + 1) * 550);
     });
+
+    // Exactly at 3.0s (3000ms): Exit and restore normal interface
+    setTimeout(() => {
+      try {
+        if (document.exitFullscreen) {
+          document.exitFullscreen().catch(() => {});
+        } else if (document.webkitExitFullscreen) {
+          document.webkitExitFullscreen();
+        }
+      } catch (_) {}
+
+      if (overlay) {
+        overlay.style.opacity = '0';
+        overlay.style.pointerEvents = 'none';
+        setTimeout(() => {
+          if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+        }, 300);
+      }
+
+      this.printLine(`
+        <div style="margin: 6px 0; padding: 8px 12px; background: rgba(56, 189, 248, 0.08); border-left: 3px solid #38bdf8; font-family: monospace;">
+          <span class="cyan" style="font-weight:700;">[BSOD_PRANK_TERMINATED] Simulación de pantalla azul finalizada.</span><br>
+          <span class="emerald">Tranquilo, tu computadora no tiene ningún error. Fue solo una broma.</span>
+        </div>
+      `);
+      if (window.soundEngine) window.soundEngine.playSuccess();
+    }, 3000);
   }
 
   cmdJoke() {
     const jokes = [
       "¿Por qué los programadores prefieren el modo oscuro? Porque la luz atrae a los bugs.",
-      "Un programador va al supermercado. Su esposa le dice: 'Trae una botella de leche, y si hay huevos, trae 10'. Regresó con 10 botellas de leche porque había huevos.",
+      "Un programador va al supermercado. Su esposa le dice: 'Trae una botella de leche, y si hay huevos, trae 10'. Regreso con 10 botellas de leche porque habia huevos.",
       "Hay 10 tipos de personas en el mundo: los que entienden binario y los que no.",
-      "¿Cuál es el café favorito de un desarrollador? Java con un poco de script.",
-      "¿Por qué C++ no puede tener citas con C? Porque C no tiene clase.",
-      "Un tester entra a un bar. Pide una cerveza. Pide 0 cervezas. Pide 999999 cervezas. Pide un lagarto. Pide -1 cervezas. El primer cliente real entra y pregunta dónde está el baño; el bar explota en llamas."
+      "¿Cual es el cafe favorito de un desarrollador? Java con un poco de script.",
+      "¿Por que C++ no puede tener citas con C? Porque C no tiene clase.",
+      "Un tester entra a un bar: pide 1 cerveza, pide 0 cervezas, pide 999999 cervezas, pide un lagarto. El software compila."
     ];
     const picked = jokes[Math.floor(Math.random() * jokes.length)];
-    this.printLine(`<span class="yellow">😄 ${picked}</span>`);
+    this.printLine(`<span class="yellow" style="font-family:monospace;">${picked}</span>`);
   }
 
   cmdQuote() {
     const quotes = [
-      "“Talk is cheap. Show me the code.” — Linus Torvalds",
-      "“Any fool can write code that a computer can understand. Good programmers write code that humans can understand.” — Martin Fowler",
-      "“First, solve the problem. Then, write the code.” — John Johnson",
-      "“Simplicity is prerequisite for reliability.” — Edsger W. Dijkstra",
-      "“Make it work, make it right, make it fast.” — Kent Beck",
-      "“The most important property of a program is whether it accomplishes the intention of its user.” — C.A.R. Hoare"
+      "«Hablar es fácil. Muéstrame el código.» — Linus Torvalds",
+      "«Cualquier tonto puede escribir código que una computadora entienda. Los buenos programadores escriben código que los humanos pueden entender.» — Martin Fowler",
+      "«Primero resuelve el problema. Después, escribe el código.» — John Johnson",
+      "«La simplicidad es un prerrequisito para la confiabilidad.» — Edsger W. Dijkstra",
+      "«Haz que funcione, haz que sea correcto, haz que sea rápido.» — Kent Beck",
+      "«La propiedad más importante de un programa es si cumple con la intención de su usuario.» — C.A.R. Hoare",
+      "«El software es una combinación magistral de arte e ingeniería.» — Bill Gates"
     ];
     const picked = quotes[Math.floor(Math.random() * quotes.length)];
-    this.printLine(`<span class="cyan">💡 ${picked}</span>`);
-  }
-
-  cmdCat() {
-    this.printLine(`
-      <div style="font-family: monospace; line-height: 1.2; color:#f59e0b; margin: 4px 0;">
-&nbsp;&nbsp;&nbsp;&nbsp;/\\_/\\&nbsp;&nbsp;<br>
-&nbsp;&nbsp;&nbsp;(&nbsp;o.o&nbsp;)&nbsp;&nbsp;*purrr*<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;^&nbsp;&lt;&nbsp;&nbsp;&nbsp;[El gato de Alexis durmiendo plácidamente sobre el teclado]
-      </div>
-    `);
-    if (window.soundEngine) window.soundEngine.playSuccess();
-  }
-
-  cmdRoll() {
-    const d20 = Math.floor(Math.random() * 20) + 1;
-    let comment = '';
-    if (d20 === 20) {
-      comment = '¡ÉXITO CRÍTICO! Tus commits entran directo a producción sin ningún bug.';
-    } else if (d20 === 1) {
-      comment = 'Pifia crítica: borraste la base de datos sin backup... por suerte era el entorno local.';
-    } else if (d20 >= 12) {
-      comment = 'Tirada exitosa: la compilación finalizó en 0.4s.';
-    } else {
-      comment = 'Tirada regular: encontraste un punto y coma faltante en la línea 42.';
-    }
-    this.printLine(`<span class="yellow">🎲 Tiraste un d20: <strong>${d20}</strong>.</span> <span class="cyan">${comment}</span>`);
+    this.printLine(`<span class="cyan" style="font-family:monospace;">${picked}</span>`);
   }
 
   cmdPing() {
-    const ms = (Math.random() * 10 + 8).toFixed(1);
-    this.printLine(`<span class="emerald">🏓 PONG alexis-node.local: latencia=${ms}ms | Stack=MERN | Status=100% OPERATIONAL</span>`);
-  }
-
-  cmdWhoami() {
-    this.printLine(`<span class="cyan">👤 Sesión: Invitado VIP explorando el portafolio interactivo de Alexis Fernando Rojas. Permisos: READ & INTERACT.</span>`);
-  }
-
-  cmdRickroll() {
-    this.printLine(`
-      <div style="margin: 4px 0; color:#ec4899; font-family: monospace;">
-        🕺 NEVER GONNA GIVE YOU UP 🎵<br>
-        &nbsp;&nbsp;Never gonna let you down...<br>
-        &nbsp;&nbsp;Never gonna run around and desert you!<br>
-        &nbsp;&nbsp;Never gonna make you cry, never gonna say goodbye!<br>
-        <span class="yellow">✨ ¡Has sido rickrolleado con estilo en la shell de Alexis!</span>
-      </div>
-    `);
-    if (window.soundEngine) window.soundEngine.playSuccess();
-  }
-
-  cmdGit() {
-    this.printLine(`
-      <div style="margin: 4px 0; font-family: monospace; font-size: 0.82rem;">
-        <span class="cyan">🌿 On branch main</span><br>
-        <span class="emerald">Your branch is up to date with 'origin/main'.</span><br><br>
-        Changes not staged for commit:<br>
-        &nbsp;&nbsp;<span style="color:#ef4444;">modified: insomnia.js (added 3 more espresso shots)</span><br>
-        &nbsp;&nbsp;<span style="color:#ef4444;">modified: perfectionism.css (zero pixel misalignment)</span><br><br>
-        Untracked files:<br>
-        &nbsp;&nbsp;<span class="yellow">secret_ideas_for_startup/</span><br><br>
-        <em>no changes added to commit (use "git add" to build greatness)</em>
-      </div>
-    `);
-  }
-
-  cmdDance() {
-    const frames = [
-      '\\(•_•)/ &nbsp; ¡Party deploy!',
-      '( •_•)&gt;⌐■-■ &nbsp; Poniendo lentes oscuros...',
-      '(⌐■_■) &nbsp; ¡Deploy en producción sin errores!'
-    ];
-    frames.forEach((f, i) => {
-      setTimeout(() => {
-        this.printLine(`<span class="yellow" style="font-family: monospace; font-size: 0.9rem;">${f}</span>`);
-        if (i === 2 && window.soundEngine) window.soundEngine.playSuccess();
-      }, i * 300);
-    });
-  }
-
-  cmdWeather() {
-    this.printLine(`
-      <div style="margin: 4px 0;">
-        <span class="cyan">🌤️ Pronóstico del tiempo para localhost:3000:</span><br>
-        • <strong>Temperatura:</strong> 24°C (Ideal para programar)<br>
-        • <strong>Humedad de errores:</strong> 0% de bugs detectados<br>
-        • <strong>Precipitación:</strong> 100% de probabilidad de lluvia de café<br>
-        • <strong>Viento:</strong> Vientos alisios de fibra óptica a 1 Gbps
-      </div>
-    `);
-  }
-
-  cmdCalc(raw) {
-    const expr = raw.replace(/^(calc|calculadora)\s*/i, '').trim();
-    if (!expr) {
-      this.printLine(`<span class="cyan">🧮 Calculadora: Escribe una expresión (ej: <span class="yellow">calc 24 * 7</span> o <span class="yellow">calc (150 + 50) * 1.21</span>).</span>`);
-      return;
-    }
-
-    // Sanitize to only allow numbers, operators, and parentheses
-    if (!/^[\d\s\+\-\*\/\(\)\.\%]+$/.test(expr)) {
-      this.printLine(`<span style="color:#ef4444;">Expresión inválida. Solo se admiten operaciones matemáticas estándar (+, -, *, /, %).</span>`);
-      return;
-    }
-
-    try {
-      const res = Function(`'use strict'; return (${expr})`)();
-      this.printLine(`<span class="emerald">🧮 ${expr} = <strong>${res}</strong></span>`);
-      if (window.soundEngine) window.soundEngine.playSuccess();
-    } catch {
-      this.printLine(`<span style="color:#ef4444;">Error al evaluar la expresión matemática.</span>`);
-    }
+    const ms = (Math.random() * 8 + 6).toFixed(1);
+    this.printLine(`<span class="emerald" style="font-family:monospace;">64 bytes from 127.0.0.1: icmp_seq=1 ttl=64 time=${ms} ms [status=200 OK]</span>`);
   }
 
   cmdSecret() {
     this.printLine(`
-      <div style="margin: 4px 0;">
-        <span class="yellow">🤫 EASTER EGGS & SECRETOS DESCUBIERTOS:</span><br>
-        1. <strong>Tarjeta con Lanyard:</strong> Agarra la tarjeta de Alexis y arrástrala; reacciona dinámicamente con física y balanceo real.<br>
-        2. <strong>Efecto Sabotear:</strong> Prueba el comando <span class="red" style="font-weight:700;">sabotear</span> o <span class="red" style="font-weight:700;">sabotear codigo</span> para ver colapsar la página entera por 3 segundos.<br>
-        3. <strong>Audio Fx:</strong> El conmutador de audio de la barra activa sonidos sintetizados en tiempo real mediante Web Audio API.<br>
-        4. <strong>Antigravedad:</strong> El comando <span class="emerald">antigravity</span> dispara ondas sónicas en el canvas de partículas del fondo.<br>
-        5. <strong>Rickroll:</strong> Escribe <span class="emerald">rickroll</span> para una dosis nostálgica de buen código.
+      <div style="margin: 4px 0; font-family: monospace;">
+        <span class="yellow">[DEBUG_INFO] Funciones interactivas del sitio:</span><br>
+        1. Lanyard Badge: Tarjeta interactiva con fisica pendular reactiva al cursor.<br>
+        2. Sabotaje: Comando <span class="red">sabotear codigo</span> ejecuta deformacion de nodos del DOM por 3s.<br>
+        3. Hack prank: Comando <span class="emerald">hack your computer</span> dispara simulacion Matrix en pantalla completa.<br>
+        4. Audio Synthesizer: Modulo Web Audio API para feedback sonoro sintetizado en tiempo real.
       </div>
     `);
-  }
-
-  cmdAntigravity() {
-    this.printLine(`<span class="violet">⚡ [PARTICLE_PULSE] Desencadenando pulso reactivo en el canvas de partículas...</span>`);
-    if (window.antigravityInstance) {
-      for (let i = 0; i < 5; i++) {
-        setTimeout(() => {
-          const rx = Math.random() * window.innerWidth;
-          const ry = Math.random() * window.innerHeight;
-          window.antigravityInstance.createShockwave(rx, ry);
-        }, i * 150);
-      }
-    }
-    if (window.soundEngine) window.soundEngine.playSuccess();
   }
 
   cmdTheme() {
@@ -600,27 +487,13 @@ class InteractiveTerminal {
     if (themeBtn) {
       themeBtn.click();
       const current = document.documentElement.getAttribute('data-theme') || 'dark';
-      this.printLine(`<span class="cyan">✓ Tema cambiado a modo: <strong>${current.toUpperCase()}</strong></span>`);
-    }
-  }
-
-  cmdMatrix() {
-    this.printLine(`<span class="emerald">Iniciando decodificación de buffer en pantalla...</span>`);
-    const glyphs = '01ABCDEFΩΨ∑∏∆∇≈≠≤≥λπ§±';
-    for (let i = 0; i < 4; i++) {
-      setTimeout(() => {
-        let stream = '';
-        for (let j = 0; j < 38; j++) {
-          stream += glyphs[Math.floor(Math.random() * glyphs.length)] + ' ';
-        }
-        this.printLine(`<span style="color:#10b981; font-family:monospace; opacity:${0.4 + i * 0.2};">${stream}</span>`);
-      }, i * 120);
+      this.printLine(`<span class="cyan" style="font-family:monospace;">[THEME] Modo activo: <strong>${current.toUpperCase()}</strong></span>`);
     }
   }
 
   cmdClear() {
     this.body.innerHTML = '';
-    this.printLine(`<span class="cyan">Terminal reiniciada. Escribe <span class="yellow">help</span> para consultar los más de 25 comandos disponibles.</span>`);
+    this.printLine(`<span class="cyan" style="font-family:monospace;">Terminal reiniciada. Escribe <span class="yellow">help</span> para consultar los comandos disponibles.</span>`);
   }
 
   escapeHTML(str) {
