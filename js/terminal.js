@@ -338,7 +338,8 @@ class InteractiveTerminal {
         • <a href="https://www.frro.utn.edu.ar/" target="_blank" style="color:#2997ff;">UTN FRRO</a> — Estudiante de Ingeniería en Sistemas de Información<br>
         • <a href="https://www.itba.edu.ar/" target="_blank" style="color:#2997ff;">ITBA</a> — Instituto Tecnológico de Buenos Aires<br><br>
         <span class="yellow">📜 Certificaciones:</span><br>
-        • <a href="https://www.coursera.org/account/accomplishments/professional-cert/certificate/UOZETYMOBH9C" target="_blank" style="color:#2997ff;">Google Data Analytics (Coursera) ↗</a><br>
+        • <a href="https://www.coursera.org/account/accomplishments/professional-cert/certificate/UOZETYMOBH9C" target="_blank" style="color:#2997ff;">Google Data Analytics (v2) (Coursera) ↗</a><br>
+        • <a href="https://www.credly.com/badges/7187c248-fe57-402d-a017-b72be71df51d/public_url" target="_blank" style="color:#2997ff;">Google Data Analytics (v.3) (Credly) ↗</a><br>
         • FULL STACK ITBA <span style="color:#eab308;">(en curso)</span>
       </div>
     `);
@@ -347,9 +348,11 @@ class InteractiveTerminal {
   cmdCerts() {
     this.printLine(`
       <div style="margin: 4px 0;">
-        <span class="cyan">📜 Certificaciones Oficiales:</span><br>
-        • <span class="emerald">Google Data Analytics</span> — Certificación Profesional emitida por Google en Coursera.<br>
+        <span class="cyan">📜 Certificaciones Profesionales Oficiales:</span><br>
+        • <span class="emerald">Google Data Analytics (v2)</span> — Emitido por Google / Coursera (10 Jul 2025).<br>
         &nbsp;&nbsp;<span class="yellow">Credencial verificada:</span> <a href="https://www.coursera.org/account/accomplishments/professional-cert/certificate/UOZETYMOBH9C" target="_blank" style="color:#2997ff;">Ver Certificado Coursera ↗</a><br><br>
+        • <span class="emerald">Google Data Analytics (v.3)</span> — Emitido por Google / Coursera en Credly (8 Abr 2026).<br>
+        &nbsp;&nbsp;<span class="yellow">Insignia verificada:</span> <a href="https://www.credly.com/badges/7187c248-fe57-402d-a017-b72be71df51d/public_url" target="_blank" style="color:#2997ff;">Ver Credencial Oficial en Credly ↗</a><br><br>
         • <span class="emerald">FULL STACK ITBA</span> — Instituto Tecnológico de Buenos Aires <span style="color:#eab308;">(en curso)</span>
       </div>
     `);

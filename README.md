@@ -20,7 +20,8 @@ Portafolio web interactivo de alto rendimiento desarrollado con enfoque en dise�
 - **[ITBA](https://www.itba.edu.ar/) (Instituto Tecnológico de Buenos Aires):** Formación en Ingeniería y Software.
 
 ### Certificaciones Profesionales
-- **[Google Data Analytics Professional Certificate](https://www.coursera.org/account/accomplishments/professional-cert/certificate/UOZETYMOBH9C) (Google / Coursera):** Certificación profesional verificada en análisis de datos, SQL, hojas de cálculo, programación en R y visualización de datos.
+- **[Google Data Analytics Professional Certificate (v2)](https://www.coursera.org/account/accomplishments/professional-cert/certificate/UOZETYMOBH9C) (Google / Coursera):** Certificación profesional verificada (emitida en julio de 2025) en análisis de datos, SQL, hojas de cálculo, programación en R y visualización de datos.
+- **[Google Data Analytics Professional Certificate (v.3)](https://www.credly.com/badges/7187c248-fe57-402d-a017-b72be71df51d/public_url) (Google / Coursera - Credly):** Actualización oficial a v.3 con insignia verificada emitida por Coursera en Credly (emitida en abril de 2026).
 - **Full Stack ITBA:** Especialización en desarrollo web de extremo a extremo *(en curso)*.
 
 ---

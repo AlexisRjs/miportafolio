@@ -83,6 +83,11 @@ personal-photos/
 !assets/*.jpeg
 !assets/*.svg
 !assets/*.ico
+!assets/**/*.png
+!assets/**/*.jpg
+!assets/**/*.jpeg
+!assets/**/*.svg
+!assets/**/*.ico
 
 # ===================================================================
 # DEPENDENCIES & PACKAGES

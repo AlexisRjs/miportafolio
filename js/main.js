@@ -700,6 +700,23 @@ function setupContactForm() {
 }
 
 /**
+ * CREDLY EMBED WIDGET TOGGLE
+ */
+function toggleCredlyWidget() {
+  const dropdown = document.getElementById('credly-embed-dropdown');
+  const btn = document.getElementById('credly-toggle-btn');
+  const arrow = document.getElementById('credly-toggle-arrow');
+  if (!dropdown) return;
+  const isExpanded = dropdown.classList.toggle('active');
+  if (btn) btn.setAttribute('aria-expanded', isExpanded);
+  if (arrow) arrow.style.transform = isExpanded ? 'rotate(180deg)' : 'rotate(0deg)';
+  if (window.soundEngine && typeof window.soundEngine.playClick === 'function') {
+    window.soundEngine.playClick();
+  }
+}
+window.toggleCredlyWidget = toggleCredlyWidget;
+
+/**
  * TOAST NOTIFICATION
  */
 function showToast(msg) {
