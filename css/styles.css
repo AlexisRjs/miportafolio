@@ -623,10 +623,16 @@ select,
 /* HERO TITLE (ELEGANT TITANIUM FINISH) */
 .hero-title {
   font-family: var(--font-display);
-  font-size: clamp(2.8rem, 5.2vw, 4.8rem);
+  font-size: clamp(2.4rem, 4.8vw, 4.5rem);
   font-weight: 700;
-  line-height: 1.05;
+  line-height: 1.2;
   letter-spacing: -0.035em;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-title .hero-title-line {
+  display: block;
 }
 
 .hero-title .name-highlight {
@@ -634,6 +640,9 @@ select,
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   display: inline-block;
+  padding-bottom: 0.18em; /* Ample breathing room so descender of 'y' is never cut off */
+  margin-bottom: -0.1em;
+  overflow: visible;
 }
 
 .hero-subtitle {
@@ -2482,6 +2491,11 @@ body.sabotage-mode #terminal {
 }
 
 @media (max-width: 480px) {
+  .hero-title {
+    font-size: clamp(1.85rem, 7.5vw, 2.5rem);
+    line-height: 1.22;
+  }
+
   .brand-role {
     display: none;
   }
@@ -2501,32 +2515,47 @@ body.sabotage-mode #terminal {
 }
 
 /* ===================================================================
-   ACCESSIBILITY & APPLE HIG CONVENTIONS: PREFERS-REDUCED-MOTION
+   RUNAWAY "NO ESTOY INTERESADO" DODGING BUTTON
    =================================================================== */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
+.runaway-anchor {
+  display: inline-flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+}
 
-  .marquee-content {
-    animation: none !important;
-    transform: none !important;
-  }
+.btn-runaway {
+  position: relative;
+  background: #000000;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 0.88rem;
+  font-weight: 500;
+  padding: 12px 22px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
+  will-change: transform;
+  z-index: 60;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
 
-  #antigravity-canvas,
-  #confetti-canvas {
-    display: none !important;
-  }
+[data-theme="light"] .btn-runaway {
+  background: #000000;
+  color: #ffffff;
+  border-color: rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
 
-  .project-card:hover,
-  .btn:hover,
-  .btn-icon:hover,
-  .tab-btn:hover {
-    transform: none !important;
-  }
+/* Red state while escaping/avoiding the cursor */
+.btn-runaway.is-fleeing {
+  background: #dc2626 !important;
+  color: #ffffff !important;
+  border-color: #ef4444 !important;
+  box-shadow: 0 6px 24px rgba(220, 38, 38, 0.55) !important;
 }

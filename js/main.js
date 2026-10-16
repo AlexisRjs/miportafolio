@@ -68,6 +68,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 14. Smooth Navbar On Scroll
   setupScrollNavbar();
+
+  // 15. Runaway "No Estoy Interesado" Dodging Button
+  setupRunawayButton();
 });
 
 /**
@@ -894,5 +897,162 @@ function setupScrollNavbar() {
     } else {
       nav.classList.remove('scrolled');
     }
+  });
+}
+
+/**
+ * RUNAWAY "NO ESTOY INTERESADO" BUTTON
+ * 1. Uses a stable #runaway-anchor to maintain an immovable home reference point.
+ * 2. Always strictly contained within the "Inicio" (#hero) section.
+ * 3. Glides smoothly (gentle, controlled evasion) and turns RED while displaced.
+ * 4. Never returns to home while the cursor is at or near the original position.
+ * 5. Returns to home and turns BLACK only when the cursor moves away from the home spot.
+ */
+function setupRunawayButton() {
+  const btn = document.getElementById('hero-btn-no-interesado');
+  const anchor = document.getElementById('runaway-anchor');
+  const hero = document.getElementById('hero');
+  if (!btn || !anchor || !hero) return;
+
+  let currentX = 0;
+  let currentY = 0;
+  let isFleeing = false;
+  let lastDodgeTime = 0;
+
+  function dodge(mouseX, mouseY) {
+    const now = performance.now();
+    // Throttle slightly (140ms) to ensure smooth, non-aggressive fluid glides
+    if (now - lastDodgeTime < 140) return;
+    lastDodgeTime = now;
+
+    // Use stable anchor rect for exact, invariant home coordinates
+    const anchorRect = anchor.getBoundingClientRect();
+    const heroRect = hero.getBoundingClientRect();
+
+    const homeCenterX = anchorRect.left + anchorRect.width / 2;
+    const homeCenterY = anchorRect.top + anchorRect.height / 2;
+
+    const curCenterX = homeCenterX + currentX;
+    const curCenterY = homeCenterY + currentY;
+
+    // Calculate evasion angle directly away from cursor
+    let angle;
+    if (typeof mouseX === 'number' && typeof mouseY === 'number') {
+      angle = Math.atan2(curCenterY - mouseY, curCenterX - mouseX);
+    } else {
+      angle = Math.random() * Math.PI * 2;
+    }
+
+    // Add mild variation for natural organic feel
+    angle += (Math.random() - 0.5) * 0.5;
+
+    // Smooth, controlled glide distance (100px - 140px)
+    const distance = 100 + Math.random() * 40;
+
+    let targetX = currentX + Math.cos(angle) * distance;
+    let targetY = currentY + Math.sin(angle) * distance;
+
+    // Keep 100% visible inside #hero (safe margin of 24px)
+    const btnRect = btn.getBoundingClientRect();
+    const btnWidth = btnRect.width || anchorRect.width;
+    const btnHeight = btnRect.height || anchorRect.height;
+    const padding = 24;
+
+    const minX = heroRect.left + padding - anchorRect.left;
+    const maxX = heroRect.right - padding - btnWidth - anchorRect.left;
+    const minY = heroRect.top + padding - anchorRect.top;
+    const maxY = heroRect.bottom - padding - btnHeight - anchorRect.top;
+
+    targetX = Math.max(minX, Math.min(maxX, targetX));
+    targetY = Math.max(minY, Math.min(maxY, targetY));
+
+    // If still too close to cursor after boundary clamping, glide along opposite vertical space
+    if (typeof mouseX === 'number' && typeof mouseY === 'number') {
+      const projX = homeCenterX + targetX;
+      const projY = homeCenterY + targetY;
+      if (Math.hypot(mouseX - projX, mouseY - projY) < 75) {
+        targetY = (targetY > (minY + maxY) / 2) ? minY + 20 : maxY - 20;
+        targetX = Math.max(minX, Math.min(maxX, targetX));
+      }
+    }
+
+    currentX = targetX;
+    currentY = targetY;
+    isFleeing = true;
+
+    // Red while evading
+    btn.classList.add('is-fleeing');
+    btn.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
+
+    if (window.soundEngine) {
+      window.soundEngine.playHover();
+    }
+  }
+
+  function returnToHome() {
+    if (!isFleeing && currentX === 0 && currentY === 0) return;
+    currentX = 0;
+    currentY = 0;
+    isFleeing = false;
+    // Returns smoothly to home and switches back to black
+    btn.classList.remove('is-fleeing');
+    btn.style.transform = 'translate3d(0, 0, 0)';
+  }
+
+  // 1. Cursor tracking
+  document.addEventListener('mousemove', (e) => {
+    // Immovable anchor coordinates
+    const anchorRect = anchor.getBoundingClientRect();
+    const homeCenterX = anchorRect.left + anchorRect.width / 2;
+    const homeCenterY = anchorRect.top + anchorRect.height / 2;
+
+    const curCenterX = homeCenterX + currentX;
+    const curCenterY = homeCenterY + currentY;
+
+    const distFromHome = Math.hypot(e.clientX - homeCenterX, e.clientY - homeCenterY);
+    const distFromBtn = Math.hypot(e.clientX - curCenterX, e.clientY - curCenterY);
+
+    if (!isFleeing) {
+      // Button is currently resting at home: dodge if cursor approaches home or button
+      if (distFromHome < 90 || distFromBtn < 80) {
+        dodge(e.clientX, e.clientY);
+      }
+    } else {
+      // Button has already dodged away:
+      // Only dodge AGAIN if the cursor actually chases and approaches the button's CURRENT location!
+      // Moving over the empty original slot will NOT trigger unnecessary movement.
+      if (distFromBtn < 80) {
+        dodge(e.clientX, e.clientY);
+      } 
+      // Return to home only when cursor moves away from both the home spot and current button position
+      else if (distFromHome >= 120 && distFromBtn >= 100) {
+        returnToHome();
+      }
+    }
+  });
+
+  // 2. Direct hover & touch triggers
+  const triggers = ['mouseenter', 'mouseover', 'mousedown', 'pointerdown', 'touchstart', 'focus'];
+  triggers.forEach((evt) => {
+    btn.addEventListener(evt, (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      btn.blur();
+      const touch = e.touches ? e.touches[0] : e;
+      dodge(touch ? touch.clientX : null, touch ? touch.clientY : null);
+    }, { passive: false });
+  });
+
+  // 3. Return home if mouse leaves window
+  document.addEventListener('mouseleave', () => {
+    returnToHome();
+  });
+
+  // 4. Absolute block on click
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dodge();
+    return false;
   });
 }
