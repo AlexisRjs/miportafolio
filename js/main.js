@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
       linkedinUrl: 'https://www.linkedin.com/in/alexis-fernando-rojas-94922b250',
       instagramUrl: 'https://instagram.com/alexisrojas.1',
       instagramUsername: 'alexisrojas.1',
-      avatarUrl: 'assets/alexis-profile.png',
+      avatarUrl: 'assets/perfil.png',
       badgeTitle: 'Alexis',
       badgeRole: 'Full Stack & Data Analyst'
     });
@@ -358,7 +358,6 @@ const projectsData = [
     title: 'Mapa Interactivo UTN FRRO',
     shortDesc: 'Aplicación web interactiva que geolocaliza secretarías, dependencias, pisos, aulas y trámites clave para la comunidad de la UTN Rosario.',
     tags: ['JavaScript', 'HTML5', 'CSS3 Moderno', 'Campus UX'],
-    image: 'assets/mata%20utnfrro.png',
     visualGrad: 'linear-gradient(180deg, #181922 0%, #0b0c12 100%)',
     iconSvg: `<polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/>`,
     fullDesc: 'Herramienta digital de orientación institucional para estudiantes y docentes de la UTN FRRO (Zeballos 1341). Ofrece ubicación directa de aulas de examen, secretarías (SAU, SeCyT, Académica, Administrativa), horarios de conmutador y trámites universitarios, eliminando la desorientación en los pasillos de la facultad.',
@@ -378,7 +377,6 @@ const projectsData = [
     title: 'Generador de Posts UPL (Flyers & OCR)',
     shortDesc: 'Suite web y motor OCR en Python para automatizar el diseño y exportación de historias para redes (1080×1920 px) en UTN FRRO.',
     tags: ['Python', 'FastAPI', 'OpenCV', 'RapidOCR', 'JavaScript', 'HTML5 Canvas'],
-    image: 'assets/generador%20de%20posts%20instagram.png',
     visualGrad: 'linear-gradient(180deg, #1f142b 0%, #0c0814 100%)',
     iconSvg: `<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>`,
     fullDesc: 'Herramienta integral de automatización y diseño oficial para Universitarios por la Libertad (UTN Facultad Regional Rosario). Procesa capturas de planillas de horarios y mesas de examen extrayendo datos con visión artificial y OCR en ~0.2s, delimitando aulas, especialidades y horarios con normalización difusa contra el catálogo oficial, renderizando piezas a 60fps con HTML5 Canvas.',
@@ -435,8 +433,8 @@ function renderProjects(filterCategory) {
   const grid = document.getElementById('projects-grid');
   if (!grid) return;
 
-  const filtered = filterCategory === 'all' 
-    ? projectsData 
+  const filtered = filterCategory === 'all'
+    ? projectsData
     : projectsData.filter((p) => p.category === filterCategory);
 
   grid.innerHTML = '';
@@ -1037,7 +1035,7 @@ function setupRunawayButton() {
       // Moving over the empty original slot will NOT trigger unnecessary movement.
       if (distFromBtn < 80) {
         dodge(e.clientX, e.clientY);
-      } 
+      }
       // Return to home only when cursor moves away from both the home spot and current button position
       else if (distFromHome >= 120 && distFromBtn >= 100) {
         returnToHome();

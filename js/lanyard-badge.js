@@ -15,7 +15,7 @@ class LanyardBadge {
       linkedinUrl: options.linkedinUrl || 'https://www.linkedin.com/in/alexis-fernando-rojas-94922b250',
       instagramUrl: options.instagramUrl || 'https://instagram.com/alexisrojas.1',
       instagramUsername: options.instagramUsername || 'alexisrojas.1',
-      avatarUrl: options.avatarUrl || 'assets/alexis-profile.png',
+      avatarUrl: options.avatarUrl || 'assets/perfil.png',
       badgeTitle: options.badgeTitle || 'Alexis',
       badgeRole: options.badgeRole || 'Full Stack & Data Analyst',
       restLength: options.restLength || 135, // Length of lanyard strap
@@ -54,6 +54,10 @@ class LanyardBadge {
         <div class="lanyard-card" id="lanyard-card" title="Arrastra el badge o interactúa con los enlaces">
           <div class="card-sheen" id="lanyard-sheen"></div>
           <div class="badge-hole"></div>
+          <div class="badge-scanner" id="lanyard-scanner">
+            <div class="badge-scanner-line"></div>
+            <div class="badge-scanner-trail"></div>
+          </div>
           <div class="badge-inner">
             <div class="badge-top-bar">
               <div class="badge-chip">
@@ -61,12 +65,11 @@ class LanyardBadge {
                   <path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/>
                 </svg>
               </div>
-              <div class="badge-status-dot" title="Activo"></div>
             </div>
 
             <div class="badge-photo-container">
-              <div class="badge-photo-frame">
-                <img src="${this.options.avatarUrl}" alt="${this.options.badgeTitle}" class="badge-photo-img" loading="eager" decoding="sync" />
+              <div class="badge-photo-frame" id="lanyard-photo-frame">
+                <img src="${this.options.avatarUrl}" alt="${this.options.badgeTitle}" class="badge-photo-img" id="lanyard-photo-img" loading="eager" decoding="sync" />
               </div>
             </div>
 
@@ -109,6 +112,21 @@ class LanyardBadge {
     this.canvas = this.container.querySelector('#lanyard-rope-canvas');
     this.ctx = this.canvas.getContext('2d');
     this.sheen = this.container.querySelector('#lanyard-sheen');
+    this.photoFrame = this.container.querySelector('#lanyard-photo-frame');
+    this.photoImg = this.container.querySelector('#lanyard-photo-img');
+
+    // Trigger biometric scan animation on entrance across the entire card
+    if (this.photoImg) {
+      if (this.photoImg.complete) {
+        setTimeout(() => this.triggerFaceScan(), 300);
+      } else {
+        this.photoImg.addEventListener('load', () => {
+          setTimeout(() => this.triggerFaceScan(), 200);
+        }, { once: true });
+      }
+    } else {
+      setTimeout(() => this.triggerFaceScan(), 300);
+    }
 
     this.updateDimensions();
     this.attachEvents();
@@ -207,10 +225,29 @@ class LanyardBadge {
 
     window.addEventListener('mouseup', () => onEnd());
 
+    // Biometric scanner hover trigger (whenever user hovers over hanging card)
+    let lastScanTime = 0;
+    const onHoverScan = () => {
+      const now = performance.now();
+      if (now - lastScanTime > 650) {
+        lastScanTime = now;
+        this.triggerFaceScan();
+        if (window.soundEngine && typeof window.soundEngine.playHover === 'function') {
+          window.soundEngine.playHover();
+        }
+      }
+    };
+
+    this.card.addEventListener('mouseenter', onHoverScan);
+    if (this.photoFrame) {
+      this.photoFrame.addEventListener('mouseenter', onHoverScan);
+    }
+
     // Touch Listeners for Mobile
     this.card.addEventListener('touchstart', (e) => {
       if (e.touches.length > 0) {
         onStart(e.touches[0].clientX, e.touches[0].clientY, e.target);
+        onHoverScan();
       }
     }, { passive: true });
 
@@ -221,6 +258,13 @@ class LanyardBadge {
     }, { passive: true });
 
     window.addEventListener('touchend', () => onEnd());
+  }
+
+  triggerFaceScan() {
+    if (!this.card) return;
+    this.card.classList.remove('is-scanning');
+    void this.card.offsetWidth; // Force synchronous reflow to restart CSS animation across entire card
+    this.card.classList.add('is-scanning');
   }
 
   animate() {

@@ -2283,7 +2283,7 @@ body.sabotage-mode #terminal {
 
 .badge-top-bar {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
 }
 
@@ -2292,53 +2292,145 @@ body.sabotage-mode #terminal {
   transition: transform 0.2s ease;
 }
 
-.badge-status-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #30d158;
-  box-shadow: 0 0 8px rgba(48, 209, 88, 0.7);
-}
-
 .badge-photo-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 4px 0 2px;
+  width: 100%;
+  padding: 0;
+  margin: 2px 0 0;
 }
 
 .badge-photo-frame {
   position: relative;
-  width: 180px;
-  height: 180px;
-  border-radius: 50%;
-  padding: 4px;
-  background: linear-gradient(145deg, #ffffff 0%, #cbd5e1 45%, #1e293b 100%);
-  box-shadow: 0 14px 34px -6px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(0, 0, 0, 0.1);
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
-  overflow: hidden;
-  flex-shrink: 0;
+  width: 100%;
+  height: 250px;
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0;
+  overflow: visible;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .lanyard-card:hover .badge-photo-frame {
-  transform: scale(1.03);
-  box-shadow: 0 18px 40px -6px rgba(0, 0, 0, 0.55), 0 0 18px rgba(41, 151, 255, 0.3);
+  transform: scale(1.02);
 }
 
 .badge-photo-img {
   width: 100%;
   height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-  object-position: 50% 20%;
-  transform: scale(1.22);
+  object-fit: contain;
+  object-position: center center;
   display: block;
-  background: #18181b;
-  filter: contrast(1.06) brightness(1.02) saturate(1.06);
+  background: transparent;
+  filter: contrast(1.08) brightness(1.02);
   image-rendering: -webkit-optimize-contrast;
   image-rendering: crisp-edges;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
+  clip-path: inset(0% 0 0 0);
+  transform: scale(1.06);
+}
+
+/* Biometric scanner beam rising across the ENTIRE lanyard card */
+.badge-scanner {
+  position: absolute;
+  left: 0;
+  top: 102%;
+  width: 100%;
+  pointer-events: none;
+  z-index: 25;
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.lanyard-card.is-scanning .badge-scanner {
+  animation: cardScanBeam 1.35s cubic-bezier(0.25, 0.9, 0.35, 1) forwards;
+}
+
+.badge-scanner-line {
+  position: relative;
+  width: 100%;
+  height: 3.5px;
+  background: linear-gradient(
+    90deg, 
+    rgba(0, 240, 255, 0.15) 0%, 
+    rgba(0, 240, 255, 0.95) 15%, 
+    #00f0ff 50%, 
+    rgba(0, 240, 255, 0.95) 85%, 
+    rgba(0, 240, 255, 0.15) 100%
+  );
+  box-shadow: 
+    0 0 8px #00f0ff,
+    0 0 18px rgba(0, 240, 255, 0.95),
+    0 0 35px rgba(0, 240, 255, 0.8),
+    0 0 55px rgba(41, 151, 255, 0.9);
+  border-radius: 2px;
+}
+
+.badge-scanner-trail {
+  position: relative;
+  width: 100%;
+  height: 48px;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 240, 255, 0.38) 0%,
+    rgba(41, 151, 255, 0.18) 45%,
+    rgba(0, 240, 255, 0) 100%
+  );
+  pointer-events: none;
+}
+
+@keyframes cardScanBeam {
+  0% {
+    top: 102%;
+    opacity: 0;
+  }
+  4% {
+    opacity: 1;
+  }
+  94% {
+    opacity: 1;
+  }
+  100% {
+    top: -6%;
+    opacity: 0;
+  }
+}
+
+/* Face reveals as the blue scanner bar travels through the photo area */
+.lanyard-card.is-scanning .badge-photo-img {
+  animation: cardFaceReveal 1.35s cubic-bezier(0.25, 0.9, 0.35, 1) forwards;
+}
+
+@keyframes cardFaceReveal {
+  0% {
+    clip-path: inset(100% 0 0 0);
+    filter: contrast(1.22) brightness(1.2) drop-shadow(0 0 16px rgba(0, 240, 255, 0.6));
+  }
+  36% {
+    clip-path: inset(100% 0 0 0);
+  }
+  46% {
+    clip-path: inset(80% 0 0 0);
+  }
+  58% {
+    clip-path: inset(52% 0 0 0);
+  }
+  72% {
+    clip-path: inset(24% 0 0 0);
+  }
+  86% {
+    clip-path: inset(0% 0 0 0);
+    filter: contrast(1.15) brightness(1.02) drop-shadow(0 0 0px transparent);
+  }
+  100% {
+    clip-path: inset(0% 0 0 0);
+  }
 }
 
 .badge-info {
