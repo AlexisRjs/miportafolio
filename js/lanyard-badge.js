@@ -136,15 +136,28 @@ class LanyardBadge {
   updateDimensions() {
     const rect = this.container.getBoundingClientRect();
     const dpr = window.devicePixelRatio || 1;
-    this.width = rect.width || 420;
-    this.height = Math.max(rect.height || 550, 520);
+    const contW = rect.width || 420;
+    const contH = Math.max(rect.height || 550, 520);
 
-    this.canvas.width = this.width * dpr;
-    this.canvas.height = this.height * dpr;
+    // Padding around the canvas bounds so the rope can draw far outside container without clipping
+    this.padX = 350;
+    this.padY = 200;
+    this.canvasWidth = contW + this.padX * 2;
+    this.canvasHeight = contH + this.padY * 2;
+
+    this.canvas.width = this.canvasWidth * dpr;
+    this.canvas.height = this.canvasHeight * dpr;
+    this.canvas.style.position = 'absolute';
+    this.canvas.style.left = `-${this.padX}px`;
+    this.canvas.style.top = `-${this.padY}px`;
+    this.canvas.style.width = `${this.canvasWidth}px`;
+    this.canvas.style.height = `${this.canvasHeight}px`;
+
+    this.ctx.setTransform(1, 0, 0, 1, 0, 0);
     this.ctx.scale(dpr, dpr);
 
-    // Anchor at top center of container
-    this.anchor.x = this.width / 2;
+    // Anchor at top center of container (in local container coordinates)
+    this.anchor.x = contW / 2;
     this.anchor.y = 0;
 
     // Resting badge position hanging directly beneath anchor
@@ -192,11 +205,30 @@ class LanyardBadge {
         this.hasMoved = true;
       }
 
-      // Constrain position with elastic pull
-      this.vel.x = (targetX - this.pos.x) * 0.48;
-      this.vel.y = (targetY - this.pos.y) * 0.48;
-      this.pos.x = targetX;
-      this.pos.y = Math.max(targetY, 60); // Don't let it drag above anchor
+      // Constrain position with elastic pull and physical rope max stretch
+      const rawTargetX = targetX;
+      const rawTargetY = Math.max(targetY, 40); // Don't let it drag above anchor
+
+      // Max physical rope stretch distance (e.g., 420px max radius from anchor)
+      const maxRopeLen = 420;
+      const distFromAnchor = Math.hypot(rawTargetX - this.anchor.x, rawTargetY - this.anchor.y);
+
+      let finalX = rawTargetX;
+      let finalY = rawTargetY;
+
+      if (distFromAnchor > maxRopeLen) {
+        // Elastic rubber band resistance beyond max rope length
+        const excess = distFromAnchor - maxRopeLen;
+        const resistedDist = maxRopeLen + Math.pow(excess, 0.72) * 2.5;
+        const angle = Math.atan2(rawTargetY - this.anchor.y, rawTargetX - this.anchor.x);
+        finalX = this.anchor.x + Math.cos(angle) * resistedDist;
+        finalY = this.anchor.y + Math.sin(angle) * resistedDist;
+      }
+
+      this.vel.x = (finalX - this.pos.x) * 0.48;
+      this.vel.y = (finalY - this.pos.y) * 0.48;
+      this.pos.x = finalX;
+      this.pos.y = finalY;
     };
 
     const onEnd = () => {
@@ -290,17 +322,17 @@ class LanyardBadge {
   }
 
   render() {
-    this.ctx.clearRect(0, 0, this.width, this.height);
+    this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
 
-    const startX = this.anchor.x;
-    const startY = this.anchor.y;
+    // Points in canvas local space (offset by padX and padY)
+    const startX = this.anchor.x + this.padX;
+    const startY = this.anchor.y + this.padY;
 
     // The card is centered horizontally at this.pos.x
     // Top of the card is at this.pos.y
-    // Center of badge-hole is at this.pos.y + 17.5px
     // The clip is positioned with bottom hook inside hole, and top of ring at this.pos.y - 13px
-    const endX = this.pos.x;
-    const endY = this.pos.y - 13; // Connects directly to top of ring
+    const endX = this.pos.x + this.padX;
+    const endY = (this.pos.y - 13) + this.padY;
 
     // Control points for natural gravity curve
     const midX = (startX + endX) / 2 + (this.vel.x * 2.8);
@@ -318,21 +350,15 @@ class LanyardBadge {
     this.ctx.shadowBlur = 8;
     this.ctx.stroke();
 
-    // Inner Ribbon Body (Refined neutral grey)
+    // Inner Ribbon Body (Refined neutral solid grey)
     this.ctx.lineWidth = 12;
-    this.ctx.strokeStyle = '#9ca3af';
-    this.ctx.stroke();
-
-    // Center seam stitching
-    this.ctx.lineWidth = 1.2;
-    this.ctx.setLineDash([5, 5]);
-    this.ctx.strokeStyle = '#e5e7eb';
+    this.ctx.strokeStyle = '#828792';
     this.ctx.stroke();
     this.ctx.restore();
 
-    // 2. Position Metallic Clip - Perfectly centered and piercing into badge hole
+    // 2. Position Metallic Clip - Perfectly centered in native container coordinates
     if (this.clip) {
-      this.clip.style.transform = `translate3d(${endX}px, ${this.pos.y + 18}px, 0) translate(-50%, -100%) rotate(${this.rot * 0.85}deg)`;
+      this.clip.style.transform = `translate3d(${this.pos.x}px, ${this.pos.y + 18}px, 0) translate(-50%, -100%) rotate(${this.rot * 0.85}deg)`;
     }
 
     // 3. Position and 3D Rotate Badge Card - crisp 2D when stationary to prevent blur, dynamic 3D when swinging
