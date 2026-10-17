@@ -225,29 +225,10 @@ class LanyardBadge {
 
     window.addEventListener('mouseup', () => onEnd());
 
-    // Biometric scanner hover trigger (whenever user hovers over hanging card)
-    let lastScanTime = 0;
-    const onHoverScan = () => {
-      const now = performance.now();
-      if (now - lastScanTime > 650) {
-        lastScanTime = now;
-        this.triggerFaceScan();
-        if (window.soundEngine && typeof window.soundEngine.playHover === 'function') {
-          window.soundEngine.playHover();
-        }
-      }
-    };
-
-    this.card.addEventListener('mouseenter', onHoverScan);
-    if (this.photoFrame) {
-      this.photoFrame.addEventListener('mouseenter', onHoverScan);
-    }
-
     // Touch Listeners for Mobile
     this.card.addEventListener('touchstart', (e) => {
       if (e.touches.length > 0) {
         onStart(e.touches[0].clientX, e.touches[0].clientY, e.target);
-        onHoverScan();
       }
     }, { passive: true });
 
