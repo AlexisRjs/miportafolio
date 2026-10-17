@@ -54,10 +54,6 @@ class LanyardBadge {
         <div class="lanyard-card" id="lanyard-card" title="Arrastra el badge o interactúa con los enlaces">
           <div class="card-sheen" id="lanyard-sheen"></div>
           <div class="badge-hole"></div>
-          <div class="badge-scanner" id="lanyard-scanner">
-            <div class="badge-scanner-line"></div>
-            <div class="badge-scanner-trail"></div>
-          </div>
           <div class="badge-inner">
             <div class="badge-top-bar">
               <div class="badge-chip">
@@ -69,6 +65,10 @@ class LanyardBadge {
 
             <div class="badge-photo-container">
               <div class="badge-photo-frame" id="lanyard-photo-frame">
+                <div class="badge-scanner" id="lanyard-scanner">
+                  <div class="badge-scanner-line"></div>
+                  <div class="badge-scanner-trail"></div>
+                </div>
                 <img src="${this.options.avatarUrl}" alt="${this.options.badgeTitle}" class="badge-photo-img" id="lanyard-photo-img" loading="eager" decoding="sync" />
               </div>
             </div>

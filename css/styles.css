@@ -2334,14 +2334,14 @@ body.sabotage-mode #terminal {
   transform: scale(1.06);
 }
 
-/* Biometric scanner beam rising across the ENTIRE lanyard card */
+/* Biometric scanner beam revealing the face photo inside badge-photo-frame */
 .badge-scanner {
   position: absolute;
-  left: 0;
-  top: 102%;
-  width: 100%;
+  left: -5%;
+  top: 104%;
+  width: 110%;
   pointer-events: none;
-  z-index: 25;
+  z-index: 10;
   opacity: 0;
   display: flex;
   flex-direction: column;
@@ -2349,7 +2349,7 @@ body.sabotage-mode #terminal {
 }
 
 .lanyard-card.is-scanning .badge-scanner {
-  animation: cardScanBeam 1.35s cubic-bezier(0.25, 0.9, 0.35, 1) forwards;
+  animation: photoScanBeam 1.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .badge-scanner-line {
@@ -2373,68 +2373,49 @@ body.sabotage-mode #terminal {
 .badge-scanner-trail {
   position: relative;
   width: 100%;
-  height: 48px;
+  height: 52px;
   background: linear-gradient(to bottom,
-      rgba(0, 240, 255, 0.38) 0%,
+      rgba(0, 240, 255, 0.4) 0%,
       rgba(41, 151, 255, 0.18) 45%,
       rgba(0, 240, 255, 0) 100%);
   pointer-events: none;
 }
 
-@keyframes cardScanBeam {
+/* The blue bar sweeps up from bottom (100%) to top (-4%) */
+@keyframes photoScanBeam {
   0% {
-    top: 102%;
+    top: 104%;
     opacity: 0;
   }
 
-  4% {
+  5% {
     opacity: 1;
   }
 
-  94% {
+  92% {
     opacity: 1;
   }
 
   100% {
-    top: -6%;
+    top: -4%;
     opacity: 0;
   }
 }
 
-/* Face reveals as the blue scanner bar travels through the photo area */
+/* Face reveals in perfect 1:1 synchronization with the scanning blue bar */
 .lanyard-card.is-scanning .badge-photo-img {
-  animation: cardFaceReveal 1.35s cubic-bezier(0.25, 0.9, 0.35, 1) forwards;
+  animation: photoFaceReveal 1.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
-@keyframes cardFaceReveal {
+@keyframes photoFaceReveal {
   0% {
     clip-path: inset(100% 0 0 0);
     filter: contrast(1.22) brightness(1.2) drop-shadow(0 0 16px rgba(0, 240, 255, 0.6));
   }
 
-  36% {
-    clip-path: inset(100% 0 0 0);
-  }
-
-  46% {
-    clip-path: inset(80% 0 0 0);
-  }
-
-  58% {
-    clip-path: inset(52% 0 0 0);
-  }
-
-  72% {
-    clip-path: inset(24% 0 0 0);
-  }
-
-  86% {
-    clip-path: inset(0% 0 0 0);
-    filter: contrast(1.15) brightness(1.02) drop-shadow(0 0 0px transparent);
-  }
-
   100% {
     clip-path: inset(0% 0 0 0);
+    filter: contrast(1.08) brightness(1.02) drop-shadow(0 0 0px transparent);
   }
 }
 
