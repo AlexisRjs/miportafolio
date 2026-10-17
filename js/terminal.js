@@ -243,12 +243,11 @@ class InteractiveTerminal {
   cmdSkills() {
     this.printLine(`
       <div style="margin: 4px 0; font-family: monospace;">
-        <span class="cyan">[SKILLS] Tecnologias Principales:</span><br>
-        - <span class="violet">Stack MERN:</span> JavaScript (ES6+), React, Node.js, Express.js, MongoDB.<br>
-        - <span class="violet">Analitica:</span> Python (Pandas, NumPy), Power BI, SQL, DAX.<br>
-        - <span class="violet">Bases de datos & APIs:</span> MongoDB (NoSQL), PostgreSQL, MySQL, REST APIs, JWT.<br>
-        - <span class="violet">Herramientas:</span> Git, GitHub, VS Code, Postman, Linux.<br>
-        - <span class="violet">Ingenieria de Software:</span> Patrones de diseño, SOLID, clean code y Scrum.
+        <span class="cyan">[SKILLS] Tecnologias & Competencias Curriculares:</span><br>
+        - <span class="violet">Stack MERN (ITBA):</span> JavaScript (ES6+), ReactJS, Node.js, Express.js, MongoDB, Mongoose, REST APIs, JWT Auth.<br>
+        - <span class="violet">Data Analytics (Google):</span> SQL (consultas avanzadas, JOINs, agregaciones), Python (Pandas, NumPy), R (Tidyverse, ggplot2), Tableau, Power BI (DAX), Spreadsheets.<br>
+        - <span class="violet">Ingenieria en Sistemas (UTN FRRO):</span> Gestion de datos relacionales (SQL/DER/3FN), arquitectura de software, diagramas UML, POO, estructuras de datos y algoritmos, SO (hilos/memoria), redes TCP/IP.<br>
+        - <span class="violet">Desktop & Herramientas:</span> Tauri 2 (Rust), Git, GitHub, Linux, VS Code, Postman.
       </div>
     `);
   }
@@ -271,13 +270,14 @@ class InteractiveTerminal {
     this.printLine(`
       <div style="margin: 4px 0; font-family: monospace;">
         <span class="cyan">Alexis Fernando Rojas | Full Stack Developer & Data Analyst</span><br>
-        Estudiante de Ingenieria en Sistemas enfocado en arquitectura MERN, Tauri/Rust y analitica con Python y Power BI.<br><br>
+        Estudiante de Ingenieria en Sistemas de Informacion enfocado en arquitectura MERN, Tauri/Rust y analitica con SQL, Python, R, Tableau y Power BI.<br><br>
         <span class="yellow">Educacion:</span><br>
         - UTN FRRO: Ingenieria en Sistemas de Informacion (en curso)<br>
-        - ITBA: Full Stack Development (en curso)<br><br>
+        - ITBA: Desarrollo Web Full Stack MERN (en curso)<br><br>
         <span class="yellow">Certificaciones:</span><br>
-        - Google Data Analytics (v2) - Coursera: <a href="https://www.coursera.org/account/accomplishments/professional-cert/certificate/UOZETYMOBH9C" target="_blank" style="color:#2997ff;">Verificar</a><br>
-        - Google Data Analytics (v.3) - Credly: <a href="https://www.credly.com/badges/7187c248-fe57-402d-a017-b72be71df51d/public_url" target="_blank" style="color:#2997ff;">Verificar</a>
+        - Google Data Analytics (v2) - Coursera (SQL, R, Tableau, Spreadsheets): <a href="https://www.coursera.org/account/accomplishments/professional-cert/certificate/UOZETYMOBH9C" target="_blank" style="color:#2997ff;">Verificar</a><br>
+        - Google Data Analytics (v.3) - Credly: <a href="https://www.credly.com/badges/7187c248-fe57-402d-a017-b72be71df51d/public_url" target="_blank" style="color:#2997ff;">Verificar</a><br>
+        - Full Stack Developer MERN - ITBA (en curso)
       </div>
     `);
   }
