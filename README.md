@@ -42,7 +42,7 @@ Portafolio web interactivo de alto rendimiento desarrollado con enfoque en dise�
 - **MongoDB y Mongoose:** Modelado de datos NoSQL, esquemas atómicos e indexación.
 - **Autenticación y Seguridad:** JSON Web Tokens (JWT), encriptación bcryptjs y validación estricta de rutas.
 
-### Análisis de Datos y Business Intelligence
+### Análisis de Datos
 - **Python:** Análisis y transformación de datos con **Pandas** y computación numérica con **NumPy**.
 - **Microsoft Power BI y DAX:** Modelado dimensional de negocios, métricas financieras (TIR, VAN, Break-even) y tableros ejecutivos interactivos.
 - **SQL:** Consultas estructuradas (PostgreSQL / MySQL) y optimización relacional.

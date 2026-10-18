@@ -245,7 +245,7 @@ class InteractiveTerminal {
       <div style="margin: 4px 0; font-family: monospace;">
         <span class="cyan">[SKILLS] Tecnologias & Competencias Curriculares:</span><br>
         - <span class="violet">Stack MERN (ITBA):</span> JavaScript (ES6+), ReactJS, Node.js, Express.js, MongoDB, Mongoose, REST APIs, JWT Auth.<br>
-        - <span class="violet">Data Analytics (Google):</span> SQL (consultas avanzadas, JOINs, agregaciones), Python (Pandas, NumPy), R (Tidyverse, ggplot2), Tableau, Power BI (DAX), Spreadsheets.<br>
+        - <span class="violet">Data Analytics (Google):</span> SQL (consultas, JOINs, agregaciones), Python (Pandas, NumPy), R (Tidyverse, ggplot2), Tableau, Power BI (DAX), Spreadsheets.<br>
         - <span class="violet">Ingenieria en Sistemas (UTN FRRO):</span> Gestion de datos relacionales (SQL/DER/3FN), arquitectura de software, diagramas UML, POO, estructuras de datos y algoritmos, SO (hilos/memoria), redes TCP/IP.<br>
         - <span class="violet">Desktop & Herramientas:</span> Tauri 2 (Rust), Git, GitHub, Linux, VS Code, Postman.
       </div>
