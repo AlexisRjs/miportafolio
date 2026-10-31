@@ -75,7 +75,9 @@ document.addEventListener('DOMContentLoaded', () => {
  */
 function setupThemeToggle() {
   const themeBtn = document.getElementById('theme-toggle-btn');
-  const savedTheme = localStorage.getItem('alexis_theme') || 'dark';
+  const urlParams = new URLSearchParams(window.location.search);
+  const themeParam = urlParams.get('theme');
+  const savedTheme = (themeParam === 'light' || themeParam === 'dark') ? themeParam : (localStorage.getItem('alexis_theme') || 'dark');
   document.documentElement.setAttribute('data-theme', savedTheme);
   updateThemeIcon(savedTheme);
 
@@ -409,123 +411,58 @@ function renderProjects(filterCategory) {
   grid.innerHTML = '';
 
   filtered.forEach((p) => {
-    const isFeatured = p.featured && (filterCategory === 'all' || filtered.length === 1);
     const card = document.createElement('article');
-    card.className = isFeatured ? 'project-card featured-bento' : 'project-card bento-card';
+    card.className = 'project-card';
     card.setAttribute('data-border-glow', '');
-    card.setAttribute('data-glow-colors', isFeatured 
-      ? 'rgba(41,151,255,0.95), rgba(160,210,255,0.85), rgba(255,255,255,0.7)' 
-      : 'rgba(255,255,255,0.95), rgba(210,230,255,0.85), rgba(41,151,255,0.45)');
+    card.setAttribute('data-glow-colors', 'rgba(255,255,255,0.95), rgba(210,230,255,0.85), rgba(41,151,255,0.45)');
     card.setAttribute('data-edge-sensitivity', '40');
     card.setAttribute('data-border-radius', '24');
-    card.setAttribute('data-glow-radius', isFeatured ? '120' : '90');
+    card.setAttribute('data-glow-radius', '90');
 
-    if (isFeatured) {
-      card.innerHTML = `
-        <div class="featured-bento-content">
-          <div class="featured-badge-row">
-            <span class="project-category-badge featured-badge">${p.categoryLabel}</span>
-            <span class="featured-kicker">FLAGSHIP SHOWCASE</span>
+    card.innerHTML = `
+      <div class="project-media">
+        ${p.image ? `
+          <img src="${p.image}" alt="${p.title}" class="project-img" loading="lazy" />
+        ` : `
+          <div class="project-visual-mock" style="background: ${p.visualGrad};">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              ${p.iconSvg || '<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>'}
+            </svg>
           </div>
-
-          <h3 class="project-title featured-title">${p.title}</h3>
-          <p class="project-desc featured-desc">${p.shortDesc}</p>
-
-          ${p.metrics ? `
-            <div class="featured-metrics-grid">
-              ${p.metrics.map(m => `
-                <div class="featured-metric-tile">
-                  <span class="featured-metric-val">${m.val}</span>
-                  <span class="featured-metric-lbl">${m.label}</span>
-                </div>
-              `).join('')}
-            </div>
-          ` : ''}
-
-          <div class="project-tech-tags">
-            ${p.tags.map(t => `<span class="project-tech-tag">${t}</span>`).join('')}
-          </div>
-
-          <div class="project-footer featured-footer">
-            <button class="project-link-btn view-details-btn" data-id="${p.id}" aria-label="Ver Arquitectura Técnica de ${p.title}">
-              <span>Ver Arquitectura &amp; Docs</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </button>
-            <div class="project-action-icons">
-              ${p.liveUrl && p.liveUrl !== '#' ? `
-                <a href="${p.liveUrl}" target="_blank" rel="noopener" class="btn-icon" title="Ver Demo en Vivo" aria-label="Ver Demo en Vivo">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
-                </a>
-              ` : ''}
-              <a href="${p.githubUrl}" target="_blank" rel="noopener" class="btn-icon" title="Ver Código en GitHub" aria-label="Ver Código en GitHub">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
+        `}
+      </div>
+      <div class="project-body">
+        <h3 class="project-title">${p.title}</h3>
+        <p class="project-desc">${p.shortDesc}</p>
+        <div class="project-tech-tags">
+          ${p.tags.map(t => `<span class="project-tech-tag">${t}</span>`).join('')}
+        </div>
+        <div class="project-footer">
+          <button class="project-link-btn view-details-btn" data-id="${p.id}" aria-label="Ver Arquitectura de ${p.title}">
+            <span>Ver Arquitectura</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+          <div class="project-action-icons">
+            ${p.liveUrl && p.liveUrl !== '#' ? `
+              <a href="${p.liveUrl}" target="_blank" rel="noopener" class="btn-icon" title="Ver Demo en Vivo" aria-label="Ver Demo en Vivo">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
               </a>
-            </div>
+            ` : ''}
+            <a href="${p.githubUrl}" target="_blank" rel="noopener" class="btn-icon" title="Ver Repositorio en GitHub" aria-label="Ver Repositorio en GitHub">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
+            </a>
           </div>
         </div>
-
-        <div class="project-media featured-media">
-          ${p.image ? `
-            <img src="${p.image}" alt="${p.title}" class="project-img featured-img" loading="lazy" />
-          ` : `
-            <div class="project-visual-mock" style="background: ${p.visualGrad};">
-              <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.6">
-                ${p.iconSvg}
-              </svg>
-            </div>
-          `}
-          <div class="featured-media-glass-shine"></div>
-        </div>
-      `;
-    } else {
-      card.innerHTML = `
-        <div class="project-media">
-          ${p.image ? `
-            <img src="${p.image}" alt="${p.title}" class="project-img" loading="lazy" />
-          ` : `
-            <div class="project-visual-mock" style="background: ${p.visualGrad};">
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                ${p.iconSvg || '<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>'}
-              </svg>
-            </div>
-          `}
-          <span class="project-category-badge">${p.categoryLabel || p.category.toUpperCase()}</span>
-        </div>
-        <div class="project-body">
-          <h3 class="project-title">${p.title}</h3>
-          <p class="project-desc">${p.shortDesc}</p>
-          <div class="project-tech-tags">
-            ${p.tags.map(t => `<span class="project-tech-tag">${t}</span>`).join('')}
-          </div>
-          <div class="project-footer">
-            <button class="project-link-btn view-details-btn" data-id="${p.id}" aria-label="Ver Arquitectura de ${p.title}">
-              <span>Ver Arquitectura</span>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </button>
-            <div class="project-action-icons">
-              ${p.liveUrl && p.liveUrl !== '#' ? `
-                <a href="${p.liveUrl}" target="_blank" rel="noopener" class="btn-icon" title="Ver Demo en Vivo" aria-label="Ver Demo en Vivo">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
-                </a>
-              ` : ''}
-              <a href="${p.githubUrl}" target="_blank" rel="noopener" class="btn-icon" title="Ver Repositorio en GitHub" aria-label="Ver Repositorio en GitHub">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
-              </a>
-            </div>
-          </div>
-        </div>
-      `;
-    }
+      </div>
+    `;
 
     grid.appendChild(card);
     if (window.BorderGlow) {
       new BorderGlow(card, {
-        colors: isFeatured
-          ? ['rgba(41,151,255,0.95)', 'rgba(160,210,255,0.85)', 'rgba(255,255,255,0.7)']
-          : ['rgba(255,255,255,0.95)', 'rgba(210,230,255,0.85)', 'rgba(41,151,255,0.45)'],
+        colors: ['rgba(255,255,255,0.95)', 'rgba(210,230,255,0.85)', 'rgba(41,151,255,0.45)'],
         edgeSensitivity: 40,
         borderRadius: 24,
-        glowRadius: isFeatured ? 120 : 90,
+        glowRadius: 90,
         glowIntensity: 1.2
       });
     }
