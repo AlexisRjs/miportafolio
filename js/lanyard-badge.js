@@ -143,7 +143,23 @@ class LanyardBadge {
     this.updateDimensions();
     this.attachEvents();
     this.setupVisibilityObserver();
+    this.setupThemeObserver();
     this.animate();
+  }
+
+  setupThemeObserver() {
+    // Re-render rope whenever user switches between dark and light themes
+    if ('MutationObserver' in window) {
+      const observer = new MutationObserver((mutations) => {
+        for (const m of mutations) {
+          if (m.attributeName === 'data-theme') {
+            this.render();
+            break;
+          }
+        }
+      });
+      observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    }
   }
 
   setupVisibilityObserver() {
@@ -175,7 +191,7 @@ class LanyardBadge {
     const rect = this.container.getBoundingClientRect();
     // Clamp DPR to max 1.5 on mobile/touch screens to eliminate rasterization lag, 2 on desktop
     const rawDpr = window.devicePixelRatio || 1;
-    const dpr = this.isMobile ? Math.min(rawDpr, 1.5) : Math.min(rawDpr, 2);
+    this.dpr = this.isMobile ? Math.min(rawDpr, 1.5) : Math.min(rawDpr, 2);
     const contW = rect.width || 420;
     const contH = Math.max(rect.height || 550, 520);
 
@@ -185,16 +201,13 @@ class LanyardBadge {
     this.canvasWidth = contW + this.padX * 2;
     this.canvasHeight = contH + this.padY * 2;
 
-    this.canvas.width = this.canvasWidth * dpr;
-    this.canvas.height = this.canvasHeight * dpr;
+    this.canvas.width = Math.round(this.canvasWidth * this.dpr);
+    this.canvas.height = Math.round(this.canvasHeight * this.dpr);
     this.canvas.style.position = 'absolute';
     this.canvas.style.left = `-${this.padX}px`;
     this.canvas.style.top = `-${this.padY}px`;
     this.canvas.style.width = `${this.canvasWidth}px`;
     this.canvas.style.height = `${this.canvasHeight}px`;
-
-    this.ctx.setTransform(1, 0, 0, 1, 0, 0);
-    this.ctx.scale(dpr, dpr);
 
     // Anchor at top center of container (in local container coordinates)
     this.anchor.x = contW / 2;
@@ -208,6 +221,9 @@ class LanyardBadge {
       this.pos.x = this.restPos.x;
       this.pos.y = this.restPos.y;
     }
+
+    // Force an immediate redraw of the rope
+    this.render();
   }
 
   attachEvents() {
@@ -620,6 +636,11 @@ class LanyardBadge {
   }
 
   render() {
+    if (!this.ctx || !this.canvas) return;
+
+    // Ensure transform matrix matches current canvas DPR
+    const dpr = this.dpr || 1;
+    this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
 
     // Points in canvas local space (offset by padX and padY)

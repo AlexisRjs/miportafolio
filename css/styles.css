@@ -2616,12 +2616,14 @@ body.sabotage-mode #terminal {
   justify-content: center;
   align-items: flex-start;
   perspective: 1200px;
+  overflow: visible;
 }
 
 .lanyard-wrapper {
   position: relative;
   width: 100%;
   height: 100%;
+  overflow: visible;
 }
 
 .lanyard-rope-canvas {
