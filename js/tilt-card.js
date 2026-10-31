@@ -8,14 +8,13 @@ class TiltCardController {
   }
 
   init() {
+    // Disable completely on touch devices to conserve CPU/GPU
+    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || window.matchMedia('(pointer: coarse)').matches;
+    if (isTouch) return;
+
     this.cards.forEach((card) => {
       this.attachEvents(card);
     });
-
-    // Mobile Gyroscope support (if permitted)
-    if (window.DeviceOrientationEvent && typeof window.DeviceOrientationEvent.requestPermission !== 'function') {
-      window.addEventListener('deviceorientation', (e) => this.handleOrientation(e));
-    }
   }
 
   attachEvents(card) {

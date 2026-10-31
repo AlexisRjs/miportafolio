@@ -110,6 +110,10 @@ class BorderGlow {
 }
 
 function initAllBorderGlows() {
+  // Disable mouse border glow on touch devices to conserve CPU
+  const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || window.matchMedia('(pointer: coarse)').matches;
+  if (isTouch) return;
+
   const elements = document.querySelectorAll('[data-border-glow]');
   elements.forEach((el) => {
     const rawColors = el.getAttribute('data-glow-colors');

@@ -130,7 +130,23 @@ class LanyardBadge {
 
     this.updateDimensions();
     this.attachEvents();
+    this.setupVisibilityObserver();
     this.animate();
+  }
+
+  setupVisibilityObserver() {
+    this.isVisible = true;
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          this.isVisible = entry.isIntersecting;
+          if (this.isVisible && !this.animId) {
+            this.animate();
+          }
+        });
+      }, { threshold: 0.05 });
+      observer.observe(this.container);
+    }
   }
 
   updateDimensions() {
@@ -281,6 +297,10 @@ class LanyardBadge {
   }
 
   animate() {
+    if (!this.isVisible) {
+      this.animId = null;
+      return;
+    }
     this.updatePhysics();
     this.render();
     this.animId = requestAnimationFrame(() => this.animate());

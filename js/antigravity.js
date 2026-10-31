@@ -8,7 +8,8 @@ class AntigravityEngine {
     if (!this.canvas) return;
     this.ctx = this.canvas.getContext('2d');
     this.particles = [];
-    this.numParticles = window.innerWidth < 768 ? 35 : 65;
+    this.numParticles = window.innerWidth < 768 ? 16 : 65;
+    this.isMobile = window.innerWidth < 768 || window.matchMedia('(pointer: coarse)').matches;
     this.mouse = {
       x: null,
       y: null,
@@ -17,6 +18,7 @@ class AntigravityEngine {
     };
     this.colors = this.getThemeColors();
     this.animationFrameId = null;
+    this.isVisible = true;
 
     this.init();
   }
@@ -59,21 +61,35 @@ class AntigravityEngine {
 
     window.addEventListener('resize', () => {
       this.resize();
-      this.numParticles = window.innerWidth < 768 ? 35 : 65;
+      this.isMobile = window.innerWidth < 768 || window.matchMedia('(pointer: coarse)').matches;
+      this.numParticles = this.isMobile ? 16 : 65;
     });
 
-    window.addEventListener('mousemove', (e) => {
-      this.mouse.x = e.clientX;
-      this.mouse.y = e.clientY;
-      this.mouse.active = true;
-    });
+    if (!this.isMobile) {
+      window.addEventListener('mousemove', (e) => {
+        this.mouse.x = e.clientX;
+        this.mouse.y = e.clientY;
+        this.mouse.active = true;
+      });
 
-    window.addEventListener('mouseleave', () => {
-      this.mouse.active = false;
-    });
+      window.addEventListener('mouseleave', () => {
+        this.mouse.active = false;
+      });
 
-    window.addEventListener('click', (e) => {
-      this.createShockwave(e.clientX, e.clientY);
+      window.addEventListener('click', (e) => {
+        this.createShockwave(e.clientX, e.clientY);
+      });
+    }
+
+    // Pause canvas animation when tab is in background
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        this.isVisible = false;
+        if (this.animationFrameId) cancelAnimationFrame(this.animationFrameId);
+      } else {
+        this.isVisible = true;
+        this.animate();
+      }
     });
 
     this.animate();
@@ -93,12 +109,16 @@ class AntigravityEngine {
   }
 
   animate() {
+    if (!this.isVisible) return;
     this.ctx.clearRect(0, 0, this.width, this.height);
 
     for (let i = 0; i < this.particles.length; i++) {
       const p = this.particles[i];
       p.update(this.width, this.height, this.mouse);
       p.draw(this.ctx, this.colors);
+
+      // On mobile, skip the heavy O(N^2) connection lines calculation
+      if (this.isMobile) continue;
 
       for (let j = i + 1; j < this.particles.length; j++) {
         const p2 = this.particles[j];

@@ -214,33 +214,40 @@ function setupPillNav() {
     }
   });
 
-  // ScrollSpy to sync active link with current section
+  // ScrollSpy to sync active link with current section (throttled with rAF)
   const sections = ['hero', 'bio', 'terminal', 'projects', 'contact'];
+  let spyTicking = false;
 
   window.addEventListener('scroll', () => {
-    const scrollPos = window.scrollY + 200;
+    if (!spyTicking) {
+      window.requestAnimationFrame(() => {
+        const scrollPos = window.scrollY + 200;
 
-    sections.forEach((secId) => {
-      const sec = document.getElementById(secId);
-      if (!sec) return;
-      const top = sec.offsetTop;
-      const height = sec.offsetHeight;
-      if (scrollPos >= top && scrollPos < top + height) {
-        const correspondingLink = document.querySelector(`.pill-nav-bar .nav-link[data-section="${secId}"]`);
-        if (correspondingLink && !correspondingLink.classList.contains('active')) {
-          navLinks.forEach((l) => l.classList.remove('active'));
-          correspondingLink.classList.add('active');
-          if (!pillBar.matches(':hover')) {
-            moveToElement(correspondingLink);
+        sections.forEach((secId) => {
+          const sec = document.getElementById(secId);
+          if (!sec) return;
+          const top = sec.offsetTop;
+          const height = sec.offsetHeight;
+          if (scrollPos >= top && scrollPos < top + height) {
+            const correspondingLink = document.querySelector(`.pill-nav-bar .nav-link[data-section="${secId}"]`);
+            if (correspondingLink && !correspondingLink.classList.contains('active')) {
+              navLinks.forEach((l) => l.classList.remove('active'));
+              correspondingLink.classList.add('active');
+              if (!pillBar.matches(':hover')) {
+                moveToElement(correspondingLink);
+              }
+            }
+            const mobLink = document.querySelector(`.mobile-nav-link[data-section="${secId}"]`);
+            if (mobLink && !mobLink.classList.contains('active')) {
+              document.querySelectorAll('.mobile-nav-link').forEach((l) => l.classList.remove('active'));
+              mobLink.classList.add('active');
+            }
           }
-        }
-        const mobLink = document.querySelector(`.mobile-nav-link[data-section="${secId}"]`);
-        if (mobLink && !mobLink.classList.contains('active')) {
-          document.querySelectorAll('.mobile-nav-link').forEach((l) => l.classList.remove('active'));
-          mobLink.classList.add('active');
-        }
-      }
-    });
+        });
+        spyTicking = false;
+      });
+      spyTicking = true;
+    }
   }, { passive: true });
 }
 
@@ -874,13 +881,20 @@ function setupMobileNav() {
  */
 function setupScrollNavbar() {
   const nav = document.querySelector('.navbar');
+  let ticking = false;
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 40) {
-      nav.classList.add('scrolled');
-    } else {
-      nav.classList.remove('scrolled');
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        if (window.scrollY > 40) {
+          nav.classList.add('scrolled');
+        } else {
+          nav.classList.remove('scrolled');
+        }
+        ticking = false;
+      });
+      ticking = true;
     }
-  });
+  }, { passive: true });
 }
 
 /**

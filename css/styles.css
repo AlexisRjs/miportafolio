@@ -2806,7 +2806,7 @@ body.sabotage-mode #terminal {
 }
 
 .lanyard-card.is-scanning .badge-scanner {
-  animation: photoScanBeam 1.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: photoScanBeam 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .badge-scanner-line {
@@ -2860,7 +2860,7 @@ body.sabotage-mode #terminal {
 
 /* Face & bust reveals in perfect 1:1 synchronization with the scanning black bar */
 .lanyard-card.is-scanning .badge-photo-img {
-  animation: photoFaceReveal 1.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: photoFaceReveal 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 @keyframes photoFaceReveal {
