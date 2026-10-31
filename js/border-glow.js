@@ -50,13 +50,18 @@ class BorderGlow {
   }
 
   attachEvents() {
-    this.el.addEventListener('mouseenter', () => {
+    const updateBounds = () => {
       this.bounds = this.el.getBoundingClientRect();
+    };
+
+    this.el.addEventListener('mouseenter', () => {
+      updateBounds();
       this.isHovered = true;
     });
 
     this.el.addEventListener('mousemove', (e) => {
-      if (!this.bounds) this.bounds = this.el.getBoundingClientRect();
+      // Refresh bounds if scrolled or not cached
+      if (!this.bounds) updateBounds();
       const x = e.clientX - this.bounds.left;
       const y = e.clientY - this.bounds.top;
 
@@ -97,6 +102,10 @@ class BorderGlow {
     window.addEventListener('resize', () => {
       this.bounds = null;
     });
+
+    window.addEventListener('scroll', () => {
+      this.bounds = null;
+    }, { passive: true });
   }
 }
 
