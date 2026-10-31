@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
       linkedinUrl: 'https://www.linkedin.com/in/alexis-fernando-rojas-94922b250',
       instagramUrl: 'https://instagram.com/alexisrojas.1',
       instagramUsername: 'alexisrojas.1',
-      avatarUrl: 'assets/Retrato monocromo con efecto glitch.png',
+      avatarUrl: 'assets/perfil.png',
       badgeTitle: 'Alexis',
       badgeRole: 'Full Stack & Data Analyst'
     });

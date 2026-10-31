@@ -15,7 +15,7 @@ class LanyardBadge {
       linkedinUrl: options.linkedinUrl || 'https://www.linkedin.com/in/alexis-fernando-rojas-94922b250',
       instagramUrl: options.instagramUrl || 'https://instagram.com/alexisrojas.1',
       instagramUsername: options.instagramUsername || 'alexisrojas.1',
-      avatarUrl: options.avatarUrl || 'assets/Retrato monocromo con efecto glitch.png',
+      avatarUrl: options.avatarUrl || 'assets/perfil.png',
       badgeTitle: options.badgeTitle || 'Alexis',
       badgeRole: options.badgeRole || 'Full Stack & Data Analyst',
       restLength: options.restLength || 135, // Length of lanyard strap
