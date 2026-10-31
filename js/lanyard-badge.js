@@ -338,21 +338,26 @@ class LanyardBadge {
     const midX = (startX + endX) / 2 + (this.vel.x * 2.8);
     const midY = (startY + endY) / 2 + Math.abs(endX - startX) * 0.16;
 
-    // 1. Draw Grey Titanium Ribbon (Visible on both Dark and Light modes)
+    // 1. Draw Ribbon (Dynamic Theme: White in Dark Mode, Black in Light Mode)
+    const isLightMode = document.documentElement.getAttribute('data-theme') === 'light';
+    const outerStroke = isLightMode ? '#181b1e' : '#e4e7ec';
+    const innerStroke = isLightMode ? '#272b30' : '#f8f9fa';
+    const shadowColor = isLightMode ? 'rgba(0, 0, 0, 0.15)' : 'rgba(0, 0, 0, 0.55)';
+
     this.ctx.save();
     this.ctx.beginPath();
     this.ctx.moveTo(startX, startY);
     this.ctx.quadraticCurveTo(midX, midY, endX, endY);
     this.ctx.lineWidth = 16;
     this.ctx.lineCap = 'round';
-    this.ctx.strokeStyle = '#52525b';
-    this.ctx.shadowColor = 'rgba(0,0,0,0.35)';
+    this.ctx.strokeStyle = outerStroke;
+    this.ctx.shadowColor = shadowColor;
     this.ctx.shadowBlur = 8;
     this.ctx.stroke();
 
-    // Inner Ribbon Body (Refined neutral solid grey)
+    // Inner Ribbon Body
     this.ctx.lineWidth = 12;
-    this.ctx.strokeStyle = '#828792';
+    this.ctx.strokeStyle = innerStroke;
     this.ctx.stroke();
     this.ctx.restore();
 
