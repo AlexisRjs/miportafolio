@@ -39,6 +39,8 @@ class LanyardBadge {
     this.hasMoved = false;
     this.mouseOffset = { x: 0, y: 0 };
     this.animId = null;
+    this.isSleeping = false;
+    this.isMobile = false;
 
     this.init();
   }
@@ -140,8 +142,8 @@ class LanyardBadge {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           this.isVisible = entry.isIntersecting;
-          if (this.isVisible && !this.animId) {
-            this.animate();
+          if (this.isVisible) {
+            this.wakeUp();
           }
         });
       }, { threshold: 0.05 });
@@ -149,15 +151,27 @@ class LanyardBadge {
     }
   }
 
+  wakeUp() {
+    if (this.isSleeping || !this.animId) {
+      this.isSleeping = false;
+      if (!this.animId && this.isVisible) {
+        this.animate();
+      }
+    }
+  }
+
   updateDimensions() {
+    this.isMobile = window.innerWidth <= 768 || window.matchMedia('(pointer: coarse)').matches;
     const rect = this.container.getBoundingClientRect();
-    const dpr = window.devicePixelRatio || 1;
+    // Clamp DPR to max 1.5 on mobile/touch screens to eliminate rasterization lag, 2 on desktop
+    const rawDpr = window.devicePixelRatio || 1;
+    const dpr = this.isMobile ? Math.min(rawDpr, 1.5) : Math.min(rawDpr, 2);
     const contW = rect.width || 420;
     const contH = Math.max(rect.height || 550, 520);
 
     // Padding around the canvas bounds so the rope can draw far outside container without clipping
-    this.padX = 350;
-    this.padY = 200;
+    this.padX = this.isMobile ? 180 : 350;
+    this.padY = this.isMobile ? 120 : 200;
     this.canvasWidth = contW + this.padX * 2;
     this.canvasHeight = contH + this.padY * 2;
 
@@ -198,6 +212,7 @@ class LanyardBadge {
 
       this.isDragging = true;
       this.hasMoved = false;
+      this.wakeUp();
       this.dragStart.x = clientX;
       this.dragStart.y = clientY;
 
@@ -291,18 +306,23 @@ class LanyardBadge {
 
   triggerFaceScan() {
     if (!this.card) return;
+    this.wakeUp();
     this.card.classList.remove('is-scanning');
     void this.card.offsetWidth; // Force synchronous reflow to restart CSS animation across entire card
     this.card.classList.add('is-scanning');
   }
 
   animate() {
-    if (!this.isVisible) {
+    if (!this.isVisible || this.isSleeping) {
       this.animId = null;
       return;
     }
     this.updatePhysics();
     this.render();
+    if (this.isSleeping) {
+      this.animId = null;
+      return;
+    }
     this.animId = requestAnimationFrame(() => this.animate());
   }
 
@@ -315,7 +335,7 @@ class LanyardBadge {
       this.vel.x = (this.vel.x + fx) * this.options.damping;
       this.vel.y = (this.vel.y + fy) * this.options.damping;
 
-      // Threshold to stop micro-jitter and bring to complete stillness
+      // Threshold to stop micro-jitter and put physics engine to sleep
       if (
         Math.abs(this.vel.x) < 0.003 &&
         Math.abs(this.vel.y) < 0.003 &&
@@ -326,6 +346,9 @@ class LanyardBadge {
         this.pos.y = this.restPos.y;
         this.vel.x = 0;
         this.vel.y = 0;
+        this.rot = 0;
+        this.rotVel = 0;
+        this.isSleeping = true;
       } else {
         this.pos.x += this.vel.x;
         this.pos.y += this.vel.y;
@@ -371,8 +394,12 @@ class LanyardBadge {
     this.ctx.lineWidth = 16;
     this.ctx.lineCap = 'round';
     this.ctx.strokeStyle = outerStroke;
-    this.ctx.shadowColor = shadowColor;
-    this.ctx.shadowBlur = 8;
+    
+    // Omit CPU-bound shadowBlur on mobile devices for buttery smooth 60fps
+    if (!this.isMobile) {
+      this.ctx.shadowColor = shadowColor;
+      this.ctx.shadowBlur = 8;
+    }
     this.ctx.stroke();
 
     // Inner Ribbon Body
@@ -386,10 +413,13 @@ class LanyardBadge {
       this.clip.style.transform = `translate3d(${this.pos.x}px, ${this.pos.y + 18}px, 0) translate(-50%, -100%) rotate(${this.rot * 0.85}deg)`;
     }
 
-    // 3. Position and 3D Rotate Badge Card - crisp 2D when stationary to prevent blur, dynamic 3D when swinging
+    // 3. Position and Rotate Badge Card
     if (this.card) {
-      if (!this.isDragging && Math.abs(this.vel.x) < 0.005 && Math.abs(this.vel.y) < 0.005 && Math.abs(this.rot) < 0.02) {
+      if (this.isSleeping || (!this.isDragging && Math.abs(this.vel.x) < 0.005 && Math.abs(this.vel.y) < 0.005 && Math.abs(this.rot) < 0.02)) {
         this.card.style.transform = `translate3d(${Math.round(this.pos.x)}px, ${Math.round(this.pos.y)}px, 0) translate(-50%, 0)`;
+      } else if (this.isMobile) {
+        // Fast hardware-accelerated 2D swing on mobile (bypasses heavy 3D matrix recomposition)
+        this.card.style.transform = `translate3d(${this.pos.x.toFixed(1)}px, ${this.pos.y.toFixed(1)}px, 0) translate(-50%, 0) rotateZ(${this.rot.toFixed(1)}deg)`;
       } else {
         const dynamicTiltX = -this.vel.y * 1.6;
         const dynamicTiltY = this.vel.x * 2.4;
@@ -397,7 +427,7 @@ class LanyardBadge {
       }
 
       // Specular Sheen reflection
-      if (this.sheen) {
+      if (this.sheen && !this.isMobile) {
         const sheenX = 50 + (this.rot * 2.5);
         this.sheen.style.background = `radial-gradient(circle at ${sheenX}% 30%, rgba(255,255,255,0.25), transparent 70%)`;
       }

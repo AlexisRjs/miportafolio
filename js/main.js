@@ -939,33 +939,57 @@ function setupRunawayButton() {
     // Add mild variation for natural organic feel
     angle += (Math.random() - 0.5) * 0.5;
 
-    // Smooth, controlled glide distance (100px - 140px)
-    const distance = 100 + Math.random() * 40;
+    const isMobile = window.innerWidth <= 768 || window.matchMedia('(pointer: coarse)').matches;
+    // Smooth, controlled glide distance (70px - 100px on mobile, 100px - 140px on desktop)
+    const distance = isMobile ? (70 + Math.random() * 30) : (100 + Math.random() * 40);
 
     let targetX = currentX + Math.cos(angle) * distance;
     let targetY = currentY + Math.sin(angle) * distance;
 
-    // Keep 100% visible inside #hero (safe margin of 24px)
     const btnRect = btn.getBoundingClientRect();
-    const btnWidth = btnRect.width || anchorRect.width;
-    const btnHeight = btnRect.height || anchorRect.height;
-    const padding = 24;
+    const btnWidth = btnRect.width || anchorRect.width || 180;
+    const btnHeight = btnRect.height || anchorRect.height || 48;
+    const padding = 16;
 
-    const minX = heroRect.left + padding - anchorRect.left;
-    const maxX = heroRect.right - padding - btnWidth - anchorRect.left;
-    const minY = heroRect.top + padding - anchorRect.top;
-    const maxY = heroRect.bottom - padding - btnHeight - anchorRect.top;
+    // Viewport-aware boundary limits: button must stay 100% inside current visible screen AND #hero
+    const viewportLeft = 12;
+    const viewportRight = window.innerWidth - 12;
+    const viewportTop = 75; // Safe margin below fixed navbar
+    const viewportBottom = window.innerHeight - 16;
 
-    targetX = Math.max(minX, Math.min(maxX, targetX));
-    targetY = Math.max(minY, Math.min(maxY, targetY));
+    const effectiveLeft = Math.max(heroRect.left + padding, viewportLeft);
+    const effectiveRight = Math.min(heroRect.right - padding, viewportRight);
+    const effectiveTop = Math.max(heroRect.top + padding, viewportTop);
+    const effectiveBottom = Math.min(heroRect.bottom - padding, viewportBottom);
 
-    // If still too close to cursor after boundary clamping, glide along opposite vertical space
+    const minX = effectiveLeft - anchorRect.left;
+    const maxX = effectiveRight - btnWidth - anchorRect.left;
+    const minY = effectiveTop - anchorRect.top;
+    const maxY = effectiveBottom - btnHeight - anchorRect.top;
+
+    if (minX <= maxX) {
+      targetX = Math.max(minX, Math.min(maxX, targetX));
+    } else {
+      targetX = (minX + maxX) / 2;
+    }
+
+    if (minY <= maxY) {
+      targetY = Math.max(minY, Math.min(maxY, targetY));
+    } else {
+      targetY = (minY + maxY) / 2;
+    }
+
+    // If still too close to cursor/touch point after boundary clamping, dodge toward opposite available space
     if (typeof mouseX === 'number' && typeof mouseY === 'number') {
       const projX = homeCenterX + targetX;
       const projY = homeCenterY + targetY;
-      if (Math.hypot(mouseX - projX, mouseY - projY) < 75) {
-        targetY = (targetY > (minY + maxY) / 2) ? minY + 20 : maxY - 20;
-        targetX = Math.max(minX, Math.min(maxX, targetX));
+      if (Math.hypot(mouseX - projX, mouseY - projY) < 65) {
+        if (minY <= maxY) {
+          targetY = (targetY > (minY + maxY) / 2) ? minY + 10 : maxY - 10;
+        }
+        if (minX <= maxX) {
+          targetX = (targetX > (minX + maxX) / 2) ? minX + 10 : maxX - 10;
+        }
       }
     }
 
