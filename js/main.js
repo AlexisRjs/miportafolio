@@ -90,10 +90,6 @@ function setupThemeToggle() {
       localStorage.setItem('alexis_theme', nextTheme);
       updateThemeIcon(nextTheme);
 
-      if (window.antigravityInstance) {
-        window.antigravityInstance.updateColors();
-      }
-
       if (window.soundEngine) {
         window.soundEngine.playToggle();
       }
