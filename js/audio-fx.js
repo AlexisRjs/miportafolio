@@ -5,7 +5,9 @@
 class SoundEngine {
   constructor() {
     this.ctx = null;
-    this.muted = localStorage.getItem('alexis_portfolio_muted') === 'true';
+    const storedMuted = localStorage.getItem('alexis_portfolio_muted');
+    // Default to MUTED unless user explicitly turned it ON
+    this.muted = storedMuted === null ? true : storedMuted === 'true';
     this.initialized = false;
   }
 
