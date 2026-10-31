@@ -42,6 +42,15 @@ class LanyardBadge {
     this.isSleeping = false;
     this.isMobile = false;
 
+    // Particle Morphing State
+    this.particles = [];
+    this.particleCanvas = null;
+    this.particleCtx = null;
+    this.particlesReady = false;
+    this.morphProgress = 0;
+    this.isMorphing = false;
+    this.morphAnimId = null;
+
     this.init();
   }
 
@@ -67,10 +76,7 @@ class LanyardBadge {
 
             <div class="badge-photo-container">
               <div class="badge-photo-frame" id="lanyard-photo-frame">
-                <div class="badge-scanner" id="lanyard-scanner">
-                  <div class="badge-scanner-line"></div>
-                  <div class="badge-scanner-trail"></div>
-                </div>
+                <canvas class="badge-particle-canvas" id="lanyard-particle-canvas"></canvas>
                 <img src="${this.options.avatarUrl}" alt="${this.options.badgeTitle}" class="badge-photo-img" id="lanyard-photo-img" loading="eager" decoding="sync" />
               </div>
             </div>
@@ -116,18 +122,22 @@ class LanyardBadge {
     this.sheen = this.container.querySelector('#lanyard-sheen');
     this.photoFrame = this.container.querySelector('#lanyard-photo-frame');
     this.photoImg = this.container.querySelector('#lanyard-photo-img');
+    this.particleCanvas = this.container.querySelector('#lanyard-particle-canvas');
+    if (this.particleCanvas) {
+      this.particleCtx = this.particleCanvas.getContext('2d');
+    }
 
-    // Trigger biometric scan animation on entrance across the entire card
+    // Trigger face particle convergence on load
     if (this.photoImg) {
-      if (this.photoImg.complete) {
-        setTimeout(() => this.triggerFaceScan(), 300);
+      if (this.photoImg.complete && this.photoImg.naturalWidth > 0) {
+        setTimeout(() => this.triggerFaceParticleMorph(), 250);
       } else {
         this.photoImg.addEventListener('load', () => {
-          setTimeout(() => this.triggerFaceScan(), 200);
+          setTimeout(() => this.triggerFaceParticleMorph(), 200);
         }, { once: true });
       }
     } else {
-      setTimeout(() => this.triggerFaceScan(), 300);
+      setTimeout(() => this.triggerFaceParticleMorph(), 250);
     }
 
     this.updateDimensions();
@@ -305,11 +315,227 @@ class LanyardBadge {
   }
 
   triggerFaceScan() {
-    if (!this.card) return;
+    this.triggerFaceParticleMorph();
+  }
+
+  triggerFaceParticleMorph() {
+    if (!this.photoFrame || !this.particleCanvas || !this.particleCtx) return;
     this.wakeUp();
-    this.card.classList.remove('is-scanning');
-    void this.card.offsetWidth; // Force synchronous reflow to restart CSS animation across entire card
-    this.card.classList.add('is-scanning');
+
+    // If particles haven't been sampled from the photo yet, sample now
+    if (!this.particlesReady) {
+      this.sampleFaceParticles();
+    } else {
+      this.resetFaceParticles();
+    }
+
+    if (this.particles.length === 0) {
+      if (this.photoImg) this.photoImg.classList.add('is-revealed');
+      return;
+    }
+
+    if (this.photoImg) {
+      this.photoImg.classList.remove('is-revealed');
+    }
+
+    this.isMorphing = true;
+    this.morphProgress = 0;
+    const startTime = performance.now();
+    const duration = 1600; // 1.6s smooth cinematic convergence
+
+    if (this.morphAnimId) {
+      cancelAnimationFrame(this.morphAnimId);
+    }
+
+    const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
+    const easeOutBack = (t) => {
+      const c1 = 1.25;
+      const c3 = c1 + 1;
+      return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2);
+    };
+
+    const step = (now) => {
+      const elapsed = now - startTime;
+      const rawP = Math.min(elapsed / duration, 1);
+      this.morphProgress = rawP;
+
+      const pPos = easeOutBack(Math.min(rawP * 1.08, 1));
+      const pAlpha = easeOutCubic(Math.min(rawP * 1.2, 1));
+
+      this.renderFaceParticles(pPos, pAlpha, rawP);
+
+      // Once particles lock into place (around 70% progress), smoothly cross-fade the high-res crisp portrait image
+      if (rawP >= 0.70 && this.photoImg && !this.photoImg.classList.contains('is-revealed')) {
+        this.photoImg.classList.add('is-revealed');
+      }
+
+      if (rawP < 1) {
+        this.morphAnimId = requestAnimationFrame(step);
+      } else {
+        this.isMorphing = false;
+        this.morphAnimId = null;
+        // Fade out particle canvas cleanly after the photo is fully visible
+        setTimeout(() => {
+          if (!this.isMorphing && this.particleCtx && this.particleCanvas) {
+            this.particleCtx.clearRect(0, 0, this.particleCanvas.width, this.particleCanvas.height);
+          }
+        }, 400);
+      }
+    };
+
+    this.morphAnimId = requestAnimationFrame(step);
+  }
+
+  sampleFaceParticles() {
+    if (!this.photoImg || !this.photoFrame) return;
+
+    const frameRect = this.photoFrame.getBoundingClientRect();
+    const w = Math.round(frameRect.width || 220);
+    const h = Math.round(frameRect.height || 250);
+
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    this.particleCanvas.width = w * dpr;
+    this.particleCanvas.height = h * dpr;
+    this.particleCanvas.style.width = `${w}px`;
+    this.particleCanvas.style.height = `${h}px`;
+    this.particleCtx.setTransform(1, 0, 0, 1, 0, 0);
+    this.particleCtx.scale(dpr, dpr);
+
+    // Create an offscreen canvas to sample pixels from the real loaded face image
+    const offCanvas = document.createElement('canvas');
+    offCanvas.width = w;
+    offCanvas.height = h;
+    const offCtx = offCanvas.getContext('2d');
+    if (!offCtx) return;
+
+    // Draw the image exactly matching CSS object-fit: contain
+    const imgW = this.photoImg.naturalWidth || w;
+    const imgH = this.photoImg.naturalHeight || h;
+    const imgRatio = imgW / imgH;
+    const frameRatio = w / h;
+
+    let drawW, drawH, drawX, drawY;
+    if (imgRatio > frameRatio) {
+      drawW = w;
+      drawH = w / imgRatio;
+      drawX = 0;
+      drawY = (h - drawH) / 2;
+    } else {
+      drawH = h;
+      drawW = h * imgRatio;
+      drawX = (w - drawW) / 2;
+      drawY = 0;
+    }
+
+    try {
+      offCtx.drawImage(this.photoImg, drawX, drawY, drawW, drawH);
+      const imgData = offCtx.getImageData(0, 0, w, h).data;
+
+      // Sample step: 3px on desktop, 4px on mobile for optimal density and 60fps performance
+      const step = this.isMobile ? 4 : 3;
+      this.particles = [];
+
+      for (let y = 0; y < h; y += step) {
+        for (let x = 0; x < w; x += step) {
+          const idx = (y * w + x) * 4;
+          const a = imgData[idx + 3];
+          const r = imgData[idx];
+          const g = imgData[idx + 1];
+          const b = imgData[idx + 2];
+
+          // Check if pixel belongs to Alexis' face/figure (not transparent and visible)
+          if (a > 40 && (r > 15 || g > 15 || b > 15)) {
+            // Determine side of origin: left or right
+            const fromLeft = Math.random() < 0.5;
+            const startX = fromLeft
+              ? -Math.random() * (w * 0.9) - 30
+              : w + Math.random() * (w * 0.9) + 30;
+            // Spread along Y with natural organic dispersion
+            const startY = y + (Math.random() - 0.5) * (h * 0.6);
+
+            // Slightly tint toward cyber glow matching the palette
+            this.particles.push({
+              targetX: x,
+              targetY: y,
+              startX: startX,
+              startY: startY,
+              // Jitter/curl effect in transit
+              swayFreq: 1.5 + Math.random() * 3,
+              swayAmp: (Math.random() - 0.5) * 22,
+              delay: Math.random() * 0.28, // slight stagger so points arrive in a dynamic wave
+              size: (step * 0.75) + Math.random() * 0.6,
+              r: r,
+              g: g,
+              b: b,
+              a: a / 255
+            });
+          }
+        }
+      }
+
+      this.particlesReady = true;
+    } catch (e) {
+      console.warn('Could not sample image pixels (CORS or canvas error):', e);
+      this.particlesReady = false;
+      if (this.photoImg) this.photoImg.classList.add('is-revealed');
+    }
+  }
+
+  resetFaceParticles() {
+    if (!this.particleCanvas || !this.photoFrame) return;
+    const w = this.particleCanvas.width / (Math.min(window.devicePixelRatio || 1, 2));
+    const h = this.particleCanvas.height / (Math.min(window.devicePixelRatio || 1, 2));
+
+    for (let i = 0; i < this.particles.length; i++) {
+      const p = this.particles[i];
+      const fromLeft = Math.random() < 0.5;
+      p.startX = fromLeft ? -Math.random() * (w * 0.9) - 30 : w + Math.random() * (w * 0.9) + 30;
+      p.startY = p.targetY + (Math.random() - 0.5) * (h * 0.6);
+    }
+  }
+
+  renderFaceParticles(pPos, pAlpha, rawProgress) {
+    if (!this.particleCtx || !this.particleCanvas) return;
+    const w = this.particleCanvas.width;
+    const h = this.particleCanvas.height;
+
+    this.particleCtx.clearRect(0, 0, w, h);
+
+    const isLightMode = document.documentElement.getAttribute('data-theme') === 'light';
+
+    for (let i = 0; i < this.particles.length; i++) {
+      const p = this.particles[i];
+
+      // Stagger per-particle progress
+      const adjustedP = Math.max(0, Math.min(1, (rawProgress - p.delay) / (1 - p.delay)));
+      if (adjustedP <= 0) continue;
+
+      // Ease position
+      const ease = 1 - Math.pow(1 - adjustedP, 3);
+      const curX = p.startX + (p.targetX - p.startX) * ease;
+      // Perpendicular wave sway that dampens as particles approach target
+      const sway = Math.sin(adjustedP * Math.PI * p.swayFreq) * p.swayAmp * (1 - adjustedP);
+      const curY = p.startY + (p.targetY - p.startY) * ease + sway;
+
+      // Dot opacity rises quickly then settles
+      const alpha = Math.min(adjustedP * 1.4, 1) * p.a;
+
+      // Color: Cyber blue/white tint when flying, settling into real pixel color
+      let drawR = p.r;
+      let drawG = p.g;
+      let drawB = p.b;
+
+      if (adjustedP < 0.85) {
+        const glowLerp = 1 - (adjustedP / 0.85);
+        // Cool high-tech glow tint while moving (cyan/electric blue accent)
+        drawR = Math.round(p.r * (1 - glowLerp) + 120 * glowLerp);
+        drawG = Math.round(p.g * (1 - glowLerp) + 200 * glowLerp);
+        drawB = Math.round(p.b * (1 - glowLerp) + 255 * glowLerp);
+      }
+
+      this.particleCtx.fillStyle = `rgba(${drawR}, ${drawG}, ${drawB}, ${alpha.toFixed(2)})`;
+      this.particleCtx.fillRect(curX, curY, p.size, p.size);
+    }
   }
 
   animate() {

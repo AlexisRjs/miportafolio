@@ -2775,92 +2775,23 @@ body.sabotage-mode #terminal {
   filter: contrast(1.08) brightness(1.02);
   image-rendering: -webkit-optimize-contrast;
   image-rendering: crisp-edges;
-  clip-path: inset(0% 0 0 0);
   transform: scale(1.06);
-}
-
-/* Biometric scanner beam revealing the photo inside badge-photo-frame */
-.badge-scanner {
-  position: absolute;
-  left: -5%;
-  top: 104%;
-  width: 110%;
-  pointer-events: none;
-  z-index: 10;
   opacity: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  transition: opacity 0.5s ease-out;
 }
 
-.lanyard-card.is-scanning .badge-scanner {
-  animation: photoScanBeam 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+.badge-photo-img.is-revealed {
+  opacity: 1;
 }
 
-.badge-scanner-line {
-  position: relative;
+.badge-particle-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 3.5px;
-  background: linear-gradient(90deg,
-      rgba(20, 24, 28, 0.2) 0%,
-      rgba(15, 17, 21, 0.95) 15%,
-      #090a0c 50%,
-      rgba(15, 17, 21, 0.95) 85%,
-      rgba(20, 24, 28, 0.2) 100%);
-  box-shadow:
-    0 0 8px rgba(0, 0, 0, 0.9),
-    0 0 18px rgba(0, 0, 0, 0.75),
-    0 0 28px rgba(33, 37, 41, 0.6);
-  border-radius: 2px;
-}
-
-.badge-scanner-trail {
-  position: relative;
-  width: 100%;
-  height: 48px;
-  background: linear-gradient(to bottom,
-      rgba(10, 12, 16, 0.45) 0%,
-      rgba(26, 30, 36, 0.2) 45%,
-      rgba(0, 0, 0, 0) 100%);
+  height: 100%;
   pointer-events: none;
-}
-
-/* The black bar sweeps up from bottom (100%) to top (-4%) */
-@keyframes photoScanBeam {
-  0% {
-    top: 104%;
-    opacity: 0;
-  }
-
-  5% {
-    opacity: 1;
-  }
-
-  92% {
-    opacity: 1;
-  }
-
-  100% {
-    top: -4%;
-    opacity: 0;
-  }
-}
-
-/* Face & bust reveals in perfect 1:1 synchronization with the scanning black bar */
-.lanyard-card.is-scanning .badge-photo-img {
-  animation: photoFaceReveal 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-
-@keyframes photoFaceReveal {
-  0% {
-    clip-path: inset(100% 0 0 0);
-    filter: contrast(1.22) brightness(1.2) drop-shadow(0 0 12px rgba(0, 0, 0, 0.6));
-  }
-
-  100% {
-    clip-path: inset(0% 0 0 0);
-    filter: contrast(1.08) brightness(1.02) drop-shadow(0 0 0px transparent);
-  }
+  z-index: 5;
 }
 
 .badge-info {
