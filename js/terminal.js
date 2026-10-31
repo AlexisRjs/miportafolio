@@ -256,11 +256,9 @@ class InteractiveTerminal {
     this.printLine(`
       <div style="margin: 4px 0; font-family: monospace;">
         <span class="cyan">[PROJECTS] Proyectos Reales:</span><br>
-        1. <span class="emerald">LibreMath:</span> Suite de ingenieria en Rust, Tauri 2, KaTeX y D3.js.<br>
-        2. <span class="emerald">E-Commerce MERN:</span> Plataforma comercial completa con catalogo, carrito y auth JWT.<br>
-        3. <span class="emerald">Auditorias Regional Rosario:</span> Cartografia SVG interactiva y dashboard analitico.<br>
-        4. <span class="emerald">Mapa Interactivo UTN FRRO:</span> Guia institucional y ubicacion de dependencias.<br>
-        5. <span class="emerald">Generador de Posts UPL:</span> Pipeline de OCR con Python/OpenCV/FastAPI + Canvas.<br>
+        1. <span class="emerald">LibreMath (Flagship):</span> Suite de ingenieria en Rust, Tauri 2, KaTeX y D3.js.<br>
+        2. <span class="emerald">E-Commerce MERN:</span> Plataforma comercial completa con catalogo reactivo, carrito y auth JWT.<br>
+        3. <span class="emerald">Auditorias Regional Rosario:</span> Cartografia SVG interactiva y dashboard analitico UNR.<br>
         <span class="yellow">Codigo fuente disponible en:</span> <a href="https://github.com/AlexisRjs" target="_blank" style="color:#2997ff;">github.com/AlexisRjs</a>
       </div>
     `);
