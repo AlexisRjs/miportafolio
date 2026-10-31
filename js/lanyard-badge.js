@@ -445,15 +445,30 @@ class LanyardBadge {
 
           // Check if pixel belongs to Alexis' face/figure (not transparent and visible)
           if (a > 40 && (r > 15 || g > 15 || b > 15)) {
-            // Determine side of origin: left or right
-            const fromLeft = Math.random() < 0.5;
-            const startX = fromLeft
-              ? -Math.random() * (w * 0.9) - 30
-              : w + Math.random() * (w * 0.9) + 30;
-            // Spread along Y with natural organic dispersion
-            const startY = y + (Math.random() - 0.5) * (h * 0.6);
+            // Determine side of origin: 0 = left, 1 = right, 2 = top
+            const side = Math.floor(Math.random() * 3);
+            let startX, startY;
+            if (side === 0) {
+              // Left
+              startX = -Math.random() * (w * 0.9) - 30;
+              startY = y + (Math.random() - 0.5) * (h * 0.6);
+            } else if (side === 1) {
+              // Right
+              startX = w + Math.random() * (w * 0.9) + 30;
+              startY = y + (Math.random() - 0.5) * (h * 0.6);
+            } else {
+              // Top
+              startX = x + (Math.random() - 0.5) * (w * 0.7);
+              startY = -Math.random() * (h * 0.9) - 30;
+            }
 
-            // Slightly tint toward cyber glow matching the palette
+            // Monochrome grayscale tone (pure blacks, charcoals, and silvery grays)
+            const luminance = Math.round(r * 0.299 + g * 0.587 + b * 0.114);
+            // Random flight tone: varying from deep black (15-40) to mid/light gray (110-190)
+            const initialGray = Math.random() < 0.45
+              ? Math.floor(15 + Math.random() * 35) // Deep black / charcoal
+              : Math.floor(95 + Math.random() * 95); // Sleek metallic gray
+
             this.particles.push({
               targetX: x,
               targetY: y,
@@ -467,6 +482,8 @@ class LanyardBadge {
               r: r,
               g: g,
               b: b,
+              luminance: luminance,
+              initialGray: initialGray,
               a: a / 255
             });
           }
@@ -488,9 +505,20 @@ class LanyardBadge {
 
     for (let i = 0; i < this.particles.length; i++) {
       const p = this.particles[i];
-      const fromLeft = Math.random() < 0.5;
-      p.startX = fromLeft ? -Math.random() * (w * 0.9) - 30 : w + Math.random() * (w * 0.9) + 30;
-      p.startY = p.targetY + (Math.random() - 0.5) * (h * 0.6);
+      const side = Math.floor(Math.random() * 3);
+      if (side === 0) {
+        // Left
+        p.startX = -Math.random() * (w * 0.9) - 30;
+        p.startY = p.targetY + (Math.random() - 0.5) * (h * 0.6);
+      } else if (side === 1) {
+        // Right
+        p.startX = w + Math.random() * (w * 0.9) + 30;
+        p.startY = p.targetY + (Math.random() - 0.5) * (h * 0.6);
+      } else {
+        // Top
+        p.startX = p.targetX + (Math.random() - 0.5) * (w * 0.7);
+        p.startY = -Math.random() * (h * 0.9) - 30;
+      }
     }
   }
 
@@ -520,17 +548,18 @@ class LanyardBadge {
       // Dot opacity rises quickly then settles
       const alpha = Math.min(adjustedP * 1.4, 1) * p.a;
 
-      // Color: Cyber blue/white tint when flying, settling into real pixel color
+      // Color: Pure black and gray particle palette matching the monochrome photo
       let drawR = p.r;
       let drawG = p.g;
       let drawB = p.b;
 
       if (adjustedP < 0.85) {
-        const glowLerp = 1 - (adjustedP / 0.85);
-        // Cool high-tech glow tint while moving (cyan/electric blue accent)
-        drawR = Math.round(p.r * (1 - glowLerp) + 120 * glowLerp);
-        drawG = Math.round(p.g * (1 - glowLerp) + 200 * glowLerp);
-        drawB = Math.round(p.b * (1 - glowLerp) + 255 * glowLerp);
+        const flightLerp = 1 - (adjustedP / 0.85);
+        // Interpolate smoothly from flying black/gray to exact face pixel tone
+        const gVal = p.initialGray;
+        drawR = Math.round(p.r * (1 - flightLerp) + gVal * flightLerp);
+        drawG = Math.round(p.g * (1 - flightLerp) + gVal * flightLerp);
+        drawB = Math.round(p.b * (1 - flightLerp) + gVal * flightLerp);
       }
 
       this.particleCtx.fillStyle = `rgba(${drawR}, ${drawG}, ${drawB}, ${alpha.toFixed(2)})`;
