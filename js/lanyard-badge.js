@@ -213,11 +213,15 @@ class LanyardBadge {
     this.anchor.x = contW / 2;
     this.anchor.y = 0;
 
-    // Resting badge position hanging directly beneath anchor
+    // Resting badge position hanging directly beneath anchor (shorter strap on mobile to fit nicely inside container)
     this.restPos.x = this.anchor.x;
-    this.restPos.y = this.anchor.y + this.options.restLength + 60;
+    const baseRestLen = this.isMobile ? Math.min(this.options.restLength, 85) : this.options.restLength;
+    this.restPos.y = this.anchor.y + baseRestLen + (this.isMobile ? 35 : 60);
 
     if (!this.pos.x && !this.pos.y) {
+      this.pos.x = this.restPos.x;
+      this.pos.y = this.restPos.y;
+    } else if (this.isSleeping) {
       this.pos.x = this.restPos.x;
       this.pos.y = this.restPos.y;
     }

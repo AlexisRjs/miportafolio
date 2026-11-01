@@ -2641,6 +2641,11 @@ body.sabotage-mode #terminal {
     justify-content: center;
   }
 
+  .lanyard-container {
+    height: 640px;
+    margin-bottom: 30px;
+  }
+
   .bio-grid {
     grid-template-columns: 1fr;
   }
@@ -2651,6 +2656,16 @@ body.sabotage-mode #terminal {
 }
 
 @media (max-width: 768px) {
+  .hero {
+    min-height: auto;
+    padding-bottom: 70px;
+  }
+
+  .lanyard-container {
+    height: 650px;
+    margin-bottom: 40px;
+  }
+
   .nav-links {
     display: none;
   }
