@@ -1170,6 +1170,20 @@ section {
   pointer-events: none;
   z-index: 0;
   overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
+}
+
+/* El Hero inicia desde arriba de la pantalla: sin fade en el borde superior */
+#hero .section-bg-art {
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 85%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 0%, black 85%, transparent 100%);
+}
+
+/* Contacto termina contra el footer de la página: sin fade en el borde inferior */
+#contact .section-bg-art {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 100%);
 }
 
 .section-bg-art-img {
