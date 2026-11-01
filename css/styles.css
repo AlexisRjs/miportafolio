@@ -1157,6 +1157,7 @@ section {
   padding: 110px 0;
   position: relative;
   overflow: hidden;
+  scroll-margin-top: calc(var(--nav-height) + 16px);
 }
 
 /* SECTION BACKGROUND CANVAS LAYERS (50% TRANSLUCENT) - GPU FRIENDLY & LIGHTWEIGHT */
@@ -2656,6 +2657,11 @@ body.sabotage-mode #terminal {
 }
 
 @media (max-width: 768px) {
+  section {
+    padding: 60px 0 75px;
+    scroll-margin-top: calc(var(--nav-height) + 8px);
+  }
+
   .hero {
     min-height: auto;
     padding-bottom: 70px;
@@ -2677,6 +2683,68 @@ body.sabotage-mode #terminal {
   .projects-grid {
     grid-template-columns: 1fr;
     gap: 22px;
+  }
+
+  /* BIOGRAPHY SECTION MOBILE POLISH & READABILITY */
+  .bio-section {
+    padding-top: 50px;
+  }
+
+  #bio .section-bg-art-img {
+    opacity: 0.22;
+    object-position: 85% 35%;
+  }
+
+  #bio .section-bg-art-overlay {
+    background: radial-gradient(circle at 50% 30%, rgba(10, 12, 16, 0.78) 0%, rgba(10, 12, 16, 0.96) 100%);
+  }
+
+  [data-theme="light"] #bio .section-bg-art-overlay {
+    background: radial-gradient(circle at 50% 30%, rgba(255, 255, 255, 0.85) 0%, rgba(246, 248, 250, 0.98) 100%);
+  }
+
+  .bio-grid {
+    gap: 36px;
+  }
+
+  .bio-text-column {
+    gap: 18px;
+  }
+
+  .bio-lead {
+    font-size: 1.15rem;
+    line-height: 1.48;
+    letter-spacing: -0.015em;
+  }
+
+  .bio-paragraph {
+    font-size: 0.92rem;
+    line-height: 1.65;
+  }
+
+  .arch-tabs-container {
+    padding: 18px 14px;
+    border-radius: var(--radius-md);
+  }
+
+  .arch-tab-nav {
+    gap: 4px;
+    padding: 3px;
+    margin-bottom: 16px;
+  }
+
+  .tab-btn {
+    min-height: 40px;
+    padding: 8px 6px;
+    font-size: 0.78rem;
+    gap: 5px;
+    letter-spacing: -0.01em;
+  }
+
+  .tab-btn svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
   }
 }
 
