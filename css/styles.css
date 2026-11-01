@@ -1159,7 +1159,7 @@ section {
   overflow: hidden;
 }
 
-/* SECTION BACKGROUND CANVAS LAYERS (50% TRANSLUCENT) */
+/* SECTION BACKGROUND CANVAS LAYERS (50% TRANSLUCENT) - GPU FRIENDLY & LIGHTWEIGHT */
 .section-bg-art {
   position: absolute;
   top: 0;
@@ -1180,9 +1180,12 @@ section {
   object-fit: cover;
   object-position: center 25%;
   opacity: 0.5;
-  filter: contrast(1.05) saturate(1.1);
-  transform: translateZ(0);
-  will-change: transform;
+  image-rendering: auto;
+}
+
+/* Specific position adjustments for natural framing across different views */
+#contact .section-bg-art-img {
+  object-position: center bottom;
 }
 
 /* Atmospheric gradient overlay so text & interactive components stay 100% readable */
@@ -1208,6 +1211,11 @@ section > .projects-grid,
 section > .section-header {
   position: relative;
   z-index: 2;
+}
+
+/* CONTACT SECTION - FLUSH WITH FOOTER MARQUEE */
+.contact-section {
+  padding-bottom: 90px;
 }
 
 .section-header {
@@ -3260,7 +3268,7 @@ body.sabotage-mode #terminal {
   position: relative;
   border-top: 1px solid var(--border-subtle);
   background: var(--bg-primary);
-  margin-top: 80px;
+  margin-top: 0;
   overflow: hidden;
 }
 
