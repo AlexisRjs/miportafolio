@@ -153,3 +153,6 @@ $RECYCLE.BIN/
 .agents/
 .gemini/
 .system_generated/
+
+dist/
+legacy/
