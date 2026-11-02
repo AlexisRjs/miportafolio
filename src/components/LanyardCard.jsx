@@ -9,7 +9,7 @@ export default function LanyardCard() {
     if (!containerRef.current) return;
 
     badgeInstanceRef.current = new LanyardBadge('lanyard-hero-container', {
-      avatarUrl: '/assets/perfil.png',
+      avatarUrl: './assets/perfil.png',
       badgeTitle: 'Alexis',
       badgeRole: 'Full Stack & Data Analyst',
       githubUrl: 'https://github.com/AlexisRjs',

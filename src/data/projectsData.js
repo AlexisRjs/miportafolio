@@ -7,7 +7,7 @@ export const projectsData = [
     title: 'LibreMath - Suite del Estudiante de Ingeniería',
     shortDesc: 'La navaja suiza del estudiante de ingeniería (UTN FRRO): software ultra veloz y liviano con backend nativo en Rust (Tauri 2), KaTeX, D3.js, notas Markdown y grafos de conocimiento.',
     tags: ['Rust', 'Tauri 2', 'TypeScript', 'KaTeX', 'D3.js', 'Tailwind CSS'],
-    image: '/assets/libremath.png',
+    image: './assets/libremath.png',
     metrics: [
       { label: 'Consumo RAM', val: '~35-70 MB' },
       { label: 'Tiempo Arranque', val: '< 1s' },
@@ -33,7 +33,7 @@ export const projectsData = [
     title: 'Plataforma E-Commerce MERN',
     shortDesc: 'Comercio electrónico desarrollado para Mueblería Hermanos Jota con catálogo reactivo, carrito de compras persistente, checkout seguro y panel administrativo.',
     tags: ['JavaScript', 'React', 'Node.js', 'Express.js', 'MongoDB', 'JWT'],
-    image: '/assets/muebleria-hermanos-jota.png',
+    image: './assets/muebleria-hermanos-jota.png',
     visualGrad: 'linear-gradient(180deg, #131d18 0%, #090f0c 100%)',
     fullDesc: 'Plataforma integral de comercio electrónico desarrollada a medida para Mueblería Hermanos Jota bajo una arquitectura desacoplada. Integra autenticación por tokens JWT, navegación de catálogo de mobiliario con filtros interactivos, gestión de stock en tiempo real y panel de administración para supervisión de pedidos y clientes.',
     architecture: [
@@ -52,7 +52,7 @@ export const projectsData = [
     title: 'Auditorías Universitarias - Regional Rosario',
     shortDesc: 'Plataforma analítica con mapa vectorial interactivo de Rosario, rankings oficiales de auditoría y métricas de retención para la UNR.',
     tags: ['JavaScript', 'SVG Interactivo', 'Data Visualization', 'CSS Glassmorphism'],
-    image: '/assets/auditorias%20universitarias.png',
+    image: './assets/auditorias%20universitarias.png',
     visualGrad: 'linear-gradient(180deg, #141b2b 0%, #070913 100%)',
     fullDesc: 'Plataforma interactiva de auditoría académica desarrollada para Universitarios por la Libertad Regional Rosario. Visualiza datos críticos de la Universidad Nacional de Rosario (UNR): tasa de graduación por cohorte, padrones de alumnos activos, costo por graduado efectivo y geolocalización de facultades e institutos mediante cartografía vectorial SVG personalizada.',
     architecture: [

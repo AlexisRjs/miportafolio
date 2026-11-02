@@ -31,7 +31,7 @@ export default function ProjectsSection() {
     <>
       <section className="projects-section" id="projects">
         <div className="section-bg-art" aria-hidden="true">
-          <img src="/assets/bg-projects.png" alt="" className="section-bg-art-img" loading="lazy" decoding="async" />
+          <img src="./assets/bg-projects.png" alt="" className="section-bg-art-img" loading="lazy" decoding="async" />
           <div className="section-bg-art-overlay"></div>
         </div>
         <div className="container">

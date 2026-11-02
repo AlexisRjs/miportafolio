@@ -236,7 +236,7 @@ export default function HeroSection() {
   return (
     <section className="hero" id="hero" ref={heroRef}>
       <div className="section-bg-art" aria-hidden="true">
-        <img src="/assets/bg-hero.png" alt="" className="section-bg-art-img" loading="eager" decoding="async" />
+        <img src="./assets/bg-hero.png" alt="" className="section-bg-art-img" loading="eager" decoding="async" />
         <div className="section-bg-art-overlay"></div>
       </div>
 

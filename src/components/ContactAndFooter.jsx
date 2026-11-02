@@ -65,7 +65,7 @@ export default function ContactAndFooter() {
     <>
       <section className="contact-section" id="contact">
         <div className="section-bg-art" aria-hidden="true">
-          <img src="/assets/bg-contact.png" alt="" className="section-bg-art-img" loading="lazy" decoding="async" />
+          <img src="./assets/bg-contact.png" alt="" className="section-bg-art-img" loading="lazy" decoding="async" />
           <div className="section-bg-art-overlay"></div>
         </div>
         <div className="container">

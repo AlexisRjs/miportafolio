@@ -42,7 +42,7 @@ export default function TerminalSection() {
   return (
     <section className="terminal-section" id="terminal">
       <div className="section-bg-art" aria-hidden="true">
-        <img src="/assets/bg-terminal.png" alt="" className="section-bg-art-img" loading="lazy" decoding="async" />
+        <img src="./assets/bg-terminal.png" alt="" className="section-bg-art-img" loading="lazy" decoding="async" />
         <div className="section-bg-art-overlay"></div>
       </div>
       <div className="container">
