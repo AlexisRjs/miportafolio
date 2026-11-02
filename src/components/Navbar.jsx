@@ -46,22 +46,47 @@ export default function Navbar({ currentSection = 'hero' }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Update pill slider position
-  useEffect(() => {
-    if (!pillBarRef.current || !sliderRef.current) return;
-    const activeEl = pillBarRef.current.querySelector(`[data-section="${activeSection}"]`);
-    if (activeEl) {
-      const barRect = pillBarRef.current.getBoundingClientRect();
-      const elRect = activeEl.getBoundingClientRect();
-      const offsetLeft = elRect.left - barRect.left;
-      const offsetTop = elRect.top - barRect.top;
+  // Move capsule slider to element
+  const moveToElement = (el) => {
+    if (!pillBarRef.current || !sliderRef.current || !el) return;
+    const barRect = pillBarRef.current.getBoundingClientRect();
+    const elRect = el.getBoundingClientRect();
+    const offsetLeft = elRect.left - barRect.left;
+    const offsetTop = elRect.top - barRect.top;
 
-      sliderRef.current.style.width = `${elRect.width}px`;
-      sliderRef.current.style.height = `${elRect.height}px`;
-      sliderRef.current.style.transform = `translate3d(${offsetLeft}px, ${offsetTop}px, 0)`;
-      sliderRef.current.style.opacity = '1';
+    sliderRef.current.style.width = `${elRect.width}px`;
+    sliderRef.current.style.height = `${elRect.height}px`;
+    sliderRef.current.style.transform = `translate3d(${offsetLeft}px, ${offsetTop}px, 0)`;
+    sliderRef.current.style.opacity = '1';
+  };
+
+  // Update pill slider position when activeSection changes (if not hovering other links)
+  useEffect(() => {
+    if (!pillBarRef.current) return;
+    const activeEl = pillBarRef.current.querySelector(`.nav-link[data-section="${activeSection}"]`);
+    if (activeEl && !pillBarRef.current.matches(':hover')) {
+      moveToElement(activeEl);
     }
   }, [activeSection]);
+
+  const handleLinkMouseEnter = (e) => {
+    const link = e.currentTarget;
+    moveToElement(link);
+    const navLinks = pillBarRef.current?.querySelectorAll('.nav-link');
+    navLinks?.forEach((l) => l.classList.remove('pill-hovered'));
+    link.classList.add('pill-hovered');
+    // Sonido sutil en hover
+    soundEngine.playHover();
+  };
+
+  const handleNavMouseLeave = () => {
+    const navLinks = pillBarRef.current?.querySelectorAll('.nav-link');
+    navLinks?.forEach((l) => l.classList.remove('pill-hovered'));
+    const activeEl = pillBarRef.current?.querySelector(`.nav-link[data-section="${activeSection}"]`);
+    if (activeEl) {
+      moveToElement(activeEl);
+    }
+  };
 
   const toggleSound = () => {
     const nextMuted = soundEngine.toggleMute();
@@ -79,7 +104,7 @@ export default function Navbar({ currentSection = 'hero' }) {
   const handleNavClick = (secId) => {
     setActiveSection(secId);
     setMobileOpen(false);
-    soundEngine.playSuccess();
+    soundEngine.playClick();
   };
 
   const navLinks = [
@@ -98,7 +123,6 @@ export default function Navbar({ currentSection = 'hero' }) {
             href="#hero" 
             className="nav-brand" 
             onClick={() => handleNavClick('hero')}
-            onMouseEnter={() => soundEngine.playHover()}
           >
             <div className="brand-text">
               <span className="brand-name">ALEXIS FERNANDO ROJAS</span>
@@ -108,7 +132,12 @@ export default function Navbar({ currentSection = 'hero' }) {
 
           {/* ReactBits Pill Nav */}
           <nav className="pill-nav-container" id="pill-nav-container">
-            <div className="pill-nav-bar" id="pill-nav-bar" ref={pillBarRef}>
+            <div 
+              className="pill-nav-bar" 
+              id="pill-nav-bar" 
+              ref={pillBarRef}
+              onMouseLeave={handleNavMouseLeave}
+            >
               <div className="pill-slider" id="pill-slider" ref={sliderRef}></div>
 
               <ul className="nav-links" id="nav-links">
@@ -119,7 +148,7 @@ export default function Navbar({ currentSection = 'hero' }) {
                       className={`nav-link ${activeSection === link.id ? 'active' : ''}`}
                       data-section={link.id}
                       onClick={() => handleNavClick(link.id)}
-                      onMouseEnter={() => soundEngine.playHover()}
+                      onMouseEnter={handleLinkMouseEnter}
                     >
                       {link.label}
                     </a>
@@ -135,12 +164,11 @@ export default function Navbar({ currentSection = 'hero' }) {
               className={`btn-icon ${isMuted ? 'audio-muted' : ''}`}
               id="sound-toggle-btn"
               onClick={toggleSound}
-              onMouseEnter={() => soundEngine.playHover()}
               aria-label="Alternar Efectos de Sonido"
               title={isMuted ? 'Activar Efectos de Sonido' : 'Silenciar Sonidos'}
             >
               <div className="audio-pulse"></div>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
                 {!isMuted && (
                   <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
@@ -153,12 +181,11 @@ export default function Navbar({ currentSection = 'hero' }) {
               className="btn-icon"
               id="theme-toggle-btn"
               onClick={toggleTheme}
-              onMouseEnter={() => soundEngine.playHover()}
               aria-label="Alternar Tema Claro/Oscuro"
               title="Cambiar Tema"
             >
               {theme === 'dark' ? (
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="12" cy="12" r="5"></circle>
                   <line x1="12" y1="1" x2="12" y2="3"></line>
                   <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -170,7 +197,7 @@ export default function Navbar({ currentSection = 'hero' }) {
                   <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
                 </svg>
               ) : (
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                 </svg>
               )}
@@ -240,7 +267,7 @@ export default function Navbar({ currentSection = 'hero' }) {
               className="mobile-social-link"
             >
               <span>LinkedIn</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M7 17L17 7M7 7h10v10" />
               </svg>
             </a>
@@ -251,7 +278,7 @@ export default function Navbar({ currentSection = 'hero' }) {
               className="mobile-social-link"
             >
               <span>GitHub</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M7 17L17 7M7 7h10v10" />
               </svg>
             </a>

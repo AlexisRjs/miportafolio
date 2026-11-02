@@ -42,10 +42,9 @@ export default function BioSection() {
                 href="#terminal" 
                 className="btn btn-secondary btn-sm"
                 onClick={() => soundEngine.playClick()}
-                onMouseEnter={() => soundEngine.playHover()}
               >
                 <span>Abrir Sandbox Terminal</span>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <polyline points="4 17 10 11 4 5"></polyline>
                   <line x1="12" y1="19" x2="20" y2="19"></line>
                 </svg>
@@ -54,14 +53,13 @@ export default function BioSection() {
                 href="#contact" 
                 className="btn btn-primary btn-sm"
                 onClick={() => soundEngine.playClick()}
-                onMouseEnter={() => soundEngine.playHover()}
               >
                 <span>Hablemos</span>
               </a>
             </div>
           </div>
 
-          {/* Right Column: Interactive Architecture Tabs & Certifications */}
+          {/* Right Column: Interactive Architecture Tabs */}
           <div className="bio-side-column">
             <div 
               className="arch-tabs-container"
@@ -75,9 +73,8 @@ export default function BioSection() {
                 <button 
                   className={`tab-btn ${activeTab === 'backend' ? 'active' : ''}`}
                   onClick={() => handleTabChange('backend')}
-                  onMouseEnter={() => soundEngine.playHover()}
                 >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
                     <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
                     <line x1="6" y1="6" x2="6.01" y2="6"></line>
@@ -88,9 +85,8 @@ export default function BioSection() {
                 <button 
                   className={`tab-btn ${activeTab === 'frontend' ? 'active' : ''}`}
                   onClick={() => handleTabChange('frontend')}
-                  onMouseEnter={() => soundEngine.playHover()}
                 >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
                     <polyline points="2 17 12 22 22 17"></polyline>
                     <polyline points="2 12 12 17 22 12"></polyline>
@@ -100,9 +96,8 @@ export default function BioSection() {
                 <button 
                   className={`tab-btn ${activeTab === 'devops' ? 'active' : ''}`}
                   onClick={() => handleTabChange('devops')}
-                  onMouseEnter={() => soundEngine.playHover()}
                 >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <circle cx="12" cy="12" r="10"></circle>
                     <polyline points="12 6 12 12 14 14"></polyline>
                   </svg>
@@ -251,79 +246,154 @@ export default function BioSection() {
                 </div>
               )}
             </div>
+          </div>
+        </div>
 
-            {/* Certifications Showcase */}
-            <div className="hero-cert-showcase">
-              <div className="hero-cert-header">
-                <span className="hero-cert-kicker">Credenciales Verificadas</span>
-                <span className="hero-cert-badge">3 Oficiales</span>
-              </div>
-              <div className="hero-cert-grid">
-                <a
-                  href="https://www.coursera.org/account/accomplishments/professional-cert/R69AQLU727W3"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hero-cert-card"
-                  title="Ver credencial Google Data Analytics Professional Certificate (v2) en Coursera"
-                  onClick={() => soundEngine.playClick()}
-                >
-                  <div className="hero-cert-img-box">
-                    <img src="/assets/badges/google-data-analytics-v2.png" alt="Google Data Analytics v2" className="hero-cert-img" width="46" height="46" loading="lazy" />
-                  </div>
-                  <div className="hero-cert-info">
-                    <h5 className="hero-cert-title">Google Data Analytics (v2)</h5>
-                    <div className="hero-cert-meta">
-                      <span className="hero-cert-ver">SQL • R • Tableau • Spreadsheets</span>
-                      <span className="hero-cert-date">10 jul 2025</span>
-                    </div>
-                  </div>
-                  <div className="hero-cert-arrow">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M7 17L17 7M7 7h10v10"></path>
-                    </svg>
-                  </div>
-                </a>
+        {/* Fila de Credenciales y Formación Académica: Alineados Horizontalmente */}
+        <div className="bio-credentials-row">
+          {/* Columna Izquierda: Formación Académica & Técnica con enlaces oficiales */}
+          <div className="bio-education-block">
+            <div className="bio-block-header">
+              <span className="section-tag" style={{ fontSize: '0.72rem', margin: 0, display: 'inline-flex' }}>
+                Formación Académica &amp; Técnica
+              </span>
+            </div>
 
-                <a
-                  href="https://www.credly.com/badges/7187c248-fe57-402d-a017-b72be71df51d/public_url"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hero-cert-card"
-                  title="Ver credencial oficial Google Data Analytics Professional Certificate (v.3) en Credly"
-                  onClick={() => soundEngine.playClick()}
-                >
-                  <div className="hero-cert-img-box">
-                    <img src="/assets/badges/google-data-analytics-v3.png" alt="Google Data Analytics v3" className="hero-cert-img" width="46" height="46" loading="lazy" />
-                  </div>
-                  <div className="hero-cert-info">
-                    <h5 className="hero-cert-title">Google Data Analytics (v.3)</h5>
-                    <div className="hero-cert-meta">
-                      <span className="hero-cert-ver">Credly • Data Lifecycle &amp; Analytics</span>
-                      <span className="hero-cert-date">8 abr 2026</span>
-                    </div>
-                  </div>
-                  <div className="hero-cert-arrow">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M7 17L17 7M7 7h10v10"></path>
-                    </svg>
-                  </div>
-                </a>
-
-                <div className="hero-cert-card hero-cert-card-itba">
-                  <div className="hero-cert-img-box hero-cert-icon-itba">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-                      <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-                    </svg>
-                  </div>
-                  <div className="hero-cert-info">
-                    <h5 className="hero-cert-title">Full Stack Developer MERN</h5>
-                    <div className="hero-cert-meta">
-                      <span className="hero-cert-ver">ITBA • React, Node, Express, MongoDB</span>
-                    </div>
-                  </div>
-                  <span className="cert-status-tag" style={{ marginLeft: 'auto' }}>en curso</span>
+            <div className="bio-edu-cards">
+              {/* UTN FRRO */}
+              <a 
+                href="https://www.frro.utn.edu.ar/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="bio-edu-card" 
+                data-magnetic
+                onClick={() => soundEngine.playClick()}
+              >
+                <div className="bio-edu-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                    <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"></path>
+                  </svg>
                 </div>
+                <div className="bio-edu-info">
+                  <div className="bio-edu-header">
+                    <h4 className="bio-edu-title">Ingeniería en Sistemas de Información</h4>
+                    <span className="bio-edu-badge">En curso</span>
+                  </div>
+                  <p className="bio-edu-inst">UTN FRRO — Universidad Tecnológica Nacional</p>
+                  <p className="bio-edu-desc">
+                    Gestión de datos (SQL relacional), análisis y diseño de sistemas (UML, arquitectura), algoritmos, paradigmas de programación, sistemas operativos y redes.
+                  </p>
+                </div>
+              </a>
+
+              {/* ITBA */}
+              <a 
+                href="https://www.itba.edu.ar/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="bio-edu-card" 
+                data-magnetic
+                onClick={() => soundEngine.playClick()}
+              >
+                <div className="bio-edu-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                  </svg>
+                </div>
+                <div className="bio-edu-info">
+                  <div className="bio-edu-header">
+                    <h4 className="bio-edu-title">Desarrollo Web Full Stack (Stack MERN)</h4>
+                    <span className="bio-edu-badge">Especialización</span>
+                  </div>
+                  <p className="bio-edu-inst">ITBA — Instituto Tecnológico de Buenos Aires</p>
+                  <p className="bio-edu-desc">
+                    Ingeniería web end-to-end con MongoDB, Express.js, React y Node.js. Arquitectura de APIs REST, autenticación JWT, modelado NoSQL y metodologías ágiles.
+                  </p>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          {/* Columna Derecha: Certificaciones Oficiales */}
+          <div className="bio-certs-block">
+            <div className="bio-block-header">
+              <span className="section-tag" style={{ fontSize: '0.72rem', margin: 0, display: 'inline-flex' }}>
+                Certificaciones Oficiales
+              </span>
+            </div>
+
+            <div className="bio-certs-grid">
+              {/* Cert 1: Google Data Analytics v2 (Enlace Actualizado Oficial de Coursera) */}
+              <a
+                href="https://www.coursera.org/account/accomplishments/professional-cert/certificate/UOZETYMOBH9C"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hero-cert-card"
+                title="Ver credencial Google Data Analytics Professional Certificate (v2) en Coursera"
+                data-magnetic
+                onClick={() => soundEngine.playClick()}
+              >
+                <div className="hero-cert-img-box">
+                  <img src="/assets/badges/google-data-analytics-v2.png" alt="Google Data Analytics v2" className="hero-cert-img" width="46" height="46" loading="lazy" />
+                </div>
+                <div className="hero-cert-info">
+                  <h5 className="hero-cert-title">Google Data Analytics (v2)</h5>
+                  <div className="hero-cert-meta">
+                    <span className="hero-cert-ver">SQL • R • Tableau • Spreadsheets</span>
+                    <span className="hero-cert-date">10 jul 2025</span>
+                  </div>
+                </div>
+                <div className="hero-cert-arrow">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M7 17L17 7M7 7h10v10"></path>
+                  </svg>
+                </div>
+              </a>
+
+              {/* Cert 2: Google Data Analytics v3 en Credly */}
+              <a
+                href="https://www.credly.com/badges/7187c248-fe57-402d-a017-b72be71df51d/public_url"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hero-cert-card"
+                title="Ver credencial oficial Google Data Analytics Professional Certificate (v.3) en Credly"
+                data-magnetic
+                onClick={() => soundEngine.playClick()}
+              >
+                <div className="hero-cert-img-box">
+                  <img src="/assets/badges/google-data-analytics-v3.png" alt="Google Data Analytics v3" className="hero-cert-img" width="46" height="46" loading="lazy" />
+                </div>
+                <div className="hero-cert-info">
+                  <h5 className="hero-cert-title">Google Data Analytics (v.3)</h5>
+                  <div className="hero-cert-meta">
+                    <span className="hero-cert-ver">Credly • Data Lifecycle &amp; Analytics</span>
+                    <span className="hero-cert-date">8 abr 2026</span>
+                  </div>
+                </div>
+                <div className="hero-cert-arrow">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M7 17L17 7M7 7h10v10"></path>
+                  </svg>
+                </div>
+              </a>
+
+              {/* Cert 3: Full Stack ITBA */}
+              <div className="hero-cert-card hero-cert-card-itba">
+                <div className="hero-cert-img-box hero-cert-icon-itba">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                  </svg>
+                </div>
+                <div className="hero-cert-info">
+                  <h5 className="hero-cert-title">Full Stack Developer MERN</h5>
+                  <div className="hero-cert-meta">
+                    <span className="hero-cert-ver">ITBA • React, Node, Express, MongoDB</span>
+                  </div>
+                </div>
+                <span className="cert-status-tag" style={{ marginLeft: 'auto' }}>en curso</span>
               </div>
             </div>
           </div>

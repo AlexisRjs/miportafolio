@@ -15,12 +15,69 @@ export default function HeroSection() {
 
     let currentX = 0;
     let currentY = 0;
+    let isFleeing = false;
+    let dodgeCount = 0;
     let lastDodgeTime = 0;
+    let idleTimer = null;
+    let latestMouseX = null;
+    let latestMouseY = null;
+
+    const isCursorOverHome = () => {
+      if (latestMouseX === null || latestMouseY === null) return false;
+      const anchorRect = anchor.getBoundingClientRect();
+      const pad = 12;
+      return (
+        latestMouseX >= anchorRect.left - pad &&
+        latestMouseX <= anchorRect.right + pad &&
+        latestMouseY >= anchorRect.top - pad &&
+        latestMouseY <= anchorRect.bottom + pad
+      );
+    };
+
+    const returnToHome = () => {
+      if (isCursorOverHome()) {
+        resetIdleTimer();
+        return;
+      }
+      if (idleTimer) {
+        clearTimeout(idleTimer);
+        idleTimer = null;
+      }
+      currentX = 0;
+      currentY = 0;
+      isFleeing = false;
+      dodgeCount = 0;
+      btn.classList.remove('is-fleeing');
+      btn.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease';
+      btn.style.transform = 'translate3d(0, 0, 0)';
+    };
+
+    const resetIdleTimer = () => {
+      if (idleTimer) clearTimeout(idleTimer);
+      idleTimer = setTimeout(() => {
+        if (isFleeing || currentX !== 0 || currentY !== 0) {
+          if (isCursorOverHome()) {
+            // Postpone returning as long as cursor is directly over home position
+            resetIdleTimer();
+          } else {
+            returnToHome();
+          }
+        }
+      }, 1000);
+    };
 
     const dodge = (mouseX, mouseY) => {
       const now = performance.now();
       if (now - lastDodgeTime < 140) return;
       lastDodgeTime = now;
+
+      dodgeCount++;
+
+      // If user has already pursued/chased the button twice, smoothly return to home position
+      if (dodgeCount > 2) {
+        returnToHome();
+        return;
+      }
 
       const anchorRect = anchor.getBoundingClientRect();
       const heroRect = hero.getBoundingClientRect();
@@ -92,10 +149,44 @@ export default function HeroSection() {
 
       currentX = targetX;
       currentY = targetY;
+      isFleeing = true;
 
-      btn.style.transition = 'transform 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28)';
+      // Turn red while evading
+      btn.classList.add('is-fleeing');
+      btn.style.transition = 'transform 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28), background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease';
       btn.style.transform = `translate3d(${targetX.toFixed(1)}px, ${targetY.toFixed(1)}px, 0)`;
       soundEngine.playKey();
+
+      // Whenever button flees, arm the return timer so it automatically comes home if user doesn't pursue
+      resetIdleTimer();
+    };
+
+    const handleMouseMove = (e) => {
+      latestMouseX = e.clientX;
+      latestMouseY = e.clientY;
+
+      const anchorRect = anchor.getBoundingClientRect();
+      const homeCenterX = anchorRect.left + anchorRect.width / 2;
+      const homeCenterY = anchorRect.top + anchorRect.height / 2;
+
+      const curCenterX = homeCenterX + currentX;
+      const curCenterY = homeCenterY + currentY;
+
+      const distFromHome = Math.hypot(e.clientX - homeCenterX, e.clientY - homeCenterY);
+      const distFromBtn = Math.hypot(e.clientX - curCenterX, e.clientY - curCenterY);
+
+      if (!isFleeing) {
+        if (distFromHome < 90 || distFromBtn < 80) {
+          dodge(e.clientX, e.clientY);
+        }
+      } else {
+        if (distFromBtn < 80) {
+          dodge(e.clientX, e.clientY);
+        } else if (distFromBtn >= 130 && distFromHome >= 120) {
+          // If cursor moved away after dodging, return smoothly to home position
+          returnToHome();
+        }
+      }
     };
 
     const handleMouseEnter = (e) => dodge(e.clientX, e.clientY);
@@ -105,10 +196,33 @@ export default function HeroSection() {
       dodge(t ? t.clientX : null, t ? t.clientY : null);
     };
 
+    // Return to home when mouse leaves window or document
+    const handleMouseLeaveDoc = (e) => {
+      if (!e.relatedTarget && !e.toElement) {
+        latestMouseX = null;
+        latestMouseY = null;
+        returnToHome();
+      }
+    };
+
+    const handleWindowBlur = () => returnToHome();
+    const handleWindowScroll = () => {
+      if (isFleeing) returnToHome();
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseleave', handleMouseLeaveDoc);
+    window.addEventListener('blur', handleWindowBlur);
+    window.addEventListener('scroll', handleWindowScroll, { passive: true });
     btn.addEventListener('mouseenter', handleMouseEnter);
     btn.addEventListener('touchstart', handleTouchStart, { passive: false });
 
     return () => {
+      if (idleTimer) clearTimeout(idleTimer);
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseleave', handleMouseLeaveDoc);
+      window.removeEventListener('blur', handleWindowBlur);
+      window.removeEventListener('scroll', handleWindowScroll);
       btn.removeEventListener('mouseenter', handleMouseEnter);
       btn.removeEventListener('touchstart', handleTouchStart);
     };
@@ -150,10 +264,9 @@ export default function HeroSection() {
               className="btn btn-primary" 
               id="hero-cta-projects"
               onClick={() => soundEngine.playClick()}
-              onMouseEnter={() => soundEngine.playHover()}
             >
               <span>Explorar Proyectos</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
             </a>
@@ -162,7 +275,6 @@ export default function HeroSection() {
               className="btn btn-secondary" 
               id="hero-cta-contact"
               onClick={() => soundEngine.playClick()}
-              onMouseEnter={() => soundEngine.playHover()}
             >
               <span>Iniciar Contacto</span>
             </a>

@@ -65,3 +65,4 @@ export const projectsData = [
     githubUrl: 'https://github.com/AlexisRjs/UPLregionalRosario'
   }
 ];
+

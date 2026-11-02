@@ -20,8 +20,20 @@ export default function ContactAndFooter() {
       // ignore
     }
 
-    const mailtoUrl = `mailto:alexisfernandorojas@hotmail.com?subject=Contacto Portafolio - ${encodeURIComponent(formData.name)}&body=${encodeURIComponent(formData.message + '\n\nDe: ' + formData.email)}`;
-    window.open(mailtoUrl, '_blank');
+    const recipient = 'alexisrojas2073@gmail.com';
+    const subject = `Contacto Portafolio - ${formData.name}`;
+    const bodyContent = `${formData.message}\n\n--\nRemitente: ${formData.name}\nCorreo de contacto: ${formData.email}`;
+
+    // Gmail web composer URL directly opens user's browser with prefilled data
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(recipient)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyContent)}`;
+    
+    // Open in a new tab
+    const newWindow = window.open(gmailUrl, '_blank');
+    if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+      // Fallback if popup blocker intercepted
+      window.location.href = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyContent)}`;
+    }
+
     setSubmitted(true);
     setTimeout(() => setSubmitted(false), 5000);
   };
@@ -35,26 +47,18 @@ export default function ContactAndFooter() {
     { name: 'Python', color: '#3776ab' },
     { name: 'Power BI', color: '#f2c811' },
     { name: 'SQL & Bases de Datos', color: '#00758f' },
-    { name: 'JavaScript', color: '#f7df1e' },
-    { name: 'React', color: '#61dafb' },
-    { name: 'MongoDB', color: '#47a248' },
-    { name: 'Node.js', color: '#5fa04e' },
-    { name: 'Express.js', color: '#ffffff' },
-    { name: 'Python', color: '#3776ab' },
-    { name: 'Power BI', color: '#f2c811' },
   ];
 
   const marqueeRow2 = [
+    { name: 'Git & GitHub', color: '#f05032' },
+    { name: 'Pandas (Python)', color: '#150458' },
+    { name: 'RESTful APIs', color: '#009688' },
     { name: 'JSON Web Tokens (JWT)', color: '#d63aff' },
     { name: 'Excel', color: '#107c41' },
     { name: 'Visualización de Datos', color: '#00b4d8' },
     { name: 'E-Commerce MERN', color: '#00f5d4' },
     { name: 'Puntos de Venta (POS)', color: '#3a86ff' },
     { name: 'Tailwind & CSS3', color: '#38bdf8' },
-    { name: 'Git & GitHub', color: '#f05032' },
-    { name: 'Pandas (Python)', color: '#150458' },
-    { name: 'RESTful APIs', color: '#009688' },
-    { name: 'JSON Web Tokens (JWT)', color: '#d63aff' },
   ];
 
   return (
@@ -188,14 +192,12 @@ export default function ContactAndFooter() {
                 <button 
                   type="submit" 
                   className="btn btn-primary" 
-                  style={{ width: '100%', marginTop: '8px' }}
-                  onMouseEnter={() => soundEngine.playHover()}
+                  style={{ width: '100%', marginTop: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}
                 >
-                  <span>{submitted ? '✓ Mensaje Preparado' : 'Enviar Mensaje'}</span>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <line x1="22" y1="2" x2="11" y2="13"></line>
-                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                  <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
                   </svg>
+                  <span>{submitted ? '✓ Abriendo Gmail...' : 'Enviar vía Gmail'}</span>
                 </button>
               </form>
             </div>
@@ -203,7 +205,7 @@ export default function ContactAndFooter() {
         </div>
       </section>
 
-      {/* FOOTER CON MARQUEE */}
+      {/* FOOTER CON MARQUEE BIDIRECCIONAL */}
       <footer className="footer">
         <div className="container" style={{ textAlign: 'center', marginBottom: '28px' }}>
           <span className="section-tag">Dominio Técnico &amp; Herramientas</span>
@@ -213,6 +215,7 @@ export default function ContactAndFooter() {
         </div>
 
         <div className="marquee-wrapper">
+          {/* Carril 1: Sentido Izquierda */}
           <div className="marquee-row">
             <div className="marquee-content">
               {marqueeRow1.map((item, idx) => (
@@ -232,8 +235,9 @@ export default function ContactAndFooter() {
             </div>
           </div>
 
-          <div className="marquee-row marquee-reverse">
-            <div className="marquee-content">
+          {/* Carril 2: Sentido Opuesto (Reverse) */}
+          <div className="marquee-row">
+            <div className="marquee-content reverse">
               {marqueeRow2.map((item, idx) => (
                 <div key={idx} className="tech-marquee-badge">
                   <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: item.color, display: 'inline-block' }}></span>
@@ -241,7 +245,7 @@ export default function ContactAndFooter() {
                 </div>
               ))}
             </div>
-            <div className="marquee-content" aria-hidden="true">
+            <div className="marquee-content reverse" aria-hidden="true">
               {marqueeRow2.map((item, idx) => (
                 <div key={'dup2-' + idx} className="tech-marquee-badge">
                   <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: item.color, display: 'inline-block' }}></span>
