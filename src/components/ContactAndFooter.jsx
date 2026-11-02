@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import confetti from 'canvas-confetti';
+import bgContact from '../../assets/bg-contact.png';
 import { soundEngine } from '../utils/soundEngine';
 
 export default function ContactAndFooter() {
@@ -65,7 +66,7 @@ export default function ContactAndFooter() {
     <>
       <section className="contact-section" id="contact">
         <div className="section-bg-art" aria-hidden="true">
-          <img src="./assets/bg-contact.png" alt="" className="section-bg-art-img" loading="lazy" decoding="async" />
+          <img src={bgContact} alt="" className="section-bg-art-img" loading="lazy" decoding="async" />
           <div className="section-bg-art-overlay"></div>
         </div>
         <div className="container">

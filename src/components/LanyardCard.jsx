@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import perfilImg from '../../assets/perfil.png';
 import LanyardBadge from '../utils/lanyard-badge-core';
 
 export default function LanyardCard() {
@@ -9,7 +10,7 @@ export default function LanyardCard() {
     if (!containerRef.current) return;
 
     badgeInstanceRef.current = new LanyardBadge('lanyard-hero-container', {
-      avatarUrl: './assets/perfil.png',
+      avatarUrl: perfilImg,
       badgeTitle: 'Alexis',
       badgeRole: 'Full Stack & Data Analyst',
       githubUrl: 'https://github.com/AlexisRjs',

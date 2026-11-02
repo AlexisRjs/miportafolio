@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import bgProjects from '../../assets/bg-projects.png';
 import { projectsData } from '../data/projectsData';
 import { soundEngine } from '../utils/soundEngine';
 
@@ -31,7 +32,7 @@ export default function ProjectsSection() {
     <>
       <section className="projects-section" id="projects">
         <div className="section-bg-art" aria-hidden="true">
-          <img src="./assets/bg-projects.png" alt="" className="section-bg-art-img" loading="lazy" decoding="async" />
+          <img src={bgProjects} alt="" className="section-bg-art-img" loading="lazy" decoding="async" />
           <div className="section-bg-art-overlay"></div>
         </div>
         <div className="container">

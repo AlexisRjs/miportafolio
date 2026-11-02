@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import bgBio from '../../assets/bg-bio.png';
+import badgeV2 from '../../assets/badges/google-data-analytics-v2.png';
+import badgeV3 from '../../assets/badges/google-data-analytics-v3.png';
 import { soundEngine } from '../utils/soundEngine';
 
 export default function BioSection() {
@@ -12,7 +15,7 @@ export default function BioSection() {
   return (
     <section className="bio-section" id="bio">
       <div className="section-bg-art" aria-hidden="true">
-        <img src="./assets/bg-bio.png" alt="" className="section-bg-art-img" loading="lazy" decoding="async" />
+        <img src={bgBio} alt="" className="section-bg-art-img" loading="lazy" decoding="async" />
         <div className="section-bg-art-overlay"></div>
       </div>
       <div className="container">
@@ -336,7 +339,7 @@ export default function BioSection() {
                 onClick={() => soundEngine.playClick()}
               >
                 <div className="hero-cert-img-box">
-                  <img src="./assets/badges/google-data-analytics-v2.png" alt="Google Data Analytics v2" className="hero-cert-img" width="46" height="46" loading="lazy" />
+                  <img src={badgeV2} alt="Google Data Analytics v2" className="hero-cert-img" width="46" height="46" loading="lazy" />
                 </div>
                 <div className="hero-cert-info">
                   <h5 className="hero-cert-title">Google Data Analytics (v2)</h5>
@@ -363,7 +366,7 @@ export default function BioSection() {
                 onClick={() => soundEngine.playClick()}
               >
                 <div className="hero-cert-img-box">
-                  <img src="./assets/badges/google-data-analytics-v3.png" alt="Google Data Analytics v3" className="hero-cert-img" width="46" height="46" loading="lazy" />
+                  <img src={badgeV3} alt="Google Data Analytics v3" className="hero-cert-img" width="46" height="46" loading="lazy" />
                 </div>
                 <div className="hero-cert-info">
                   <h5 className="hero-cert-title">Google Data Analytics (v.3)</h5>
