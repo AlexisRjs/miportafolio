@@ -1,0 +1,37 @@
+{
+  "name": "portafolio-alexis",
+  "version": "1.0.0",
+  "description": "Alexis Fernando Rojas - Full Stack Developer & Data Analyst Portfolio",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexisRjs/miportafolio.git"
+  },
+  "keywords": [
+    "portfolio",
+    "react",
+    "tailwind",
+    "mern",
+    "fullstack",
+    "data-analytics"
+  ],
+  "author": "Alexis Fernando Rojas",
+  "license": "MIT",
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@vitejs/plugin-react": "^6.2.1",
+    "tailwindcss": "^4.3.3",
+    "vite": "^8.3.5"
+  },
+  "dependencies": {
+    "canvas-confetti": "^1.9.4",
+    "lucide-react": "^1.66.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  }
+}
