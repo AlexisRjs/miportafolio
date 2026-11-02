@@ -25,7 +25,7 @@ export default function HeroSection() {
     const isCursorOverHome = () => {
       if (latestMouseX === null || latestMouseY === null) return false;
       const anchorRect = anchor.getBoundingClientRect();
-      const pad = 12;
+      const pad = 14;
       return (
         latestMouseX >= anchorRect.left - pad &&
         latestMouseX <= anchorRect.right + pad &&
@@ -57,7 +57,6 @@ export default function HeroSection() {
       idleTimer = setTimeout(() => {
         if (isFleeing || currentX !== 0 || currentY !== 0) {
           if (isCursorOverHome()) {
-            // Postpone returning as long as cursor is directly over home position
             resetIdleTimer();
           } else {
             returnToHome();
@@ -73,7 +72,7 @@ export default function HeroSection() {
 
       dodgeCount++;
 
-      // If user has already pursued/chased the button twice, smoothly return to home position
+      // If user has pursued button twice, smoothly return to home position
       if (dodgeCount > 2) {
         returnToHome();
         return;
@@ -157,7 +156,7 @@ export default function HeroSection() {
       btn.style.transform = `translate3d(${targetX.toFixed(1)}px, ${targetY.toFixed(1)}px, 0)`;
       soundEngine.playKey();
 
-      // Whenever button flees, arm the return timer so it automatically comes home if user doesn't pursue
+      // Whenever button flees, arm the 1-second timer
       resetIdleTimer();
     };
 
@@ -183,8 +182,10 @@ export default function HeroSection() {
         if (distFromBtn < 80) {
           dodge(e.clientX, e.clientY);
         } else if (distFromBtn >= 130 && distFromHome >= 120) {
-          // If cursor moved away after dodging, return smoothly to home position
-          returnToHome();
+          // If cursor moved away and is not over home, return smoothly
+          if (!isCursorOverHome()) {
+            returnToHome();
+          }
         }
       }
     };
@@ -196,7 +197,6 @@ export default function HeroSection() {
       dodge(t ? t.clientX : null, t ? t.clientY : null);
     };
 
-    // Return to home when mouse leaves window or document
     const handleMouseLeaveDoc = (e) => {
       if (!e.relatedTarget && !e.toElement) {
         latestMouseX = null;
