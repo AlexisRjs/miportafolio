@@ -67,10 +67,6 @@ class LanyardBadge {
 
             <div class="badge-photo-container">
               <div class="badge-photo-frame" id="lanyard-photo-frame">
-                <div class="badge-scanner" id="lanyard-scanner">
-                  <div class="badge-scanner-line"></div>
-                  <div class="badge-scanner-trail"></div>
-                </div>
                 <img src="${this.options.avatarUrl}" alt="${this.options.badgeTitle}" class="badge-photo-img" id="lanyard-photo-img" loading="eager" decoding="sync" />
               </div>
             </div>
@@ -116,9 +112,6 @@ class LanyardBadge {
     this.sheen = this.container.querySelector('#lanyard-sheen');
     this.photoFrame = this.container.querySelector('#lanyard-photo-frame');
     this.photoImg = this.container.querySelector('#lanyard-photo-img');
-
-    // Trigger face scan beam on entrance
-    setTimeout(() => this.triggerFaceScan(), 300);
 
     this.updateDimensions();
     this.attachEvents();
@@ -315,11 +308,7 @@ class LanyardBadge {
   }
 
   triggerFaceScan() {
-    if (!this.card) return;
-    this.wakeUp();
-    this.card.classList.remove('is-scanning');
-    void this.card.offsetWidth; // Force synchronous reflow to restart CSS scanner beam
-    this.card.classList.add('is-scanning');
+    // Fixed static photo - scanner beam disabled
   }
 
   animate() {
