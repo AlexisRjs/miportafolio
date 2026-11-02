@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import bgBio from '../../assets/bg-bio.png';
-import badgeV2 from '../../assets/badges/google-data-analytics-v2.png';
-import badgeV3 from '../../assets/badges/google-data-analytics-v3.png';
+import badgeV2 from '../../assets/google-data-analytics-v2.png';
+import badgeV3 from '../../assets/google-data-analytics-v3.png';
 import { soundEngine } from '../utils/soundEngine';
 
 export default function BioSection() {
