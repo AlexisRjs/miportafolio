@@ -1,5 +1,6 @@
 import React from 'react';
 import Navbar from './components/Navbar';
+import ScrollProgressBar from './components/ScrollProgressBar';
 import HeroSection from './components/HeroSection';
 import BioSection from './components/BioSection';
 import TerminalSection from './components/TerminalSection';
@@ -11,6 +12,9 @@ export default function App() {
     <div className="portfolio-app-root">
       {/* Background vignette subtle noise overlay */}
       <div className="noise-overlay" aria-hidden="true"></div>
+
+      {/* Top Scroll Progress Bar (Inverted Theme Color) */}
+      <ScrollProgressBar />
 
       {/* Navigation */}
       <Navbar />
